@@ -33,8 +33,6 @@
         #    url = "github:Jovian-Experiments/Jovian-NixOS";
         #    inputs.nixpkgs.follows = "nixpkgs";
         #};
-        compose2nix.url = "github:aksiksi/compose2nix";
-        compose2nix.inputs.nixpkgs.follows = "nixpkgs";
     };
 
     outputs = 
@@ -43,7 +41,6 @@
             nixpkgs,
             nix-darwin,
             home-manager,
-            compose2nix,
             #agenix,
             ...
         } @inputs: 
