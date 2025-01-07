@@ -125,9 +125,5 @@
 
       boot.zfs.forceImportAll = true;
 
-      lib.mkPath {
-        
-      }
-
 
 }
