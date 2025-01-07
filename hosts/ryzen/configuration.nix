@@ -96,5 +96,6 @@
       };
 
       boot.zfs.forceImportAll = true;
+      boot.zfs.extraPools = [ "storage-ssd" ];
 
 }
