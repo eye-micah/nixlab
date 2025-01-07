@@ -88,15 +88,10 @@
         enable = true;
       };
 
-     systemd.services."zfs-import-cache" = {
-        #serviceConfig = {
-        #  ExecStart = "@zpool@ import -f -a"; # Forces pool import
-        #  RemainAfterExit = true;
-        #};
-        enable = true;
-      };
       systemd.services."zfs-mount" = {
         enable = true;
       };
+
+      boot.zfs.forceImportAll = true;
 
 }
