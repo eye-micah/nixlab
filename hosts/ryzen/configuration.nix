@@ -1,10 +1,13 @@
 { pkgs, inputs, ... }:
 
 {
+
     imports = [
-        ./hardware-configuration.nix
-        ./services
+        #./hardware-configuration.nix
+        #./services
     ];
+
+    system.stateVersion = "25.05";
 
     boot.initrd.systemd.enable = true;
 
@@ -34,19 +37,11 @@
             options = "--delete-older-than 30d";
         };
 
-        settings = {
-            max-jobs = 3;
-            trusted-users = [ "builder" ];
-        };
-
         optimise.automatic = true;
-
-        generateRegistryFromInputs = true;
-        generateNixPathFromInputs = true;
     };
 
     # Containerization and VMs enablement
-    virtualization = {
+    virtualisation = {
         containers.enable = true;
         podman = {
             enable = true;
@@ -62,6 +57,6 @@
 
         # storage
         zfs
-    ]
+    ];
 
 }

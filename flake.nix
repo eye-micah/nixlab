@@ -49,11 +49,10 @@
                 ryzen = nixpkgs.lib.nixosSystem {
                     system = "x86_64-linux";
                     modules = [
-                        ./disko/ext4-root
-                        ./modules/zfs.nix
+                        #./disko/ext4-root
                         ./hosts/ryzen/configuration.nix
                         agenix.nixosModules.age 
-                    ]
+                    ];
                 };
             };
         };
