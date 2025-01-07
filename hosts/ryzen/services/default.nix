@@ -1,5 +1,5 @@
 {
   imports = [
-  #  ./jellyfin.nix
+    ./jellyfin.nix
   ];
 }
