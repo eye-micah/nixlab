@@ -80,7 +80,7 @@
         zfs
     ];
 
-      systemd.services."zfs-import" = {
+      systemd.services."zfs-import-scan" = {
         #serviceConfig = {
         #  ExecStart = "@zpool@ import -f -a"; # Forces pool import
         #  RemainAfterExit = true;
