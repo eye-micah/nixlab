@@ -33,8 +33,6 @@
     services.zfs.trim.enable = true;
     services.zfs.autoScrub.enable = true;
 
-    boot.zfs.forceImport = true;
-
     boot.loader = {
         systemd-boot = {
             enable = true;
@@ -83,9 +81,14 @@
     ];
 
       systemd.services."zfs-import" = {
-        enable = true;
         wantedBy = [ "default.target" ];
+        serviceConfig = {
+          ExecStart = "@zpool@ import -f -a"; # Forces pool import
+          RemainAfterExit = true;
+        };
+        enable = true;
       };
+
       systemd.services."zfs-mount" = {
         enable = true;
         wantedBy = [ "default.target" ];
