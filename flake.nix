@@ -43,7 +43,7 @@
             nixpkgs,
             nix-darwin,
             home-manager,
-            deploy-rs,
+            compose2nix,
             #agenix,
             ...
         } @inputs: 
@@ -60,19 +60,10 @@
                         ./disko/ext4-root
                         ./hosts/ryzen/configuration.nix
                         #agenix.nixosModules.default
+                        inputs.compose2nix.nixosModules.default
                     ];
                 };
             };
-
-            deploy.nodes.ryzen = {
-                hostname = "ryzen";
-                profiles.system = {
-                    user = "root";
-                    path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.ryzen;
-                };
-            };
-
-            checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib;
 
         };
 }
