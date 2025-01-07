@@ -78,6 +78,7 @@
         # containerization packages
         podman-tui 
         docker-compose
+        inputs.compose2nix.packages.x86_64-linux.default
 
         # storage
         zfs
@@ -123,6 +124,10 @@
       };
 
       boot.zfs.forceImportAll = true;
+
+      lib.mkPath {
+        
+      }
 
 
 }
