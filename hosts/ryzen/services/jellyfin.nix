@@ -13,6 +13,7 @@ let
   tvDir = /mnt/tv;
 
 in {
+  config.virtualisation.oci-containers.backend = "podman";
   config.virtualisation.oci-containers.containers = {
     jellyfin = {
       image = "docker.io/linuxserver/jellyfin:${jellyfinImageVersion}";
