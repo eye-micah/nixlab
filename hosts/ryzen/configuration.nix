@@ -7,11 +7,28 @@
         ./services
     ];
 
+    fileSystems = {
+        # NOTE: root and home are on tmpfs
+        # root partition, exists only as a fallback, actual root is a tmpfs
+        "/" = {
+          device = "/dev/disk/by-label/NIXROOT";
+          fsType = "ext4";
+          neededForBoot = true;
+        };
+
+        # boot partition
+        "/boot/efi" = {
+          device = "/dev/disk/by-label/NIXESP";
+          fsType = "vfat";
+        };
+
+    };
+
     system.stateVersion = "25.05";
 
     boot.initrd.systemd.enable = true;
 
-    boot.supportedFilesystems = [ "zfs" "ext4" "vfat" ];
+    boot.supportedFilesystems = [ "zfs" "vfat" ];
 
     services.zfs.trim.enable = true;
     services.zfs.autoScrub.enable = true;
