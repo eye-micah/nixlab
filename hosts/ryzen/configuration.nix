@@ -81,7 +81,6 @@
     ];
 
       systemd.services."zfs-import" = {
-        wantedBy = [ "multi-user.target" ];
         #serviceConfig = {
         #  ExecStart = "@zpool@ import -f -a"; # Forces pool import
         #  RemainAfterExit = true;
@@ -91,7 +90,6 @@
 
       systemd.services."zfs-mount" = {
         enable = true;
-        wantedBy = [ "multi-user.target" ];
       };
 
 }
