@@ -46,6 +46,10 @@
         };
     };
 
+    nix.settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+    };
+
     networking.hostName = "ryzen";
     networking.hostId = "41b9e6d1";
 
