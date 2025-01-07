@@ -31,6 +31,7 @@ in {
         PUID = "1000";
         TZ = "Etc/UTC";
       };
+      autoStart = true;
     };  
   };
 }  
