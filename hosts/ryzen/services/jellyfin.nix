@@ -8,6 +8,9 @@
 let
   envVars = import ../env-vars.nix;
   jellyfinImageVersion = "10.10.3";
+  # For the sake of local testing in a VM.
+  moviesDir = /mnt/movies;
+  tvDir = /mnt/tv;
 
 in {
   config.virtualisation.oci-containers.containers = {
