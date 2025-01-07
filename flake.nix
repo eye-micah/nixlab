@@ -2,8 +2,12 @@
     inputs = {
         # I like living on the edge, and going with unstable just means less headaches with out of date software
         nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+        # Used for partitioning
+        disko.url = "github:nix-community/disko";
+        disko.inputs.nixpkgs.follows = "nixpkgs";
         # Used for deploying to nodes
         deploy-rs.url = "github:serokell/deploy-rs";
+        deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
         # Script from Wolfgang's Channel for forcing ASPM.
         auto-aspm = {
             url = "github:notthebee/AutoASPM";
@@ -37,6 +41,7 @@
             nixpkgs,
             nix-darwin,
             home-manager,
+            deploy-rs,
             #agenix,
             ...
         } @inputs: 
@@ -49,11 +54,23 @@
                 ryzen = nixpkgs.lib.nixosSystem {
                     system = "x86_64-linux";
                     modules = [
-                        #./disko/ext4-root
+                        inputs.disko.nixosModules.disko
+                        ./disko/ext4-root
                         ./hosts/ryzen/configuration.nix
                         #agenix.nixosModules.default
                     ];
                 };
             };
+
+            deploy.nodes.ryzen = {
+                hostname = "ryzen";
+                profiles.system = {
+                    user = "root";
+                    path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.ryzen;
+                };
+            };
+
+            checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) inputs.deploy-rs.lib;
+
         };
 }

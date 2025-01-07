@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, lib, ... }:
 
 {
 
@@ -11,14 +11,14 @@
         # NOTE: root and home are on tmpfs
         # root partition, exists only as a fallback, actual root is a tmpfs
         "/" = {
-          device = "/dev/disk/by-label/NIXROOT";
+          device = lib.mkForce "/dev/disk/by-label/NIXROOT";
           fsType = "ext4";
           neededForBoot = true;
         };
 
         # boot partition
         "/boot/efi" = {
-          device = "/dev/disk/by-label/NIXESP";
+          device = lib.mkForce "/dev/disk/by-label/NIXESP";
           fsType = "vfat";
         };
 
