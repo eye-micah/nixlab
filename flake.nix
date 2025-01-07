@@ -51,7 +51,7 @@
                     modules = [
                         #./disko/ext4-root
                         ./hosts/ryzen/configuration.nix
-                        agenix.nixosModules.age 
+                        agenix.nixosModules.default
                     ];
                 };
             };

@@ -22,9 +22,9 @@ in {
         "0.0.0.0:1900:1900/udp"
       ];
       volumes = [
-        "${dockerPersist}/jellyfin:/config"
-        "${moviesDir}:/movies"
-        "${tvDir}:/tv"
+        "${envVars.dockerPersist}/jellyfin:/config"
+        "${envVars.moviesDir}:/movies"
+        "${envVars.tvDir}:/tv"
       ];
       environment = { 
         PGID = "1000";
