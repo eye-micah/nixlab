@@ -10,10 +10,10 @@
             flake = false;
         };
         # For secrets management.
-        agenix = {
-            url = "github:ryantm/agenix";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
+        #agenix = {
+        #    url = "github:ryantm/agenix";
+        #    inputs.nixpkgs.follows = "nixpkgs";
+        #};
         # For Macs.
         nix-darwin = {
             url = "github:LnL7/nix-darwin/master";
@@ -37,7 +37,7 @@
             nixpkgs,
             nix-darwin,
             home-manager,
-            agenix,
+            #agenix,
             ...
         } @inputs: 
         let
@@ -51,7 +51,7 @@
                     modules = [
                         #./disko/ext4-root
                         ./hosts/ryzen/configuration.nix
-                        agenix.nixosModules.default
+                        #agenix.nixosModules.default
                     ];
                 };
             };
