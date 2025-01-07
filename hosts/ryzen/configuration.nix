@@ -51,6 +51,8 @@
     networking.hostName = "ryzen";
     networking.hostId = "41b9e6d1";
 
+    services.openssh.enable = true;
+
     nix = {
         gc = {
             automatic = true;
