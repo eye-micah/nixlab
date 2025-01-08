@@ -15,7 +15,7 @@
                 format = "vfat";
                 mountpoint = "/boot/efi";
                 mountOptions = [ "umask=0077" ];
-                extraArgs = [ "-L NIXESP" ] ;
+                extraArgs = [ "-nNIXESP" ] ;
               };
             };
             root = {
@@ -24,7 +24,7 @@
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/";
-                extraArgs = [ "-L NIXROOT" ] ;
+                extraArgs = [ "-LNIXROOT" ] ;
               };
             };
           };

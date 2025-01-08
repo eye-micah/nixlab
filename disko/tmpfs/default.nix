@@ -15,14 +15,14 @@
                 format = "vfat";
                 mountpoint = "/boot/efi";
                 mountOptions = [ "umask=0077" ];
-                extraArgs = [ "-L NIXESP" ] ;
+                extraArgs = [ "-nNIXESP" ] ;
               };
             };
             root = {
               size = "100%";
               content = {
                 type = "btrfs";
-                extraArgs = [ "-L NIXROOT" ] ;
+                extraArgs = [ "-LNIXROOT" ] ;
                 subvolumes = {
                   # Subvolume name is different from mountpoint
                   "persist" = {
