@@ -129,6 +129,7 @@
       users.users.micah = {
         isSystemUser = true;
         home = "/home/micah";
+        createHome = true;
         password = "micah";  # This will use a hashed password in the system
         shell = pkgs.bash;    # Set the shell to Zsh or another shell of your choice
         group = "micah";
