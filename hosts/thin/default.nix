@@ -13,20 +13,20 @@
   };
 
   fileSystems."/persist" = {
-    device = "/dev/disk/by-label/NIXROOT";
+    device = lib.mkForce "/dev/disk/by-label/NIXROOT";
     neededForBoot = true;
     fsType = "btrfs";
     options = [ "subvol=persist" ];
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-label/NIXROOT";
+    device = lib.mkForce "/dev/disk/by-label/NIXROOT";
     fsType = "btrfs";
     options = [ "subvol=nix" ];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-label/NIXESP";
+    device = lib.mkForce "/dev/disk/by-label/NIXESP";
     fsType = "vfat";
   };
 
@@ -48,19 +48,6 @@
   networking.hostName = "thin";
   networking.hostId = "41b9e6d2";
 
-  networking = {
-    useDHCP = false; # Disable DHCP globally
-    defaultGateway = "192.168.1.1"; # Replace with your actual gateway
-    nameservers = [ "8.8.8.8" "8.8.4.4" ]; # Replace with your preferred DNS servers
-
-    interfaces."*" = {
-      ipv4.addresses = [
-        {
-          address = "192.168.1.245";
-          prefixLength = 24;
-        }
-      ];
-    };
-  };
+  networking.useDHCP = true;
 
 }

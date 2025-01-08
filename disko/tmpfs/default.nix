@@ -21,8 +21,7 @@
             root = {
               size = "100%";
               content = {
-                type = "filesystem";
-                format = "btrfs";
+                type = "btrfs";
                 extraArgs = [ "-L NIXROOT" ] ;
                 subvolumes = {
                   # Subvolume name is different from mountpoint

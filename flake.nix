@@ -30,7 +30,7 @@
         };
         impermanence = {
             url = "github:nix-community/impermanence";
-            inputs.ninxpkgs.follows = "nixpkgs";
+            #inputs.nixpkgs.follows = "nixpkgs";
         };
     };
 
@@ -69,8 +69,8 @@
                         ./disko/tmpfs
                         ./hosts/configuration.nix
                         ./hosts/thin
-                    ]
-                }
+                    ];
+                };
             };
 
         };
