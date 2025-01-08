@@ -128,10 +128,11 @@
 
       users.users.micah = {
         isSystemUser = true;
+        home = "/home/micah";
         password = "micah";  # This will use a hashed password in the system
         shell = pkgs.bash;    # Set the shell to Zsh or another shell of your choice
-        extraGroups = [ wheel podman video input ];
-        opensshAuthorizedKeys.keys = [
+        extraGroups = [ "wheel" "podman" "video" "input" ];
+        openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFQy6Jw3QC3ADSbNdRZZSTZMOwB7o/+SQatG4Er2gtC micah@haruka.tail8d76a.ts.net"
         ];
       };
