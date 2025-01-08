@@ -28,11 +28,10 @@
             url = "github:nix-community/home-manager/master";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        # For my gaming system. Not used until NVIDIA + GS support improves or I move to AMD.
-        #jovian = {
-        #    url = "github:Jovian-Experiments/Jovian-NixOS";
-        #    inputs.nixpkgs.follows = "nixpkgs";
-        #};
+        impermanence = {
+            url = "github:nix-community/impermanence";
+            inputs.ninxpkgs.follows = "nixpkgs";
+        };
     };
 
     outputs = 
@@ -55,10 +54,23 @@
                     modules = [
                         inputs.disko.nixosModules.disko
                         ./disko/ext4-root
-                        ./hosts/ryzen/configuration.nix
+                        ./modules/zfs.nix
+                        ./hosts/configuration.nix
                         #agenix.nixosModules.default
+                        ./hosts/ryzen
                     ];
                 };
+
+                thin = nixpkgs.lib.nixosSystem {
+                    system = "x86_64-linux";
+                    modules = [
+                        inputs.disko.nixosModules.disko
+                        inputs.impermanence.nixosModules.impermanence
+                        ./disko/tmpfs
+                        ./hosts/configuration.nix
+                        ./hosts/thin
+                    ]
+                }
             };
 
         };
