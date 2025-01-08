@@ -30,7 +30,7 @@
                     mountpoint = "/persist";
                   };
                   # Parent is not mounted so the mountpoint must be set
-                  "/nix" = {
+                  "nix" = {
                     mountOptions = [ "compress=zstd" "noatime" ];
                     mountpoint = "/nix";
                   };
