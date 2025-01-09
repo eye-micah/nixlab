@@ -34,6 +34,7 @@
     enable = true;
     hideMounts = true;
     directories = [
+        "/etc/nixos"
         "/var/log"
         "/var/lib/nixos"
         "/var/lib/systemd/coredump"
@@ -45,7 +46,7 @@
     ];
   };
 
-  networking.hostName = "thin";
+  networking.hostName = "nanba";
   networking.hostId = "41b9e6d2";
 
   networking.useDHCP = true;

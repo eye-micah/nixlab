@@ -49,7 +49,7 @@
         {
             # darwinConfigurations {};
             nixosConfigurations = {
-                ryzen = nixpkgs.lib.nixosSystem {
+                saeko = nixpkgs.lib.nixosSystem {
                     system = "x86_64-linux";
                     modules = [
                         inputs.disko.nixosModules.disko
@@ -57,19 +57,37 @@
                         ./modules/zfs.nix
                         ./hosts/configuration.nix
                         #agenix.nixosModules.default
-                        ./hosts/ryzen
+                        ./hosts/saeko
                     ];
                 };
 
-                thin = nixpkgs.lib.nixosSystem {
+                nanba = nixpkgs.lib.nixosSystem {
                     system = "x86_64-linux";
                     modules = [
                         inputs.disko.nixosModules.disko
                         inputs.impermanence.nixosModules.impermanence
                         ./disko/tmpfs
                         ./hosts/configuration.nix
-                        ./hosts/thin
+                        ./hosts/nanba
                     ];
+                };
+            };
+            
+            deploy = {
+                nodes = {
+                    saeko = {
+                        hostname = "saeko-1"; # Replace with IP address during deployment.
+                        user = "micah";
+                        path = "/etc/nixos";
+                        profiles.system = self.nixosConfigurations.saeko; 
+                    };
+
+                    nanba = {
+                        hostname = "192.168.1.177"; # Was "nanba"
+                        user = "micah";
+                        path = "/etc/nixos";
+                        profiles.system = self.nixosConfigurations.nanba;
+                    };
                 };
             };
 

@@ -1,7 +1,7 @@
 {
   disko.devices = {
     disk = {
-      my-disk = {
+      NIXROOT = {
         device = "ADD DEVICE HERE";
         type = "disk";
         content = {
@@ -18,7 +18,7 @@
                 extraArgs = [ "-nNIXESP" ] ;
               };
             };
-            root = {
+            persist = {
               size = "100%";
               content = {
                 type = "btrfs";
