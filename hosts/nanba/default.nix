@@ -46,7 +46,7 @@
     ];
     users.micah = {
       directories = [ "git" { directory = ".ssh"; mode = "0700"; } ]
-    }
+    };
   };
 
   networking.hostName = "nanba";
