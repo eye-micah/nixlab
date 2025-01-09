@@ -64,7 +64,7 @@
         isSystemUser = true;
         home = "/home/micah";
         createHome = true;
-        password = "micah";  # This will use a hashed password in the system
+        hashedPassword = "$6$RnJeIDSyPLqDOHGu$u/oHbJyOeBu0uss9DY2VBYLD7BZmCNoc7456iP4LBEy8a5tjlu5GzDEX1FKte/7rFxolXXNkZS5UacQdz5Row0";  # This will use a hashed password in the system
         shell = pkgs.bash;    # Set the shell to Zsh or another shell of your choice
         group = "micah";
         extraGroups = [ "wheel" "podman" "video" "input" ];
