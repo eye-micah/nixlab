@@ -77,16 +77,18 @@
                 nodes = {
                     saeko = {
                         hostname = "saeko-1"; # Replace with IP address during deployment.
-                        user = "micah";
-                        path = "/etc/nixos";
-                        profiles.system = self.nixosConfigurations.saeko; 
+                        profiles.system = { 
+                            user = "root";
+                            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.saeko;
+                        };
                     };
 
                     nanba = {
                         hostname = "192.168.1.177"; # Was "nanba"
-                        user = "micah";
-                        path = "/etc/nixos";
-                        profiles.system = self.nixosConfigurations.nanba;
+                        profiles.system = { 
+                            user = "root";
+                            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.nanba;
+                        };
                     };
                 };
             };
