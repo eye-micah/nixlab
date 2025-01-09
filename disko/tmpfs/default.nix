@@ -2,7 +2,7 @@
   disko.devices = {
     disk = {
       NIXROOT = {
-        device = "ADD DEVICE HERE";
+        device = "/dev/sda";
         type = "disk";
         content = {
           type = "gpt";
@@ -13,7 +13,7 @@
               content = {
                 type = "filesystem";
                 format = "vfat";
-                mountpoint = "/boot/efi";
+                mountpoint = "/boot";
                 mountOptions = [ "umask=0077" ];
                 extraArgs = [ "-nNIXESP" ] ;
               };

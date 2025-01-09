@@ -66,7 +66,7 @@
                     modules = [
                         inputs.disko.nixosModules.disko
                         inputs.impermanence.nixosModules.impermanence
-                        ./disko/tmpfs
+                        ./disko/tmpfs/default.nix
                         ./hosts/configuration.nix
                         ./hosts/nanba
                     ];
@@ -79,7 +79,8 @@
                         hostname = "saeko-1"; # Replace with IP address during deployment.
                         profiles.system = { 
                             user = "root";
-                            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.saeko;
+                            sshUser = "root";
+                            path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.saeko;
                         };
                     };
 
@@ -87,7 +88,8 @@
                         hostname = "192.168.1.177"; # Was "nanba"
                         profiles.system = { 
                             user = "root";
-                            path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.nanba;
+                            sshUser = "root";
+                            path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.nanba;
                         };
                     };
                 };
