@@ -45,7 +45,7 @@
         "/etc/machine-id"
     ];
     users.micah = {
-      directories = [ "git" { directory = ".ssh"; mode = "0700"; } ]
+      directories = [ "git" { directory = ".ssh"; mode = "0700"; } ];
     };
   };
 
