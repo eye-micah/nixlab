@@ -73,8 +73,6 @@
         ];
       };
 
-      users.users.root = { password = "micah"; };
-
       users.groups.micah = {};
 
 }
