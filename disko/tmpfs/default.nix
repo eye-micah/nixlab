@@ -25,8 +25,8 @@
                 extraArgs = [ "-LNIXROOT" ] ;
                 subvolumes = {
                   # Subvolume name is different from mountpoint
-                  "persist" = {
-                    mountpoint = "/persist";
+                  "nix_persist" = {
+                    mountpoint = "/nix/persist";
                   };
                   # Parent is not mounted so the mountpoint must be set
                   "nix" = {

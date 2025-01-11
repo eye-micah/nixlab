@@ -13,11 +13,11 @@
     options = [ "defaults" "size=50%" "mode=755" ];
   };
 
-  fileSystems."/persist" = {
+  fileSystems."/nix/persist" = {
     device = "/dev/disk/by-partlabel/disk-NIXROOT-persist";
     neededForBoot = true;
     fsType = "btrfs";
-    options = [ "subvol=persist" ];
+    options = [ "subvol=nix_persist" ];
   };
 
   fileSystems."/nix" = {
@@ -32,7 +32,7 @@
     fsType = "vfat";
   };
 
-  environment.persistence."/persist" = {
+  environment.persistence."/nix/persist/system" = {
     enable = true;
     hideMounts = true;
     directories = [
