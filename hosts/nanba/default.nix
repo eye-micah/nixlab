@@ -14,21 +14,21 @@
   };
 
   fileSystems."/nix/persist" = {
-    device = "/dev/disk/by-label/NIXROOT";
+    device = lib.mkDefault "/dev/disk/by-label/NIXROOT";
     neededForBoot = true;
     fsType = "btrfs";
     options = [ "subvol=nix_persist" ];
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-label/NIXROOT";
+    device = lib.mkDefault "/dev/disk/by-label/NIXROOT";
     neededForBoot = true;
     fsType = "btrfs";
     options = [ "subvol=nix" ];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-label/NIXESP";
+    device = lib.mkDefault "/dev/disk/by-label/NIXESP";
     fsType = "vfat";
   };
 
