@@ -7,9 +7,9 @@
   ];
 
   fileSystems."/" = {
-    device = "none";
+    device = lib.mkForce "none";
     fsType = lib.mkForce "tmpfs";
-    options = [ "defaults" "size=25%" "mode=755" ];
+    options = [ "defaults" "size=50%" "mode=755" ];
   };
 
   fileSystems."/persist" = {
