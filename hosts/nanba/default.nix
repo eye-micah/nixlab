@@ -8,6 +8,7 @@
 
   fileSystems."/" = {
     device = "none";
+    neededForBoot = true;
     fsType = "tmpfs";
     options = [ "defaults" "size=50%" "mode=755" ];
   };
@@ -21,6 +22,7 @@
 
   fileSystems."/nix" = {
     device = "/dev/disk/by-label/NIXROOT";
+    neededForBoot = true;
     fsType = "btrfs";
     options = [ "subvol=nix" ];
   };
