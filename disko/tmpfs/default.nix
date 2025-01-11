@@ -33,15 +33,18 @@
                     mountOptions = [ "compress=zstd" "noatime" ];
                     mountpoint = "/nix";
                   };
-                  "root" = {
-                    mountOptions = [ "noatime" ];
-                    mountpoint = "/";
-                  };
+                };
               };
             };
           };
         };
       };
     };
+    nodev = {
+      "/" = {
+        fsType = "tmpfs";
+        mountOptions = [ "size=2G" ];
+      };
+    };
   };
-};}
+}

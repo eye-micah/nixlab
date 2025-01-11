@@ -7,26 +7,26 @@
   ];
 
   fileSystems."/" = {
-    device = lib.mkForce "none";
-    fsType = lib.mkForce "tmpfs";
+    device = "none";
+    fsType = "tmpfs";
     options = [ "defaults" "size=50%" "mode=755" ];
   };
 
   fileSystems."/persist" = {
-    device = lib.mkForce "/dev/disk/by-label/NIXROOT";
+    device = "/dev/disk/by-label/NIXROOT";
     neededForBoot = true;
     fsType = "btrfs";
     options = [ "subvol=persist" ];
   };
 
   fileSystems."/nix" = {
-    device = lib.mkForce "/dev/disk/by-label/NIXROOT";
+    device = "/dev/disk/by-label/NIXROOT";
     fsType = "btrfs";
     options = [ "subvol=nix" ];
   };
 
   fileSystems."/boot" = {
-    device = lib.mkForce "/dev/disk/by-label/NIXESP";
+    device = "/dev/disk/by-label/NIXESP";
     fsType = "vfat";
   };
 

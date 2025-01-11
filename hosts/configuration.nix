@@ -12,7 +12,7 @@
 
     boot.initrd.systemd.enable = false;
 
-    boot.supportedFilesystems = [ "zfs" "vfat" "btrfs" ];
+    boot.supportedFilesystems = [ "zfs" "vfat" "btrfs" "tmpfs" ];
 
     services.zfs.trim.enable = true;
     services.zfs.autoScrub.enable = true;
