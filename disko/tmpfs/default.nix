@@ -36,7 +36,7 @@
                   "root" = {
                     mountOptions = [ "noatime" ];
                     mountpoint = "/";
-                  }
+                  };
               };
             };
           };
