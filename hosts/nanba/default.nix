@@ -28,7 +28,7 @@
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-label/NIXESP";
+    device = "/dev/disk/by-partlabel/disk-NIXROOT-ESP";
     fsType = "vfat";
   };
 
