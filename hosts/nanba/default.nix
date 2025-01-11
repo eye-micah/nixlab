@@ -21,7 +21,7 @@
   };
 
   fileSystems."/nix" = {
-    device = "/dev/disk/by-label/NIXROOT";
+    device = "/dev/disk/by-partlabel/disk-NIXROOT-persist";
     neededForBoot = true;
     fsType = "btrfs";
     options = [ "subvol=nix" ];
