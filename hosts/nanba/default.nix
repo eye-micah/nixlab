@@ -8,7 +8,7 @@
 
   fileSystems."/" = {
     device = "none";
-    fsType = "tmpfs";
+    fsType = lib.mkForce "tmpfs";
     options = [ "defaults" "size=25%" "mode=755" ];
   };
 
