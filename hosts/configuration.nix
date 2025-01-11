@@ -24,7 +24,7 @@
         };
         efi = {
             canTouchEfiVariables = true;
-            efiSysMountPoint = "/dev/disk/by-label/NIXESP";
+            efiSysMountPoint = "/boot";
         };
     };
 
