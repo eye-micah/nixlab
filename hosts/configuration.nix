@@ -10,7 +10,7 @@
 
     system.stateVersion = "25.05";
 
-    boot.initrd.systemd.enable = true;
+    boot.initrd.systemd.enable = false;
 
     boot.supportedFilesystems = [ "zfs" "vfat" "btrfs" ];
 
