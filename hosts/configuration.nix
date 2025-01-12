@@ -2,6 +2,8 @@
 
 {
 
+    boot.zfs.devNodes = "/dev/disk/by-partuuid";
+
     imports = [
         #./hardware-configuration.nix
 #        ./default.nix # Separating parts of configuration that are unique to this system.
