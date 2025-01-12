@@ -22,14 +22,14 @@
     gnome-software
   ];
 
-  environment.systemPackages = with pkgs.gnomeExtensions; [
-    dash-to-panel
-    appindicator
+  environment.systemPackages = with pkgs; [
+    gnomeExtensions.dash-to-panel
+    gnomeExtensions.appindicator
+    gnome-terminal
+    firefox
   ];
 
   services.udev.packages = [ pkgs.gnome-settings-daemon ]; # Needed for appindicator icons
-
-  environment.systemPackages = with pkgs; [ gnome-terminal firefox ];
 
  # nixpkgs.overlays = [
     # GNOME 46: triple-buffering-v4-46
