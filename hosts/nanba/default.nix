@@ -7,49 +7,27 @@
   ];
 
   fileSystems."/" = {
-    device = "none";
-    neededForBoot = true;
-    fsType = "tmpfs";
-    options = [ "defaults" "size=50%" "mode=755" ];
-  };
-
-  fileSystems."/nix/persist" = {
-    device = lib.mkDefault "/dev/disk/by-label/NIXROOT";
-    neededForBoot = true;
-    fsType = "btrfs";
-    options = [ "subvol=nix_persist" ];
+      device = "zroot";
+      fsType = "zfs";
   };
 
   fileSystems."/nix" = {
-    device = lib.mkDefault "/dev/disk/by-label/NIXROOT";
-    neededForBoot = true;
-    fsType = "btrfs";
-    options = [ "subvol=nix" ];
+      device = "zroot/nix";
+      fsType = "zfs";
+  };
+
+  fileSystems."/home" = {
+      device = "zroot/home";
+      fsType = "zfs";
   };
 
   fileSystems."/boot" = {
-    device = lib.mkDefault "/dev/disk/by-label/NIXESP";
-    fsType = "vfat";
+      device = lib.mkForce "/dev/disk/by-label/NIXESP";
+      fsType = "vfat";
   };
 
-  environment.persistence."/nix/persist/system" = {
-    enable = true;
-    hideMounts = true;
-    directories = [
-        "/etc/nixos"
-        "/var/log"
-        "/var/lib/nixos"
-        "/var/lib/systemd/coredump"
-        "/var/cache"
-        "/etc/NetworkManager/system-connections"
-    ];
-    files = [
-        "/etc/machine-id"
-    ];
-    users.micah = {
-      directories = [ "git" { directory = ".ssh"; mode = "0700"; } ];
-    };
-  };
+  swapDevices = [];
+
 
   networking.hostName = "nanba";
   networking.hostId = "41b9e6d2";

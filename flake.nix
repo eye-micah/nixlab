@@ -53,7 +53,18 @@
                     system = "x86_64-linux";
                     modules = [
                         inputs.disko.nixosModules.disko
-                        ./disko/ext4-root
+                        (import ./disko/zfs-root { device = "insert device here"; })
+                        ./modules/zfs.nix
+                        ./hosts/configuration.nix
+                        #agenix.nixosModules.default
+                        ./hosts/generic
+                    ];
+                };
+                saeko = nixpkgs.lib.nixosSystem {
+                    system = "x86_64-linux";
+                    modules = [
+                        inputs.disko.nixosModules.disko
+                        (import ./disko/zfs-root { device = "insert device here"; })
                         ./modules/zfs.nix
                         ./hosts/configuration.nix
                         #agenix.nixosModules.default
@@ -90,11 +101,9 @@
                     system = "x86_64-linux";
                     modules = [
                         inputs.disko.nixosModules.disko
-                        inputs.impermanence.nixosModules.impermanence
-                        ./disko/tmpfs/default.nix
+                        (import ./disko/zfs-root { device = "insert device here"; })
                         ./hosts/configuration.nix
                         ./hosts/nanba
-
                     ];
                 };
             };
@@ -127,8 +136,17 @@
             
             deploy = {
                 nodes = {
+                    generic = {
+                        hostname = "nixos";
+                        profiles.system = {
+                            user = "root";
+                            ssh_user = "root";
+                            path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.generic;
+                        };
+                    };
+
                     saeko = {
-                        hostname = "saeko-1"; # Replace with IP address during deployment.
+                        hostname = "saeko-1"; # Replace with "saeko" during deployment. This is for my main Ryzen home server.
                         profiles.system = { 
                             user = "root";
                             sshUser = "root";
@@ -137,15 +155,35 @@
                     };
 
                     nanba = {
-                        hostname = "192.168.1.177"; # Was "nanba"
+                        hostname = "192.168.1.177"; # Was "nanba". This is for a low-power thin client or Pi.
                         profiles.system = { 
                             user = "root";
                             sshUser = "root";
                             path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.nanba;
                         };
                     };
+
+                    haruka = {
+                        hostname = "haruka"; # This is my Mac.
+                        profiles.system = {
+                            user = "micah";
+                            sshUser = "micah";
+                            path = inputs.deploy-rs.lib.aarch64-darwin.activate.darwin self.darwinConfigurations.haruka;
+                        };
+                    };
+
+                    lxc = {
+                        hostname = "lxc";
+                        profiles.system = {
+                            user = "root";
+                            sshUser = "root";
+                            path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.lxc;
+                        };
+                    };
                 };
             };
+
+            checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
         };
 }

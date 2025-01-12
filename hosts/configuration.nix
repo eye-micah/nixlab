@@ -7,6 +7,28 @@
 #        ./default.nix # Separating parts of configuration that are unique to this system.
         #./services
     ];
+
+    fileSystems."/" = {
+        device = "zroot";
+        fsType = "zfs";
+    };
+
+    fileSystems."/nix" = {
+        device = "zroot/nix";
+        fsType = "zfs";
+    };
+
+    fileSystems."/home" = {
+        device = "zroot/home";
+        fsType = "zfs";
+    };
+
+    fileSystems."/boot" = {
+        device = lib.mkForce "/dev/disk/by-label/NIXESP";
+        fsType = "vfat";
+    };
+
+    swapDevices = [];
     
     nixpkgs.config.allowUnfree = true;
     nixpkgs.config.allowUnsupportedSystem = true;
@@ -15,7 +37,7 @@
 
     boot.initrd.systemd.enable = false;
 
-    boot.supportedFilesystems = [ "zfs" "vfat" "btrfs" "tmpfs" ];
+    boot.supportedFilesystems = [ "zfs" "vfat" ];
 
     services.zfs.trim.enable = true;
     services.zfs.autoScrub.enable = true;

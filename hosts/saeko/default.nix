@@ -9,23 +9,6 @@
         ./services
     ];
 
-    fileSystems = {
-        # NOTE: root and home are on tmpfs
-        # root partition, exists only as a fallback, actual root is a tmpfs
-        "/" = {
-          device = lib.mkForce "/dev/disk/by-label/NIXROOT";
-          fsType = "ext4";
-          neededForBoot = true;
-        };
-
-        # boot partition
-        "/boot/efi" = {
-          device = lib.mkForce "/dev/disk/by-label/NIXESP";
-          fsType = "vfat";
-        };
-
-    };
-
     networking.hostName = "saeko";
     networking.hostId = "41b9e6d1";
 
