@@ -53,7 +53,7 @@
                     system = "x86_64-linux";
                     modules = [
                         inputs.disko.nixosModules.disko
-                        ./disko/zfs-root
+                        ./disko/root/simple-ext4.nix
                         ./modules/zfs.nix
                         ./hosts/configuration.nix
                         #agenix.nixosModules.default
@@ -64,7 +64,7 @@
                     system = "x86_64-linux";
                     modules = [
                         inputs.disko.nixosModules.disko
-                        ./disko/zfs-root
+                        ./disko/root
                         ./modules/zfs.nix
                         ./hosts/configuration.nix
                         #agenix.nixosModules.default
@@ -76,7 +76,7 @@
                     system = "x86_64-linux";
                     modules = [
                         inputs.disko.nixosModules.disko
-                        ./disko/zfs-root 
+                        ./disko/root 
                         ./modules/zfs.nix
                         ./modules/pipewire.nix
                         ./modules/gnome.nix
@@ -101,7 +101,7 @@
                     system = "x86_64-linux";
                     modules = [
                         inputs.disko.nixosModules.disko
-                        ./disko/zfs-root
+                        ./disko/root
                         ./hosts/configuration.nix
                         ./hosts/nanba
                     ];
