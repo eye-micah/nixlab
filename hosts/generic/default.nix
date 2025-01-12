@@ -3,8 +3,7 @@
 {
   
   networking.hostName = lib.mkDefault "nixos";
-  networking.hostId = builtins.substring 0 8 (builtins.hashString "sha256" config.networking.hostName);
-
+  networking.hostId = "3r3r9944";
   networking.useDHCP = true;
 
 }
