@@ -1,9 +1,9 @@
-{ pkgs, inputs, lib, config, ... }:
+{ ... }:
 
 {
   
   networking.hostName = "nixos";
-  networking.hostId = "3r3r9944";
+  networking.hostId = "41b9e6d9";
   networking.useDHCP = true;
 
 }
