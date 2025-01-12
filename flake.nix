@@ -74,6 +74,13 @@
                         # Jesus Christ. There's gotta be a cleaner way to do this.
                         ./hosts/configuration.nix
                         ./hosts/saejima
+                        home-manager.darwinModules.home-manager
+                        {
+                            # NixOS with Home Manager integration
+                            home-manager.useGlobalPkgs = true;
+                            home-manager.useUserPackages = true;
+                            home-manager.users.micah = import ./home-manager/clients/home.nix;
+                        }
                     ];
                 };
 
@@ -85,6 +92,7 @@
                         ./disko/tmpfs/default.nix
                         ./hosts/configuration.nix
                         ./hosts/nanba
+
                     ];
                 };
             };
