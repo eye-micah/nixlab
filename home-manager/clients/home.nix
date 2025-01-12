@@ -51,6 +51,9 @@
   home.file.".vimrc".source = ./dotfiles/vimrc;
   home.file.".p10k.zsh".source = ./dotfiles/p10k.zsh;
 
+  home.file.".local/share/fonts/avenir.otf".source = ./dotfiles/fonts/avenir;
+  home.file.".local/share/fonts/didot.ttf".source = ./dotfiles/fonts/didot;
+
   # Enable Zsh shell for the user
   programs.zsh = {
     enable = true;

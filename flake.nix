@@ -70,7 +70,8 @@
                         ./modules/pipewire.nix
                         ./modules/gnome.nix
                         ./modules/gaming.nix
-                        ./modules/nvidia.nix
+                        # ./modules/nvidia.nix
+  			./modules/resolve.nix
                         # Jesus Christ. There's gotta be a cleaner way to do this.
                         ./hosts/configuration.nix
                         ./hosts/saejima

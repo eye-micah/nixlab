@@ -13,6 +13,8 @@
 
   hardware.uinput.enable = true;
 
+  powerManagement.cpuFreqGovernor = "performance";
+
   environment.systemPackages = with pkgs; [
     # monitoring
     mangohud
