@@ -5,6 +5,10 @@
         ./services
     ];
 
+    networking.hostId = "abcd1234";
+    networking.hostName = "kaito";
+    networking.useDHCP = true;
+
     fileSystems."/" = {
         device = "none";
         fsType = "tmpfs";

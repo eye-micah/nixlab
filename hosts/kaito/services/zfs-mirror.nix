@@ -3,8 +3,8 @@
 
     boot.kernelParams = [ "zfs.zfs_arc_max=536870912" ];
 
-    fileSystems."/backup" = {
-        device = "zpool/backup";
+    fileSystems."/mirror" = {
+        device = "zpool/mirror";
         fsType = "zfs";
     };
 

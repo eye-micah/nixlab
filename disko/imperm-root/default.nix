@@ -20,6 +20,7 @@
                             format = "vfat";
                             mountpoint = "/boot";
                             mountOptions = [ "umask=0077" ];
+                            extraArgs = [ "-nNIXESP" ];
                         };
                     };
                     nix = {
@@ -28,7 +29,8 @@
                             type = "filesystem";
                             format = "ext4";
                             mountpoint = "/nix";
-                            options = [ "-LNIX" ];
+                            mountOptions = [ "noatime" ];
+                            extraArgs = [ "-nNIX" ];
                         };
                     };
                 };
