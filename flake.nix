@@ -57,6 +57,7 @@
                         ./modules/zfs.nix
                         ./hosts/configuration.nix
                         #agenix.nixosModules.default
+                        ./modules/zfs-fs-config.nix
                         ./hosts/generic
                     ];
                 };
@@ -68,6 +69,7 @@
                         ./modules/zfs.nix
                         ./hosts/configuration.nix
                         #agenix.nixosModules.default
+                        ./modules/zfs-fs-config.nix
                         ./hosts/saeko
                     ];
                 };
@@ -84,6 +86,7 @@
                         ./modules/nvidia.nix
                         # Jesus Christ. There's gotta be a cleaner way to do this.
                         ./hosts/configuration.nix
+                        ./modules/zfs-fs-config.nix
                         ./hosts/saejima
                         home-manager.nixosModules.home-manager
                         {
@@ -103,7 +106,19 @@
                         inputs.disko.nixosModules.disko
                         (import ./disko/root { device = "IDK"; })
                         ./hosts/configuration.nix
+                        ./modules/zfs-fs-config.nix
                         ./hosts/nanba
+                    ];
+                };
+
+                kaito = nixpkgs.lib.nixosSystem { # Redundant backup NAS, configured for power savings.
+                    system = "x86_64-linux";
+                    modules = [
+                        inputs.disko.nixosModules.disko
+                        inputs.impermanence.nixosModules.impermanence
+                        ./disko/imperm-root 
+                        ./hosts/configuration.nix
+                        ./hosts/kaito
                     ];
                 };
             };
