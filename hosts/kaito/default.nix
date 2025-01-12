@@ -11,7 +11,7 @@
         options = [ "defaults" "size=2G" "mode=755" ];
     };
 
-    fileSystems."/" = {
+    fileSystems."/boot" = {
         device = lib.mkForce "/dev/disk/by-label/NIXESP";
         fsType = "vfat";
     };
