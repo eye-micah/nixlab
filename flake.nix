@@ -53,7 +53,7 @@
                     system = "x86_64-linux";
                     modules = [
                         inputs.disko.nixosModules.disko
-                        (import ./disko/zfs-root { device = "insert device here"; })
+                        import ./disko/zfs-root
                         ./modules/zfs.nix
                         ./hosts/configuration.nix
                         #agenix.nixosModules.default
@@ -64,7 +64,7 @@
                     system = "x86_64-linux";
                     modules = [
                         inputs.disko.nixosModules.disko
-                        (import ./disko/zfs-root { device = "insert device here"; })
+                        import ./disko/zfs-root
                         ./modules/zfs.nix
                         ./hosts/configuration.nix
                         #agenix.nixosModules.default
@@ -76,7 +76,7 @@
                     system = "x86_64-linux";
                     modules = [
                         inputs.disko.nixosModules.disko
-                        (import ./disko/zfs-root { device = "insert device here"; })
+                        import ./disko/zfs-root 
                         ./modules/zfs.nix
                         ./modules/pipewire.nix
                         ./modules/gnome.nix
@@ -101,7 +101,7 @@
                     system = "x86_64-linux";
                     modules = [
                         inputs.disko.nixosModules.disko
-                        (import ./disko/zfs-root { device = "insert device here"; })
+                        import ./disko/zfs-root
                         ./hosts/configuration.nix
                         ./hosts/nanba
                     ];
