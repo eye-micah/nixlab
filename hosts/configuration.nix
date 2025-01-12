@@ -2,7 +2,7 @@
 
 {
 
-    boot.zfs.devNodes = "/dev/disk/by-path";
+    boot.zfs.devNodes = "/dev/disk/by-label";
 
     imports = [
         #./hardware-configuration.nix
@@ -13,16 +13,19 @@
     fileSystems."/" = {
         device = "zroot";
         fsType = "zfs";
+        neededForBoot = true;
     };
 
     fileSystems."/nix" = {
         device = "zroot/nix";
         fsType = "zfs";
+        neededForBoot = true;
     };
 
     fileSystems."/home" = {
         device = "zroot/home";
         fsType = "zfs";
+        neededForBoot = true;
     };
 
     fileSystems."/boot" = {
