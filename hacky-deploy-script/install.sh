@@ -58,13 +58,15 @@ ssh "$TARGET" bash -s <<EOF
     if [ -d "/tmp/nixlab" ]; then
         rm -rf /tmp/nixlab
     fi
-    mkdir -p /tmp/nixlab/lab
-    tar -xzf /tmp/nixlab.tar.gz -C /tmp/nixlab/lab
+    mkdir -p /tmp/nixlab
+    tar -xzf /tmp/nixlab.tar.gz -C /tmp/nixlab
     rm /tmp/nixlab.tar.gz
+    echo "Setting correct ownership for /tmp/nixlab..."
+    chown -R \$(whoami):\$(whoami) /tmp/nixlab
     echo "Running disko-install on $TARGET with flake: .#$FLAKE"
-    cd /tmp/nixlab/lab
+    cd /tmp/nixlab
     nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko disko/zfs-root/default.nix 
-    nixos-install --flake /tmp/nixlab/lab/#$FLAKE 
+    nixos-install --flake /tmp/nixlab/#$FLAKE 
 EOF
 
 # Confirm success
