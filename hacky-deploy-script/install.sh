@@ -65,8 +65,9 @@ ssh "$TARGET" bash -s <<EOF
     chown -R \$(whoami):\$(whoami) /tmp/nixlab
     echo "Running disko-install on $TARGET with flake: .#$FLAKE"
     cd /tmp/nixlab
-    nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko disko/zfs-root/default.nix 
+    nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko disko/root/default.nix --arg device '"$TARGET_DISK"'
     nixos-install --flake /tmp/nixlab/#$FLAKE 
+    zpool status -v
 EOF
 
 # Confirm success
