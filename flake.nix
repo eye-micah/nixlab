@@ -81,6 +81,7 @@
                             home-manager.useUserPackages = true;
                             home-manager.users.micah = import ./home-manager/clients/home.nix;
                         }
+                        ./home-manager/clients/linux.nix
                     ];
                 };
 
