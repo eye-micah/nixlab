@@ -80,14 +80,7 @@
                             home-manager.useGlobalPkgs = true;
                             home-manager.useUserPackages = true;
                             home-manager.users.micah = import ./home-manager/clients/home.nix;
-                            dconf = {
-                              enable = true;
-                              settings = {
-                                "org/gnome/shell" = {
-                                  disable-user-extensions = false;
-                                };
-                              };
-                            };
+
                         }
               
                     ];
