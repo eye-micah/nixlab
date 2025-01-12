@@ -1,6 +1,18 @@
 { config, pkgs, lib, ... }:
 {
 
+  boot.kernelModules = [ "xpad" "zfs" ];
+
+  services = {
+    udev = {
+      packages = with pkgs; [
+        game-devices-udev-rules
+      ];
+    };
+  };
+
+  hardware.uinput.enable = true;
+
   environment.systemPackages = with pkgs; [
     # monitoring
     mangohud
@@ -33,6 +45,6 @@
   };
 
   hardware.xone.enable = true;
-
+  hardware.steam-hardware.enable = true;
   services.flatpak.enable = true;
 }
