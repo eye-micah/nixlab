@@ -1,7 +1,7 @@
 {
   disko.devices = {
     disk.main = {
-      device = /dev/sda; # replace with what you need
+      #device = /dev/sda; # replace with what you need
       type = "disk";
       content = {
         type = "gpt";
