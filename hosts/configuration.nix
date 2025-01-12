@@ -50,6 +50,7 @@
     boot.loader = {
         grub = {
             efiSupport = true;
+            zfsSupport = true;
             device = "nodev";
         };
         efi = {

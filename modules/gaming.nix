@@ -1,6 +1,17 @@
 { config, pkgs, lib, ... }:
 {
 
+  # needed for udev rules for various controllers like my 8BitDo
+  services = {
+    udev = {
+      packages = with pkgs; [
+        game-devices-udev-rules
+      ];
+    };
+  };
+
+  hardware.uinput.enable = true;
+
   environment.systemPackages = with pkgs; [
     # monitoring
     mangohud
