@@ -63,7 +63,7 @@ ssh "$TARGET" bash -s <<EOF
     rm /tmp/nixlab.tar.gz
     echo "Running disko-install on $TARGET with flake: .#$FLAKE"
     cd /tmp/nixlab
-    nix --experimental-features "nix-command flakes" run github:nix-community/disko-install -- --write-efi-boot-entries --flake .#$FLAKE --disk main $TARGET_DISK
+    nix --experimental-features "nix-command flakes" run github:nix-community/disko/latest#disko-install -- --write-efi-boot-entries --flake .#$FLAKE --disk main $TARGET_DISK
 EOF
 
 # Confirm success
