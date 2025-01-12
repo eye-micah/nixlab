@@ -2,7 +2,7 @@
 
 {
 
-    boot.zfs.devNodes = "/dev/disk/by-partuuid";
+    boot.zfs.devNodes = "/dev/disk/by-path";
 
     imports = [
         #./hardware-configuration.nix
