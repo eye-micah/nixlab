@@ -59,12 +59,12 @@ ssh "$TARGET" bash -s <<EOF
         rm -rf /tmp/nixlab
     fi
     mkdir -p /tmp/nixlab
-    tar -xzf /tmp/nixlab.tar.gz -C /tmp/nixlab
+    tar -xzf /tmp/nixlab.tar.gz -C /tmp/nixlab/lab
     rm /tmp/nixlab.tar.gz
     echo "Running disko-install on $TARGET with flake: .#$FLAKE"
-    cd /tmp/nixlab
+    cd /tmp/nixlab/lab
     nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko disko/zfs-root/default.nix 
-    nixos-install --flake .#$FLAKE 
+    nixos-install --flake /tmp/nixlab/lab/#$FLAKE 
 EOF
 
 # Confirm success
