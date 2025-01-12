@@ -61,6 +61,20 @@
                     ];
                 };
 
+                saejima = nixpkgs.lib.nixosSystem {
+                    system = "x86_64-linux";
+                    modules = [
+                        inputs.disko.nixosModules.disko
+                        ./disko/zfs-root
+                        ./modules/zfs.nix
+                        ./modules/audio.nix
+                        ./modules/gaming.nix
+                        ./modules/nvidia.nix
+                        ./hosts/configuration.nix
+                        ./hosts/saejima
+                    ]
+                }
+
                 nanba = nixpkgs.lib.nixosSystem {
                     system = "x86_64-linux";
                     modules = [

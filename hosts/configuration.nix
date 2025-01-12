@@ -18,9 +18,9 @@
     services.zfs.autoScrub.enable = true;
 
     boot.loader = {
-        systemd-boot = {
-            enable = true;
-            configurationLimit = 5;
+        grub = {
+            efiSupport = true;
+            device = "nodev";
         };
         efi = {
             canTouchEfiVariables = true;
