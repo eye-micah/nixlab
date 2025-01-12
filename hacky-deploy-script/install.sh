@@ -58,7 +58,7 @@ ssh "$TARGET" bash -s <<EOF
     if [ -d "/tmp/nixlab" ]; then
         rm -rf /tmp/nixlab
     fi
-    mkdir -p /tmp/nixlab
+    mkdir -p /tmp/nixlab/lab
     tar -xzf /tmp/nixlab.tar.gz -C /tmp/nixlab/lab
     rm /tmp/nixlab.tar.gz
     echo "Running disko-install on $TARGET with flake: .#$FLAKE"
