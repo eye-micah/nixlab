@@ -5,13 +5,13 @@
   };
   services.xserver.videoDrivers = [ "nvidia" ];
   environment.systemPackages = with pkgs; [
-    cudaPackages_12_2.cudatoolkit
+    #cudaPackages_12_2.cudatoolkit
     gwe
   ];
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = true; # nixos says these two settings are experimental -- we'll see?
-    powerManagement.finegrained = true;
+    powerManagement.enable = false; # nixos says these two settings are experimental -- we'll see?
+    powerManagement.finegrained = false;
     open = false; 
     nvidiaSettings = true;
     package = config.boot.kernelPackages.nvidiaPackages.stable;

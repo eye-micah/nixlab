@@ -1,4 +1,6 @@
+{ config, pkgs, lib, ... }:
 {
+
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
@@ -27,14 +29,7 @@
 
   services.udev.packages = [ pkgs.gnome-settings-daemon ]; # Needed for appindicator icons
 
-  dconf = {
-    enable = true;
-    settings = {
-      "org/gnome/shell" = {
-        disable-user-extensions = false;
-      };
-    };
-  };
+
 
   nixpkgs.overlays = [
     # GNOME 46: triple-buffering-v4-46

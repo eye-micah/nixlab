@@ -7,6 +7,9 @@
 #        ./default.nix # Separating parts of configuration that are unique to this system.
         #./services
     ];
+    
+    nixpkgs.config.allowUnfree = true;
+    nixpkgs.config.allowUnsupportedSystem = true;
 
     system.stateVersion = "25.05";
 

@@ -26,7 +26,7 @@
 
     };
 
-    networking.hostName = "ryzen";
+    networking.hostName = "saeko";
     networking.hostId = "41b9e6d1";
 
     # Containerization and VMs enablement

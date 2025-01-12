@@ -65,15 +65,17 @@
                     system = "x86_64-linux";
                     modules = [
                         inputs.disko.nixosModules.disko
-                        ./disko/zfs-root
+                        (import ./disko/zfs-root { device = "insert device here"; })
                         ./modules/zfs.nix
-                        ./modules/audio.nix
+                        ./modules/pipewire.nix
+                        ./modules/gnome.nix
                         ./modules/gaming.nix
                         ./modules/nvidia.nix
+                        # Jesus Christ. There's gotta be a cleaner way to do this.
                         ./hosts/configuration.nix
                         ./hosts/saejima
-                    ]
-                }
+                    ];
+                };
 
                 nanba = nixpkgs.lib.nixosSystem {
                     system = "x86_64-linux";
@@ -84,6 +86,32 @@
                         ./hosts/configuration.nix
                         ./hosts/nanba
                     ];
+                };
+            };
+
+            homeConfigurations = {
+                micah = home-manager.lib.homeManagerConfiguration {
+                    pkgs = import nixpkgs { system = "x86_64-linux"; };
+                    modules = [
+                        ./home-manager/clients/linux.nix
+                        ./home-manager/clients/home.nix
+                    ];
+                };
+            };
+
+            darwinConfigurations = {
+                haruka = nix-darwin.lib.darwinSystem {
+                        system = "aarch64-darwin";
+                            modules = [
+                                ./home-manager/clients/darwin.nix
+                                home-manager.darwinModules.home-manager
+                                {
+                                    # nix-darwin with Home Manager integration
+                                    home-manager.useGlobalPkgs = true;
+                                    home-manager.useUserPackages = true;
+                                    home-manager.users.micah = import ./home-manager/clients/home.nix;
+                                }
+                        ];
                 };
             };
             

@@ -1,29 +1,40 @@
 { pkgs, inputs, lib, ... }:
 
 {
-  imports = [
-    ./services
-  ];
 
   fileSystems."/" = {
-    device = "zpool/root";
+    device = "zroot";
     fsType = "zfs";
   };
 
   fileSystems."/nix" = {
-    device = "zpool/nix";
+    device = "zroot/nix";
     fsType = "zfs";
   };
 
   fileSystems."/home" = {
-    device = "zpool/home";
+    device = "zroot/home";
     fsType = "zfs";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-label/NIXESP";
+    device = lib.mkForce "/dev/disk/by-label/NIXESP";
     fsType = "vfat";
   };
 
   swapDevices = [];
+
+  networking = {
+    useDHCP = false; # NM handles this for us.
+    networkmanager = {
+      enable = true;
+      dns = "none"; # NixOS handles this.
+    };
+    hostId = "41b9e6d4";
+    hostName = "saejima";
+    nameservers = [
+      "192.168.1.244"
+      "192.168.1.206"
+    ];
+  };
 }

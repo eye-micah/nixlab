@@ -5,7 +5,7 @@
   disko.devices = {
     disk.main = {
       inherit device;
-      type = disk;
+      type = "disk";
       content = {
         type = "gpt";
         partitions = {
@@ -17,43 +17,44 @@
               type = "filesystem";
               format = "vfat";
               mountpoint = "/boot";
+              mountOptions = [ "umask=0077" ];
+              extraArgs = [ "-nNIXESP" ] ;
             };
           };
-        };
-        zfs = {
-          size = "100%";
-          content = {
-            type = "zfs";
-            pool = "zroot";
+          zfs = {
+            size = "100%";
+            content = {
+              type = "zfs";
+              pool = "zroot";
+            };
           };
+      };
+    };
+  };
+  zpool = {
+    zroot = {
+      type = "zpool";
+      mode = "mirror";
+      options.cachefile = "none";
+      rootFsOptions = {
+        compression = "zstd";
+        "com.sun:auto-snapshot" = "false";
+      };
+      mountpoint = "/";
+      postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^zroot@blank$' || zfs snapshot zroot@blank";
+      datasets = {
+        nix = {
+          type = "zfs_fs";
+          mountpoint = "/nix";
+          options."com.sun:auto-snapshot" = "false";
+        };
+        home = {
+          type = "zfs_fs";
+          mountpoint = "/home";
+          options."com.sun:auto-snapshot" = "true";
         };
       };
     };
-    zpool = {
-      zroot = {
-        type = "zpool";
-        mode = "mirror";
-        options.cachefile = "none";
-        rootFsOptions = {
-          compression = "zstd";
-          "com.sun:auto-snapshot" = "false";
-        };
-        mountpoint = "/";
-        postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^zroot@blank$' || zfs snapshot zroot@blank";
-
-        datasets = {
-          nix = {
-            type = "zfs_fs";
-            mountpoint = "/nix";
-            options."com.sun:auto-snapshot" = "false";
-          };
-          home = {
-            type = "zfs_fs";
-            mountpoint = "/home";
-            options."com.sun:auto-snapshot" = "true";
-          };
-        };
-      };
-    };
+  };
   };
 }
