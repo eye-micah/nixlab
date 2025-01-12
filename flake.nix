@@ -54,7 +54,6 @@
                     modules = [
                         inputs.disko.nixosModules.disko
                         (import ./disko/root { device = "IDK"; })
-                        ./disko/root/simple-ext4.nix
                         ./modules/zfs.nix
                         ./hosts/configuration.nix
                         #agenix.nixosModules.default
