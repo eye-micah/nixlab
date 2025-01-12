@@ -74,7 +74,7 @@
                         # Jesus Christ. There's gotta be a cleaner way to do this.
                         ./hosts/configuration.nix
                         ./hosts/saejima
-                        home-manager.darwinModules.home-manager
+                        home-manager.nixosModules.home-manager
                         {
                             # NixOS with Home Manager integration
                             home-manager.useGlobalPkgs = true;
