@@ -34,7 +34,6 @@
   zpool = {
     zroot = {
       type = "zpool";
-      mode = "mirror";
       options.cachefile = "none";
       rootFsOptions = {
         compression = "zstd";
