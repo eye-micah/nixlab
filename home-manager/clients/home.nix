@@ -72,13 +72,6 @@
       # Custom PATH setup (adjust as needed)
       export PATH=/opt/homebrew/bin/:$HOME/.local/bin:/opt/local/bin:$HOME/Library/Python/3.9/bin:/usr/sbin:/sbin:$PATH
 
-      # Autoload functions
-      autoload -Uz bracketed-paste-magic
-      zle -N bracketed-paste bracketed-paste-magic
-
-      autoload -Uz url-quote-magic
-      zle -N self-insert url-quote-magic
-
       # Extended glob setting
       setopt extended_glob
     '';
