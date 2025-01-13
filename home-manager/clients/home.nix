@@ -86,7 +86,7 @@
       '']; 
     };
 
-    enableGlobalCompinit = false;
+    enableCompletion = false;
 
   };
 
