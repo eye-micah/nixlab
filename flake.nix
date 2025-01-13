@@ -43,7 +43,7 @@
     ];
 
     # Automatically import all host configuration files from ./hosts/
-    hostConfigs = builtins.map (host: import ./hosts/${host}.nix) (builtins.attrNames (builtins.readDir ./hosts));
+    hostConfigs = builtins.map (host: import ./hosts/${host}) (builtins.attrNames (builtins.readDir ./hosts));
   in {
     nixosConfigurations = {
       generic = nixpkgs.lib.nixosSystem {
@@ -78,10 +78,10 @@
         modules = persistentModules ++ hostConfigs;
       };
 
-      kaito = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = impermanentModules ++ hostConfigs;
-      };
+      #kaito = nixpkgs.lib.nixosSystem {
+      #  system = "x86_64-linux";
+      #  modules = impermanentModules ++ hostConfigs;
+      #};
     };
 
     homeConfigurations = {

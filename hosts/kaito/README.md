@@ -1,1 +1,0 @@
-This expects you to set up a mirrored vdev with pool name "zpool", dataset named "mirror" under "/mirror". I would rather not have this be scripted out of fear of data loss. Boot into a live ISO or something and set this up before installation.
