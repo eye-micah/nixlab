@@ -116,7 +116,7 @@
                     modules = [
                         inputs.disko.nixosModules.disko
                         inputs.impermanence.nixosModules.impermanence
-                        ./disko/imperm-root 
+                        (import ./disko/imperm-root { device = "IDK"; })
                         ./hosts/configuration.nix
                         ./hosts/kaito
                     ];
