@@ -64,8 +64,6 @@
     # Additional environment variables
     initExtra = ''
 
-      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
       export WINEFSYNC=1
       export WINEESYNC=1
       export HOMEBREW_NO_ANALYTICS=1
