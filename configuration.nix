@@ -4,6 +4,8 @@
 
     boot.zfs.devNodes = "/dev/disk/by-id";
 
+    boot.zfs.forceImportRoot = "true";
+
     imports = [
         #./hardware-configuration.nix
 #        ./default.nix # Separating parts of configuration that are unique to this system.
