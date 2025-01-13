@@ -58,13 +58,13 @@
     # Set the desired options and configurations
     shellAliases = {
       rm = "rm -i";
-      switch = "darwin-rebuild switch --flake ~/git/nix-infra/home-manager/clients";
+      switch = "darwin-rebuild switch --flake '~/git/nixlab/#haruka'";
     };
 
     # Additional environment variables
     initExtra = ''
 
-      [ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
       export WINEFSYNC=1
       export WINEESYNC=1
