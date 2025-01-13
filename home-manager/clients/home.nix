@@ -63,7 +63,6 @@
 
     # Additional environment variables
     initExtra = ''
-
       export WINEFSYNC=1
       export WINEESYNC=1
       export HOMEBREW_NO_ANALYTICS=1
@@ -87,16 +86,6 @@
     };
 
   };
-
-    dconf = {
-      enable = true;
-      settings = {
-        "org/gnome/shell" = {
-          disable-user-extensions = false;
-        };
-      };
-    };
-
 
 
 
