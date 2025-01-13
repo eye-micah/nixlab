@@ -2,6 +2,8 @@
 
 {
 
+  homeManagerEnabled = lib.mkDefault false;
+
   # Set boot-related options
   boot.zfs.devNodes = "/dev/disk/by-id";
 

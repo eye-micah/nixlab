@@ -15,4 +15,7 @@
       "192.168.1.206"
     ];
   };
+
+  homeManagerEnabled = true;
+
 }

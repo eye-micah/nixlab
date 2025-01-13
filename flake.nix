@@ -22,93 +22,84 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, impermanence, ... } @inputs: let
-    modules = import ./modules/default.nix { inherit (nixpkgs) lib; };
+  outputs = { 
+    self, 
+    nixpkgs, 
+    nix-darwin, 
+    home-manager, 
+    impermanence, 
+    ... 
+  } @inputs: let
+    sharedConfig = import ./modules/shared.nix { inherit (nixpkgs) lib; };
+    lib = nixpkgs.lib;
+    generateHostConfig = name: let
+        hostConfig = import ./hosts/${name}/default.nix;
 
-    # Define persistentModules
-    persistentModules = [
-      inputs.disko.nixosModules.disko
-      (import ./disko/root { device = "IDK"; })
-      ./modules/zfs.nix
-      ./modules/zfs-fs-config.nix
-      ./configuration.nix  # Shared configuration for all hosts
-    ];
-
-    # Define impermanentModules
-    impermanentModules = [
-      inputs.disko.nixosModules.disko
-      inputs.impermanence.nixosModules.impermanence
-      (import ./disko/imperm-root { device = "IDK"; })
-      ./configuration.nix
-    ];
-  in {
-    nixosConfigurations = {
-      generic = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = persistentModules ++ [
-          ./hosts/generic
+        # Define persistentModules (the future is to have impersistModules)
+        persistentConfig = [
+            inputs.disko.nixosModules.disko
+            (import ./disko/root { device = "IDK"; })
+            ./modules/zfs.nix
+            ./modules/fsLayout.nix
+            ./configuration.nix  # Shared configuration for all hosts
         ];
-      };
 
-      saeko = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = persistentModules ++ [
-          ./hosts/saeko
-        ];
-      };
+        # Host-specific modules
+        hostModules = if hostConfig.homeManagerEnabled then
+            persistentConfig ++ [
+                home-manager.nixosModules.home-manager
+                {
+                    home-manager.useGlobalPkgs = true;
+                    home-manager.useUserPackages = true;
+                    home-manager.users.micah = import ./home-manager/clients/home.nix;
+                }
+            ]
+        else
+            persistentConfig;
 
-      saejima = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = persistentModules ++ [
-          ./hosts/saejima
-        ] ++ [
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.micah = import ./home-manager/clients/home.nix;
-          }
-        ];
-      };
+    in {
+        nixosConfigurations.${name} = nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [
+                sharedConfig
+                hostConfig
+                hostModules
+            ];
+        };
 
-      nanba = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = persistentModules ++ [
-          ./hosts/nanba
-        ];
-      };
+        homeConfigurations = {
+            micah = home-manager.lib.homeManagerConfiguration {
+                pkgs = import nixpkgs { system = "x86_64-linux"; };
+                modules = [
+                    ./home-manager/clients/linux.nix
+                    ./home-manager/clients/home.nix
+                ];
+            };
+        };
 
-      #kaito = nixpkgs.lib.nixosSystem {
-      #  system = "x86_64-linux";
-      #  modules = impermanentModules ++ [
-      #    ./hosts/kaito
-      #  ];
-      #};
+        darwinConfigurations = {
+            haruka = nix-darwin.lib.darwinSystem {
+                system = "aarch64-darwin";
+                modules = [
+                    ./home-manager/clients/darwin.nix
+                    home-manager.darwinModules.home-manager
+                    {
+                        home-manager.useGlobalPkgs = true;
+                        home-manager.useUserPackages = true;
+                        home-manager.users.micah = import ./home-manager/clients/home.nix;
+                    }
+                ];
+            };
+        };
+
+
     };
 
-    homeConfigurations = {
-      micah = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs { system = "x86_64-linux"; };
-        modules = [
-          ./home-manager/clients/linux.nix
-          ./home-manager/clients/home.nix
-        ];
-      };
-    };
+    hostNames = builtins.attrNames (builtins.readDir ./hosts);
+    mergedHostConfigs = lib.mergeAttrs (map (name: generateHostConfig name) hostNames);
 
-    darwinConfigurations = {
-      haruka = nix-darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          ./home-manager/clients/darwin.nix
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.micah = import ./home-manager/clients/home.nix;
-          }
-        ];
-      };
-    };
-  };
+  in
+    mergedHostConfigs;
+
+
 }
