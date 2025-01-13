@@ -41,3 +41,5 @@ echo "Deploying NixOS configuration..."
 ssh "$HOST" "cd /mnt/lab && chown -R root:root /mnt/lab && sudo nixos-install --flake .#$FLAKE"
 
 echo "Disk partitioning and NixOS installation complete!"
+
+echo "Be sure to export the pool before rebooting."
