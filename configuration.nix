@@ -2,7 +2,7 @@
 
 {
 
-    boot.zfs.devNodes = "/dev/disk/by-id";
+    boot.zfs.devNodes = "/dev/disk/by-path";
 
     imports = [
         #./hardware-configuration.nix

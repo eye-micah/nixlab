@@ -9,7 +9,7 @@ umount -R /mnt/boot || true
 umount -R /mnt/home || true
 umount -R /mnt/nix || true
 
-zpool export zroot
+zpool export zroot || true
 
 
 echo "Wiping $DEVICE using sgdisk..."
