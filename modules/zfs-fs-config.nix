@@ -26,4 +26,6 @@
 
     swapDevices = [];
 
+    systemd.services.zfs-mount.enable = false; # I hope this fixes this shit bro
+
 }

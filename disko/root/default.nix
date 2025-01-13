@@ -2,6 +2,9 @@
   device ? throw "Set this to your disk device, e.g. /dev/sda",
   ...
 }: 
+
+# Using legacy mountpoints because ZFS is weird by default and decides it wants to opaquely handle its own mounts?
+
 {
   disko.devices = {
     disk.main = {
@@ -17,7 +20,7 @@
             content = {
               type = "filesystem";
               format = "vfat";
-              mountpoint = "/boot";
+              mountpoint = "legacy"; # Set to legacy for manual mounting
               mountOptions = [ "umask=0077" ];
               extraArgs = [ "-nNIXESP" ] ;
             };
@@ -44,17 +47,17 @@
       datasets = {
         root = {
           type = "zfs_fs";
-          mountpoint = "/";
+          mountpoint = "legacy"; # Legacy mountpoint
           options."com.sun:auto-snapshot" = "false";
         };
         nix = {
           type = "zfs_fs";
-          mountpoint = "/nix";
+          mountpoint = "legacy"; # Legacy mountpoint
           options."com.sun:auto-snapshot" = "false";
         };
         home = {
           type = "zfs_fs";
-          mountpoint = "/home";
+          mountpoint = "legacy"; # Legacy mountpoint
           options."com.sun:auto-snapshot" = "true";
         };
       };
@@ -62,3 +65,4 @@
   };
   };
 }
+

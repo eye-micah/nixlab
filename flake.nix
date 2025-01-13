@@ -1,8 +1,6 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "nixpkgs";
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
     auto-aspm = {
@@ -27,8 +25,6 @@
 
     # Define persistentModules
     persistentModules = [
-      inputs.disko.nixosModules.disko
-      (import ./disko/root { device = "IDK"; })
       ./modules/zfs.nix
       ./modules/zfs-fs-config.nix
       ./configuration.nix  # Shared configuration for all hosts
@@ -36,24 +32,24 @@
 
     # Define impermanentModules
     impermanentModules = [
-      inputs.disko.nixosModules.disko
       inputs.impermanence.nixosModules.impermanence
-      (import ./disko/imperm-root { device = "IDK"; })
       ./configuration.nix
     ];
 
-    # Automatically import all host configuration files from ./hosts/
-    hostConfigs = builtins.map (host: import ./hosts/${host}) (builtins.attrNames (builtins.readDir ./hosts));
   in {
     nixosConfigurations = {
       generic = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = persistentModules ++ hostConfigs;
+        modules = persistentModules ++ [
+            ./hosts/generic
+        ];
       };
 
       saeko = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = persistentModules ++ hostConfigs;
+        modules = persistentModules ++ [
+            ./hosts/saeko
+        ];
       };
 
       saejima = nixpkgs.lib.nixosSystem {
@@ -63,7 +59,8 @@
           ./modules/gnome.nix
           ./modules/gaming.nix
           ./modules/nvidia.nix
-        ] ++ hostConfigs ++ [
+          ./hosts/saejima
+        ] ++ [
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -75,7 +72,9 @@
 
       nanba = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = persistentModules ++ hostConfigs;
+        modules = persistentModules ++ [
+            ./hosts/nanba
+        ];
       };
 
       #kaito = nixpkgs.lib.nixosSystem {
