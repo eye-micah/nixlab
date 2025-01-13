@@ -1,43 +1,113 @@
 {
-  description = "Darwin and Home Manager configuration";
-
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    darwin.url = "github:lnl7/nix-darwin";
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    agenix.url = "github:ryantm/agenix";
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+    auto-aspm = {
+      url = "github:notthebee/AutoASPM";
+      flake = false;
+    };
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, darwin, agenix, ... }: {
-    # Home Manager configuration for Linux
-    homeConfigurations = {
-      micah = home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs { system = "x86_64-linux"; };
-        modules = [
-          ./linux.nix
-          ./home.nix
+  outputs = { self, nixpkgs, nix-darwin, home-manager, impermanence, ... } @inputs: let
+    modules = import ./modules/default.nix { inherit (nixpkgs) lib; };
+    persistentModules = [
+      inputs.disko.nixosModules.disko
+      (import ./disko/root { device = "IDK"; })
+      ./modules/zfs.nix
+      ./modules/zfs-fs-config.nix
+    ];
+    impermanentModules = [
+      inputs.disko.nixosModules.disko
+      inputs.impermanence.nixosModules.impermanence
+      (import ./disko/imperm-root { device = "IDK"; })
+    ];
+  in {
+    nixosConfigurations = {
+      generic = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = persistentModules ++ [
+          ./hosts/configuration.nix
+          ./hosts/generic
+        ];
+      };
+
+      saeko = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = persistentModules ++ [
+          ./hosts/configuration.nix
+          ./hosts/saeko
+        ];
+      };
+
+      saejima = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = persistentModules ++ [
+          ./modules/pipewire.nix
+          ./modules/gnome.nix
+          ./modules/gaming.nix
+          ./modules/nvidia.nix
+          ./hosts/configuration.nix
+          ./hosts/saejima
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.micah = import ./home-manager/clients/home.nix;
+          }
+        ];
+      };
+
+      nanba = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = persistentModules ++ [
+          ./hosts/configuration.nix
+          ./hosts/nanba
+        ];
+      };
+
+      kaito = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = impermanentModules ++ [
+          ./hosts/configuration.nix
+          ./hosts/kaito
         ];
       };
     };
 
-    # nix-darwin configuration for macOS
+    homeConfigurations = {
+      micah = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs { system = "x86_64-linux"; };
+        modules = [
+          ./home-manager/clients/linux.nix
+          ./home-manager/clients/home.nix
+        ];
+      };
+    };
+
     darwinConfigurations = {
-      haruka = darwin.lib.darwinSystem {
+      haruka = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          ./darwin.nix
-          agenix.nixosModules.default
-          {
-            environment.systemPackages = [ agenix.packages.aarch64-darwin.default ];
-          }
+          ./home-manager/clients/darwin.nix
           home-manager.darwinModules.home-manager
           {
-            # nix-darwin with Home Manager integration
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.micah = import ./home.nix;
+            home-manager.users.micah = import ./home-manager/clients/home.nix;
           }
         ];
       };
