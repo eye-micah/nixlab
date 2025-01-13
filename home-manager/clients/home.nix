@@ -79,7 +79,6 @@
     antidote = {
       enable = true;
       plugins = [''
-        romkatv/powerlevel10k
         zsh-users/zsh-autosuggestions
         zsh-users/zsh-history-substring-search
         zsh-users/zsh-syntax-highlighting
