@@ -2,84 +2,86 @@
 
 {
 
-    boot.zfs.devNodes = "/dev/disk/by-id";
+  # Set boot-related options
+  boot.zfs.devNodes = "/dev/disk/by-id";
 
-    imports = [
-        #./hardware-configuration.nix
-#        ./default.nix # Separating parts of configuration that are unique to this system.
-        #./services
+  imports = [
+    # Uncomment if needed for system-specific configurations
+    # ./hardware-configuration.nix
+    # ./default.nix
+    # ./services
+  ];
+
+  # Default nixpkgs settings
+  nixpkgs.config.allowUnfree = lib.mkDefault false;
+  nixpkgs.config.allowUnsupportedSystem = lib.mkDefault false;
+
+  # Set the default state version
+  system.stateVersion = lib.mkDefault "23.05";
+
+  # Disable initrd systemd by default (can be overwritten if needed)
+  boot.initrd.systemd.enable = lib.mkDefault false;
+
+  # Define the supported file systems
+  boot.supportedFilesystems = lib.mkDefault [ "zfs" "vfat" ];
+
+  # Set up ZFS-related services
+  services.zfs.trim.enable = lib.mkDefault true;
+  services.zfs.autoScrub.enable = lib.mkDefault true;
+
+  # Configure the boot loader
+  boot.loader = {
+    grub = {
+      efiSupport = lib.mkDefault true;
+      zfsSupport = lib.mkDefault true;
+      device = lib.mkDefault "nodev";
+    };
+    efi = {
+      canTouchEfiVariables = lib.mkDefault true;
+      efiSysMountPoint = lib.mkDefault "/boot";
+    };
+  };
+
+  # Enable Nix experimental features (flakes, nix-command)
+  nix.settings = {
+    experimental-features = lib.mkDefault [ "nix-command" "flakes" ];
+  };
+
+  # Enable SSH by default
+  services.openssh.enable = lib.mkDefault true;
+
+  # Configure garbage collection and optimization for Nix
+  nix.gc = {
+    automatic = lib.mkDefault true;
+    dates = lib.mkDefault "weekly";
+    options = lib.mkDefault "--delete-older-than 30d";
+  };
+
+  nix.optimise.automatic = lib.mkDefault true;
+
+  # Default system packages
+  environment.systemPackages = with pkgs; lib.mkDefault [
+    git
+    # podman-tui
+    # docker-compose
+    # zfs
+  ];
+
+  # User configuration for micah
+  users.users.micah = {
+    isSystemUser = lib.mkDefault true;
+    home = lib.mkDefault "/home/micah";
+    createHome = lib.mkDefault true;
+    hashedPassword = lib.mkDefault "$6$RnJeIDSyPLqDOHGu$u/oHbJyOeBu0uss9DY2VBYLD7BZmCNoc7456iP4LBEy8a5tjlu5GzDEX1FKte/7rFxolXXNkZS5UacQdz5Row0";
+    shell = pkgs.bash; # Default shell
+    group = lib.mkDefault "micah";
+    extraGroups = lib.mkDefault [ "wheel" "podman" "video" "input" ];
+    openssh.authorizedKeys.keys = lib.mkDefault [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFQy6Jw3QC3ADSbNdRZZSTZMOwB7o/+SQatG4Er2gtC micah@haruka.tail8d76a.ts.net"
     ];
+  };
 
-    
-    nixpkgs.config.allowUnfree = true;
-    nixpkgs.config.allowUnsupportedSystem = true;
-
-    system.stateVersion = "25.05";
-
-    boot.initrd.systemd.enable = false;
-
-    boot.supportedFilesystems = [ "zfs" "vfat" ];
-
-    services.zfs.trim.enable = true;
-    services.zfs.autoScrub.enable = true;
-
-    boot.loader = {
-        grub = {
-            efiSupport = true;
-            zfsSupport = true;
-            device = "nodev";
-        };
-        efi = {
-            canTouchEfiVariables = true;
-            efiSysMountPoint = "/boot";
-        };
-    };
-
-    nix.settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-    };
-
-    services.openssh.enable = true;
-
-    nix = {
-        gc = {
-            automatic = true;
-            dates = "weekly";
-            options = "--delete-older-than 30d";
-        };
-
-        optimise.automatic = true;
-    };
-
-
-
-    environment.systemPackages = with pkgs; [
-        # needed tools 
-        git 
-
-        # containerization packages
-        #podman-tui 
-        #docker-compose
-
-        # storage
-        #zfs
-    ];
-
-
-
-      users.users.micah = {
-        isSystemUser = true;
-        home = "/home/micah";
-        createHome = true;
-        hashedPassword = "$6$RnJeIDSyPLqDOHGu$u/oHbJyOeBu0uss9DY2VBYLD7BZmCNoc7456iP4LBEy8a5tjlu5GzDEX1FKte/7rFxolXXNkZS5UacQdz5Row0";  # This will use a hashed password in the system
-        shell = pkgs.bash;    # Set the shell to Zsh or another shell of your choice
-        group = "micah";
-        extraGroups = [ "wheel" "podman" "video" "input" ];
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFQy6Jw3QC3ADSbNdRZZSTZMOwB7o/+SQatG4Er2gtC micah@haruka.tail8d76a.ts.net"
-        ];
-      };
-
-      users.groups.micah = {};
+  # Define user group configuration for micah
+  users.groups.micah = {};
 
 }

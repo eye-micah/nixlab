@@ -3,7 +3,7 @@
 {
 
   networking = {
-    useDHCP = false; # NM handles this for us.
+    useDHCP = lib.mkForce false; # NM handles this for us.
     networkmanager = {
       enable = true;
       dns = "none"; # NixOS handles this.

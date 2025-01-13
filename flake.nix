@@ -41,29 +41,27 @@
       (import ./disko/imperm-root { device = "IDK"; })
       ./configuration.nix
     ];
-
-    # Automatically import all host configuration files from ./hosts/
-    hostConfigs = builtins.map (host: import ./hosts/${host}) (builtins.attrNames (builtins.readDir ./hosts));
   in {
     nixosConfigurations = {
       generic = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = persistentModules ++ hostConfigs;
+        modules = persistentModules ++ [
+          ./hosts/generic
+        ];
       };
 
       saeko = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = persistentModules ++ hostConfigs;
+        modules = persistentModules ++ [
+          ./hosts/saeko
+        ];
       };
 
       saejima = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = persistentModules ++ [
-          ./modules/pipewire.nix
-          ./modules/gnome.nix
-          ./modules/gaming.nix
-          ./modules/nvidia.nix
-        ] ++ hostConfigs ++ [
+          ./hosts/saejima
+        ] ++ [
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -75,12 +73,16 @@
 
       nanba = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = persistentModules ++ hostConfigs;
+        modules = persistentModules ++ [
+          ./hosts/nanba
+        ];
       };
 
       #kaito = nixpkgs.lib.nixosSystem {
       #  system = "x86_64-linux";
-      #  modules = impermanentModules ++ hostConfigs;
+      #  modules = impermanentModules ++ [
+      #    ./hosts/kaito
+      #  ];
       #};
     };
 
@@ -110,4 +112,3 @@
     };
   };
 }
-
