@@ -30,7 +30,7 @@
                             format = "ext4";
                             mountpoint = "/nix";
                             mountOptions = [ "noatime" ];
-                            extraArgs = [ "-nNIX" ];
+                            extraArgs = [ "-LNIX" ];
                         };
                     };
                 };
