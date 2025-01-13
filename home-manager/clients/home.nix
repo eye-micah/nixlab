@@ -58,7 +58,7 @@
     # Set the desired options and configurations
     shellAliases = {
       rm = "rm -i";
-      switch = "pushd ~/git/nixlab && darwin-rebuild switch --flake '#haruka' && popd";
+      switch = "darwin-rebuild switch --flake '#haruka'";
     };
 
     # Additional environment variables
