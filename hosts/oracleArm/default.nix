@@ -1,16 +1,18 @@
-{ ... }: 
+{ lib, ... }: 
 {
   imports = [
     ./services
-    ./hardware-configuration.nix
+	./generated/configuration.nix
+    ./generated/hardware-configuration.nix
   ];
 
-	boot.tmp.cleanOnBoot = true;
-	zramSwap.enable = true;
-	networking.hostName = "instance-20250115-1216";
-	networking.domain = "";
-	services.openssh.enable = true;
-	users.users.root.openssh.authorizedKeys.keys = [''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFQy6Jw3QC3ADSbNdRZZSTZMOwB7o/+SQatG4Er2gtC micah@haruka.tail8d76a.ts.net'' ];
+	boot.tmp.cleanOnBoot = lib.mkDefault true;
+	zramSwap.enable = lib.mkDefault true;
+	networking.hostName = lib.mkDefault "oracleArmInstance";
+	networking.domain = lib.mkDefault "";
+	services.openssh.enable = lib.mkDefault true;
+	users.users.root.openssh.authorizedKeys.keys = lib.mkDefault [''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFQy6Jw3QC3ADSbNdRZZSTZMOwB7o/+SQatG4Er2gtC micah@haruka.tail8d76a.ts.net'' ];
 	system.stateVersion = "23.11";
-
+	networking.hostId = lib.mkDefault "7f4a3c1d";
+	boot.loader.grub.configurationLimit = lib.mkDefault 1;
 }
