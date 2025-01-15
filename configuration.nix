@@ -2,9 +2,9 @@
 
 {
 
-    boot.zfs.devNodes = "/dev/disk/by-id";
+    #boot.zfs.devNodes = "/dev/disk/by-id";
 
-    boot.zfs.forceImportRoot = true;
+    #boot.zfs.forceImportRoot = true;
 
     imports = [
         #./hardware-configuration.nix
@@ -16,7 +16,7 @@
     nixpkgs.config.allowUnfree = true;
     nixpkgs.config.allowUnsupportedSystem = true;
 
-    system.stateVersion = "25.05";
+    system.stateVersion = lib.mkDefault "25.05";
 
     boot.initrd.systemd.enable = false;
 
@@ -32,7 +32,7 @@
             device = "nodev";
         };
         efi = {
-            canTouchEfiVariables = true;
+            canTouchEfiVariables = lib.mkDefault true;
             efiSysMountPoint = "/boot";
         };
     };

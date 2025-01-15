@@ -30,4 +30,25 @@
         name = "micah";
         home = "/Users/micah";
     };
+
+    homebrew = {
+      enable = true;
+      casks = [
+        "firefox"
+        "iterm2"
+        "bitwarden"
+        "alfred"
+        "google-chrome"
+        "tailscale"
+        "parsec"
+        "rectangle"
+        "alt-tab"
+        "obs"
+        "shutter-encoder"
+        "iina"
+        "qbittorrent"
+        "localsend"
+        "copyclip"
+      ];
+    };
 }
