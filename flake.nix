@@ -37,6 +37,7 @@
       ./modules/zfs-fs-config.nix
       ./configuration.nix  # Shared configuration for all hosts
       agenix.nixosModules.default
+
     ];
 
     desktopModules = [
@@ -44,6 +45,8 @@
       ./modules/firefox.nix
       ./modules/gnome.nix
       ./modules/flatpak.nix
+      nixvim.homeManagerModules.nixvim
+      ./modules/nixvim.nix
     ];
 
     # Define impermanentModules
@@ -106,7 +109,6 @@
       micah = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs { system = "x86_64-linux"; };
         modules = [
-          nixvim.homeManagerModules.nixvim
           ./home-manager/clients/linux.nix
           ./home-manager/clients/home.nix
         ];
@@ -117,8 +119,9 @@
       haruka = nix-darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
-          ./home-manager/clients/darwin.nix
-          nixvim.homeManagerModules.nixvim
+          ./modules/darwin.nix
+          ./modules/nixvim.nix
+          nixvim.nixDarwinModules.nixvim
           home-manager.darwinModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
