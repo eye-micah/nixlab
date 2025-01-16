@@ -37,4 +37,7 @@
       "192.168.1.206"
     ];
   };
+
+
+  environment.systemPackages = with pkgs; [ zed-editor ];
 }
