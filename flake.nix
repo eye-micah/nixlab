@@ -44,7 +44,6 @@
       ./modules/firefox.nix
       ./modules/gnome.nix
       ./modules/flatpak.nix
-      nixvim.homeManagerModules.nixvim
     ];
 
     # Define impermanentModules
@@ -107,6 +106,7 @@
       micah = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs { system = "x86_64-linux"; };
         modules = [
+          nixvim.homeManagerModules.nixvim
           ./home-manager/clients/linux.nix
           ./home-manager/clients/home.nix
         ];
