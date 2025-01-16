@@ -52,6 +52,15 @@
   home.file.".vimrc".source = ./dotfiles/vimrc;
   home.file.".p10k.zsh".source = ./dotfiles/p10k.zsh;
 
+  home.programs.nixvim = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+      luaLoader.enable = true;
+  };
+
+
   # Enable Zsh shell for the user
   programs.zsh = {
     enable = true;
@@ -92,14 +101,7 @@
 
     enableCompletion = false;
 
-    nixvim = {
-      enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
-      
-      luaLoader.enable = true;
-    };
+    
 
   };
 

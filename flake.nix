@@ -28,7 +28,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, agenix, ... } @inputs: let
+  outputs = { self, nixpkgs, nix-darwin, home-manager, agenix, nixvim, ... } @inputs: let
     modules = import ./modules/default.nix { inherit (nixpkgs) lib; };
 
     # Define persistentModules
@@ -106,6 +106,7 @@
       micah = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs { system = "x86_64-linux"; };
         modules = [
+          nixvim.homeManagerModules.nixvim
           ./home-manager/clients/linux.nix
           ./home-manager/clients/home.nix
         ];
@@ -117,9 +118,8 @@
         system = "aarch64-darwin";
         modules = [
           ./home-manager/clients/darwin.nix
-          home-manager.darwinModules.nixvim
-          home-manager.darwinModules.home-manager
-          {
+          nixvim.homeManagerModules.nixvim
+          home-manager.darwinModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.micah = import ./home-manager/clients/home.nix;
