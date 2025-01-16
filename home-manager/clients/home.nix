@@ -1,8 +1,12 @@
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
-  home.stateVersion = "24.11";
 
+  #imports = [
+    #inputs.nixvim.homeManagerModules.nixvim
+    # ];
+
+  home.stateVersion = "24.11";
   home.packages = [
     pkgs.tmux
     # pkgs.vim
@@ -52,15 +56,6 @@
   home.file.".vimrc".source = ./dotfiles/vimrc;
   home.file.".p10k.zsh".source = ./dotfiles/p10k.zsh;
 
-  programs.nixvim = {
-      enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
-      luaLoader.enable = true;
-  };
-
-
   # Enable Zsh shell for the user
   programs.zsh = {
     enable = true;
@@ -98,13 +93,7 @@
         rupa/z
       ''];
     };
-
     enableCompletion = false;
-
-
-
   };
-
-
 
 }
