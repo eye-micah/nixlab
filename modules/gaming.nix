@@ -1,6 +1,19 @@
 { config, pkgs, lib, ... }:
 {
 
+  # needed for udev rules for various controllers like my 8BitDo
+  services = {
+    udev = {
+      packages = with pkgs; [
+        game-devices-udev-rules
+      ];
+    };
+  };
+
+  boot.kernelModules = [ "xpad" ]; # Needed for my 8BitDo controller.
+
+  hardware.uinput.enable = true;
+
   environment.systemPackages = with pkgs; [
     # monitoring
     mangohud
@@ -34,5 +47,14 @@
 
   hardware.xone.enable = true;
 
-  services.flatpak.enable = true;
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-wlr
+        xdg-desktop-portal-gtk
+      ];
+    };
+  };
+
 }

@@ -5,11 +5,12 @@
 
   home.packages = [
     pkgs.tmux
-    pkgs.vim
+    # pkgs.vim 
     pkgs.btop
     pkgs.zsh
     pkgs.nerd-fonts.meslo-lg
     pkgs.nerd-fonts.fira-code
+    pkgs.nixd
   ];
 
   # Platform-specific adjustments
@@ -58,7 +59,7 @@
     # Set the desired options and configurations
     shellAliases = {
       rm = "rm -i";
-      switch = "darwin-rebuild switch --flake ~/git/nix-infra/home-manager/clients";
+      switch = "darwin-rebuild switch --flake '#haruka'";
     };
 
     # Additional environment variables
@@ -74,13 +75,6 @@
       # Custom PATH setup (adjust as needed)
       export PATH=/opt/homebrew/bin/:$HOME/.local/bin:/opt/local/bin:$HOME/Library/Python/3.9/bin:/usr/sbin:/sbin:$PATH
 
-      # Autoload functions
-      autoload -Uz bracketed-paste-magic
-      zle -N bracketed-paste bracketed-paste-magic
-
-      autoload -Uz url-quote-magic
-      zle -N self-insert url-quote-magic
-
       # Extended glob setting
       setopt extended_glob
     '';
@@ -93,23 +87,22 @@
         zsh-users/zsh-history-substring-search
         zsh-users/zsh-syntax-highlighting
         rupa/z
-      '']; 
+      ''];
+    };
+
+    enableCompletion = false;
+
+    nixvim = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+      
+      luaLoader.enable = true;
     };
 
   };
 
-    dconf = {
-      enable = true;
-      settings = {
-        "org/gnome/shell" = {
-          disable-user-extensions = false;
-        };
-      };
-    };
-
-
 
 
 }
-
-

@@ -2,28 +2,6 @@
 
 {
 
-  fileSystems."/" = {
-    device = "zroot";
-    fsType = "zfs";
-  };
-
-  fileSystems."/nix" = {
-    device = "zroot/nix";
-    fsType = "zfs";
-  };
-
-  fileSystems."/home" = {
-    device = "zroot/home";
-    fsType = "zfs";
-  };
-
-  fileSystems."/boot" = {
-    device = lib.mkForce "/dev/disk/by-label/NIXESP";
-    fsType = "vfat";
-  };
-
-  swapDevices = [];
-
   networking = {
     useDHCP = false; # NM handles this for us.
     networkmanager = {
