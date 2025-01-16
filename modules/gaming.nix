@@ -10,6 +10,8 @@
     };
   };
 
+  boot.kernelModules = [ "xpad" ]; # Needed for my 8BitDo controller.
+
   hardware.uinput.enable = true;
 
   environment.systemPackages = with pkgs; [
@@ -45,5 +47,14 @@
 
   hardware.xone.enable = true;
 
-  services.flatpak.enable = true;
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-wlr
+        xdg-desktop-portal-gtk
+      ];
+    };
+  };
+
 }

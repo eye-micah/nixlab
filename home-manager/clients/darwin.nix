@@ -49,6 +49,7 @@
         "qbittorrent"
         "localsend"
         "copyclip"
+        "zed"
       ];
     };
 }

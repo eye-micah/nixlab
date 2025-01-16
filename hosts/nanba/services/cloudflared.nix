@@ -1,7 +1,13 @@
 { config, pkgs, lib, ... }:
 
+age.secrets.cloudflare = {
+  file = ../../../secrets/cloudflare.age;
+  owner = "root";
+  group = "root";
+};
+
 let
-  cloudflaredToken = "eyJhIjoiNDNjNTg0MGYyYWNjM2Q1ZmNjNjU4NjQ3MGU3ZTRiZGMiLCJ0IjoiYzY5YzAzODQtY2VkMi00ZGU0LWI3ZDUtOGM1ZTA4YzI2MDk5IiwicyI6Ik1EVmtZVFF6T1RVdE5EVXpNUzAwTjJNMUxUbGhZalV0TWpoa05USXpZamsxTUdVMiJ9"; # Replace with your actual token
+  cloudflaredToken = config.age.secrets.cloudflare.file; # Replace with your actual token
 in
 {
   # Ensure the cloudflared package is available

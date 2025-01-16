@@ -18,9 +18,17 @@
     impermanence = {
       url = "github:nix-community/impermanence";
     };
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, impermanence, ... } @inputs: let
+  outputs = { self, nixpkgs, nix-darwin, home-manager, agenix, ... } @inputs: let
     modules = import ./modules/default.nix { inherit (nixpkgs) lib; };
 
     # Define persistentModules
@@ -28,6 +36,14 @@
       ./modules/zfs.nix
       ./modules/zfs-fs-config.nix
       ./configuration.nix  # Shared configuration for all hosts
+      agenix.nixosModules.default
+    ];
+
+    desktopModules = [
+      ./modules/pipewire.nix
+      ./modules/firefox.nix
+      ./modules/gnome.nix
+      ./modules/flatpak.nix
     ];
 
     # Define impermanentModules
@@ -54,9 +70,7 @@
 
       saejima = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = persistentModules ++ [
-          ./modules/pipewire.nix
-          ./modules/gnome.nix
+        modules = persistentModules ++ desktopModules ++ [
           ./modules/gaming.nix
           ./modules/nvidia.nix
           ./hosts/saejima
@@ -78,8 +92,8 @@
       };
 
       oracleArm = nixpkgs.lib.nixosSystem {
-	system = "aarch64-linux";
-	modules = [ ./configuration.nix ./hosts/oracleArm ];		
+        system = "aarch64-linux";
+        modules = [ ./configuration.nix ./hosts/oracleArm ];
       };
 
       #kaito = nixpkgs.lib.nixosSystem {
@@ -103,6 +117,7 @@
         system = "aarch64-darwin";
         modules = [
           ./home-manager/clients/darwin.nix
+          home-manager.darwinModules.nixvim
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -114,4 +129,3 @@
     };
   };
 }
-

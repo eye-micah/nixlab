@@ -5,11 +5,12 @@
 
   home.packages = [
     pkgs.tmux
-    pkgs.vim
+    # pkgs.vim 
     pkgs.btop
     pkgs.zsh
     pkgs.nerd-fonts.meslo-lg
     pkgs.nerd-fonts.fira-code
+    pkgs.nixd
   ];
 
   # Platform-specific adjustments
@@ -86,15 +87,22 @@
         zsh-users/zsh-history-substring-search
         zsh-users/zsh-syntax-highlighting
         rupa/z
-      '']; 
+      ''];
     };
 
     enableCompletion = false;
+
+    nixvim = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+      
+      luaLoader.enable = true;
+    };
 
   };
 
 
 
 }
-
-
