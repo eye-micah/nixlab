@@ -17,9 +17,8 @@
     impermanence = {
       url = "github:nix-community/impermanence";
     };
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+    agenix = {
+      url = "github:ryantm/agenix";
     };
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -35,7 +34,7 @@
               nixpkgs, 
               nix-darwin, 
               home-manager, 
-              sops-nix, 
+              agenix, 
               disko, 
               nixvim, 
               ... } @inputs: let
@@ -46,8 +45,8 @@
       ./modules/zfs.nix
       ./modules/zfs-fs-config.nix
       ./modules/qemu.nix
-      sops-nix.nixosModules.sops
-      ./modules/sops.nix
+      agenix.nixosModules.default
+      ./modules/agenix.nix
       ./configuration.nix  # Shared configuration for all hosts
       disko.nixosModules.default
       ./disko/root
