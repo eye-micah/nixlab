@@ -19,19 +19,19 @@
     #boot.initrd.supportedFilesystems = [ "zfs" "vfat" ];
     #boot.zfs.extraPools = [ "zroot" ];
 
-    services.zfs.trim.enable = true;
-    services.zfs.autoScrub.enable = true;
+    #services.zfs.trim.enable = true;
+    #services.zfs.autoScrub.enable = true;
 
     boot.loader = {
         grub = {
-            efiSupport = true;
-            zfsSupport = true;
+            efiSupport = lib.mkDefault true;
+            zfsSupport = lib.mkDefault false;
             device = "nodev";
             efiInstallAsRemovable = lib.mkDefault true;
         };
         efi = {
 #            canTouchEfiVariables = lib.mkDefault true;
-            efiSysMountPoint = "/boot";
+            efiSysMountPoint = lib.mkDefault "/boot";
         };
     };
 

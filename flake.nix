@@ -30,23 +30,22 @@
     };
   };
 
-  outputs = { self, 
-              nixpkgs, 
-              nix-darwin, 
-              home-manager, 
-              agenix, 
-              disko, 
-              nixvim, 
+  outputs = { self,
+              nixpkgs,
+              nix-darwin,
+              home-manager,
+              agenix,
+              disko,
+              nixvim,
               ... } @inputs: let
     modules = import ./modules/default.nix { inherit (nixpkgs) lib; };
 
     # Define persistentModules
     persistentModules = [
-      ./modules/zfs.nix
-      ./modules/zfs-fs-config.nix
+      #./modules/zfs.nix
+      #./modules/zfs-fs-config.nix
       ./modules/qemu.nix
       agenix.nixosModules.default
-      ./modules/agenix.nix
       ./configuration.nix  # Shared configuration for all hosts
       disko.nixosModules.default
       ./disko/root

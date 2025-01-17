@@ -3,4 +3,5 @@ let
 in
 {
   "tailscaleNanba.age".publicKeys = [ haruka ];
+  "tailscaleSaeko.age".publicKeys = [ haruka ];
 }
