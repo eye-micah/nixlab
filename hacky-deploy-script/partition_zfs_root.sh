@@ -7,7 +7,6 @@ umount -R /mnt || true
 umount -R /mnt/nix || true
 umount -R /mnt/boot || true
 umount -R /mnt/home || true
-umount -R /mnt/nix || true
 
 zpool export zroot || true
 
@@ -45,17 +44,18 @@ ZFS_PART="${DEVICE}-part2"
 zpool create -f \
     -O compression=zstd \
     -O com.sun:auto-snapshot=false \
-    -O mountpoint=legacy \
+    -O mountpoint=none \
     -o cachefile=none \
     zroot "$ZFS_PART"
 
 echo "Creating ZFS datasets..."
+zfs create -o com.sun:auto-snapshot=false -o mountpoint=legacy zroot/root
 zfs create -o com.sun:auto-snapshot=false -o mountpoint=legacy zroot/nix
 zfs create -o com.sun:auto-snapshot=true  -o mountpoint=legacy zroot/home
 zfs create -o com.sun:auto-snapshot=false -o mountpoint=legacy zroot/lab
 
 echo "Mounting filesystems..."
-mount -t zfs zroot /mnt
+mount -t zfs zroot/root /mnt
 mkdir -p /mnt/{boot,nix,home,lab}
 mount -t zfs zroot/nix /mnt/nix
 mount -t zfs zroot/home /mnt/home
