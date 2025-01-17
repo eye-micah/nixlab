@@ -26,9 +26,13 @@
       url = "github:nix-community/nixvim";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, agenix, nixvim, ... } @inputs: let
+  outputs = { self, nixpkgs, nix-darwin, home-manager, agenix, disko, nixvim, ... } @inputs: let
     modules = import ./modules/default.nix { inherit (nixpkgs) lib; };
 
     # Define persistentModules
@@ -37,7 +41,8 @@
       ./modules/zfs-fs-config.nix
       ./configuration.nix  # Shared configuration for all hosts
       agenix.nixosModules.default
-
+      disko.nixosModules.default
+      ./disko/root
     ];
 
     desktopModules = [

@@ -1,7 +1,7 @@
-{
-  device ? throw "Set this to your disk device, e.g. /dev/sda",
-  ...
-}:
+#{
+#  device ? throw "Set this to your disk device, e.g. /dev/sda",
+#  ...
+#}:
 
 # Using legacy mountpoints because ZFS is weird by default and decides it wants to opaquely handle its own mounts?
 
@@ -9,7 +9,7 @@
   disko.devices = {
     disk.main = {
       type = "disk";
-      inherit device;
+      device = "/dev/sda";
       content = {
         type = "gpt";
         partitions = {
