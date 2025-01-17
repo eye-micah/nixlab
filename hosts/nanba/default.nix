@@ -43,18 +43,5 @@
       };
     };
 
-    boot.loader.grub.device = lib.mkForce "/dev/sda";
-    boot.loader.grub.efiSupport = false;
-    boot.loader.grub.efiInstallAsRemovable = false;
-    boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" "vmw_pvscsi" ];
-    boot.initrd.kernelModules = [ "nvme" ];
-    fileSystems."/" = { device = lib.mkForce "/dev/sda1"; fsType = lib.mkForce "ext4"; };
-    swapDevices = [ { device = lib.mkForce "/dev/sda5"; } ];
-
-    boot.tmp.cleanOnBoot = true;
-    zramSwap.enable = false;
-    networking.domain = "";
-    services.openssh.enable = true;
-    users.users.root.openssh.authorizedKeys.keys = [''ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFQy6Jw3QC3ADSbNdRZZSTZMOwB7o/+SQatG4Er2gtC micah@haruka.tail8d76a.ts.net'' ];
 
 }

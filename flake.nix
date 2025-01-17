@@ -42,8 +42,8 @@
 
     # Define persistentModules
     persistentModules = [
-      #./modules/zfs.nix
-      #./modules/zfs-fs-config.nix
+      ./modules/zfs.nix
+      ./modules/zfs-fs-config.nix
       ./modules/qemu.nix
       agenix.nixosModules.default
       ./configuration.nix  # Shared configuration for all hosts

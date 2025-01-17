@@ -19,8 +19,8 @@
     #boot.initrd.supportedFilesystems = [ "zfs" "vfat" ];
     #boot.zfs.extraPools = [ "zroot" ];
 
-    #services.zfs.trim.enable = true;
-    #services.zfs.autoScrub.enable = true;
+    services.zfs.trim.enable = true;
+    services.zfs.autoScrub.enable = true;
 
     boot.loader = {
         grub = {
@@ -40,6 +40,7 @@
     };
 
     services.openssh.enable = true;
+    networking.firewall.allowedTCPPorts = [ 22 ];
 
     nix = {
         gc = {
