@@ -2,12 +2,6 @@
 
 {
 
-  age.secrets.tailscale = {
-    file = ../../../secrets/tailscale.age;
-    owner = "root";
-    group = "root";
-  };
-
   #tailscaleAuthKey = config.age.secrets.tailscale.path;
   services.tailscale.enable = true;
   environment.systemPackages = [ pkgs.tailscale ];
@@ -36,7 +30,7 @@
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up -authkey $( cat ${config.age.secrets.tailscale.path} ) --ssh --advertise-exit-node --accept-dns=true --advertise-routes=192.168.0.0/24,192.168.1.0/24
+      ${tailscale}/bin/tailscale up -authkey $(cat ${config.sops.secrets.tailscaleAuthKey.path}) --ssh --advertise-exit-node --accept-dns=true --advertise-routes=192.168.0.0/24,192.168.1.0/24
     '';
   };
 

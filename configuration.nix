@@ -1,4 +1,4 @@
-{ pkgs, inputs, lib, ... }:
+{ pkgs, inputs, config, lib, ... }:
 
 {
 
@@ -6,15 +6,8 @@
         #./hardware-configuration.nix
 #        ./default.nix # Separating parts of configuration that are unique to this system.
         #./services
-        #inputs.sops-nix.nixosModules.sops
     ];
 
-    sops.defaultSopsFile = ./secrets/secrets.json;
-    sops.defaultSopsFormat = "json";
-    sops.age.keyFile = "./secrets/age/keys.txt";
-
-    sops.secrets.tailscaleAuthKey = { };
-   
     nixpkgs.config.allowUnfree = true;
     nixpkgs.config.allowUnsupportedSystem = true;
 

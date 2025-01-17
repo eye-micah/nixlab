@@ -47,6 +47,7 @@
       ./modules/zfs-fs-config.nix
       ./modules/qemu.nix
       sops-nix.nixosModules.sops
+      ./modules/sops.nix
       ./configuration.nix  # Shared configuration for all hosts
       disko.nixosModules.default
       ./disko/root
