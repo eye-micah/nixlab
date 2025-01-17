@@ -34,9 +34,10 @@
             efiSupport = true;
             zfsSupport = true;
             device = "nodev";
+            efiInstallAsRemovable = lib.mkDefault true;
         };
         efi = {
-            canTouchEfiVariables = lib.mkDefault true;
+#            canTouchEfiVariables = lib.mkDefault true;
             efiSysMountPoint = "/boot";
         };
     };
