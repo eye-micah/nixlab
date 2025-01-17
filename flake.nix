@@ -39,6 +39,7 @@
     persistentModules = [
       ./modules/zfs.nix
       ./modules/zfs-fs-config.nix
+      ./modules/qemu.nix
       ./configuration.nix  # Shared configuration for all hosts
       agenix.nixosModules.default
       disko.nixosModules.default
@@ -65,14 +66,6 @@
       generic = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = persistentModules ++ [
-            ./hosts/generic
-        ];
-      };
-
-      genericVM = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = persistentModules ++ [
-            ./modules/qemu.nix
             ./hosts/generic
         ];
       };
