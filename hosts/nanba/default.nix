@@ -44,6 +44,7 @@
     };
 
     boot.loader.grub.device = lib.mkForce "/dev/sda";
+    boot.loader.grub.efiSupport = false;
     boot.initrd.availableKernelModules = [ "ata_piix" "uhci_hcd" "xen_blkfront" "vmw_pvscsi" ];
     boot.initrd.kernelModules = [ "nvme" ];
     fileSystems."/" = { device = lib.mkForce "/dev/sda1"; fsType = lib.mkForce "ext4"; };
