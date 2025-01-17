@@ -69,6 +69,14 @@
         ];
       };
 
+      genericVM = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = persistentModules ++ [
+            ./modules/qemu.nix
+            ./hosts/generic
+        ];
+      };
+
       saeko = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = persistentModules ++ [

@@ -2,11 +2,6 @@
 
 {
 
-    boot.zfs.devNodes = "/dev/disk/by-id";
-
-    boot.zfs.forceImportRoot = true;
-
-
     imports = [
         #./hardware-configuration.nix
 #        ./default.nix # Separating parts of configuration that are unique to this system.
@@ -21,10 +16,9 @@
 
     boot.initrd.systemd.enable = false;
 
-    boot.supportedFilesystems = [ "zfs" "vfat" ];
-    boot.initrd.supportedFilesystems = [ "zfs" "vfat" ];
-    boot.zfs.extraPools = [ "zroot" ];
-
+    #boot.supportedFilesystems = [ "zfs" "vfat" ];
+    #boot.initrd.supportedFilesystems = [ "zfs" "vfat" ];
+    #boot.zfs.extraPools = [ "zroot" ];
 
     services.zfs.trim.enable = true;
     services.zfs.autoScrub.enable = true;

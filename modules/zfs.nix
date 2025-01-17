@@ -1,19 +1,19 @@
 { config, pkgs, lib, ... }:
 
 {
-    boot.initrd.supportedFilesystems = ["zfs"];
-    boot.supportedFilesystems = [ "zfs" ];
+    #boot.initrd.supportedFilesystems = ["zfs"];
+    #boot.supportedFilesystems = [ "zfs" ];
 
-    environment.systemPackages = with pkgs; [
+    #environment.systemPackages = with pkgs; [
         # needed tools 
-        git 
+    #    git 
 
         # containerization packages
         #podman-tui 
         #docker-compose
 
-        # storage
-        zfs
-    ];
+    #    # storage
+    #    zfs
+    #];
 
 }
