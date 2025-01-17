@@ -9,8 +9,7 @@
     };
     nix-darwin = {
       url = "github:LnL7/nix-darwin/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+      inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,8 +17,8 @@
     impermanence = {
       url = "github:nix-community/impermanence";
     };
-    agenix = {
-      url = "github:ryantm/agenix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
@@ -32,7 +31,14 @@
     };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, agenix, disko, nixvim, ... } @inputs: let
+  outputs = { self, 
+              nixpkgs, 
+              nix-darwin, 
+              home-manager, 
+              sops-nix, 
+              disko, 
+              nixvim, 
+              ... } @inputs: let
     modules = import ./modules/default.nix { inherit (nixpkgs) lib; };
 
     # Define persistentModules
@@ -40,8 +46,8 @@
       ./modules/zfs.nix
       ./modules/zfs-fs-config.nix
       ./modules/qemu.nix
+      sops-nix.nixosModules.sops
       ./configuration.nix  # Shared configuration for all hosts
-      agenix.nixosModules.default
       disko.nixosModules.default
       ./disko/root
     ];
