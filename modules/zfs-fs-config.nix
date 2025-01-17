@@ -2,7 +2,7 @@
 
 {
     fileSystems."/" = {
-        device = "zroot/root";
+        device = "zroot";
         fsType = "zfs";
         neededForBoot = true;
     };

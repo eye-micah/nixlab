@@ -1,13 +1,13 @@
 { pkgs, inputs, lib, ... }:
 
 {
-  
+
   imports = [
     ./services
   ];
 
   fileSystems."/" = {
-      device = "zroot/root";
+      device = "zroot";
       fsType = "zfs";
   };
 
