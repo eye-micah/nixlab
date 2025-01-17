@@ -20,7 +20,6 @@
             content = {
               type = "filesystem";
               format = "vfat";
-              mountpoint = "legacy"; # Set to legacy for manual mounting
               mountOptions = [ "umask=0077" ];
               extraArgs = [ "-nNIXESP" ] ;
             };
@@ -47,14 +46,10 @@
       datasets = {
         nix = {
           type = "zfs_fs";
-          mountpoint = "legacy"; # Legacy mountpoint
-          canMount = true;
           options."com.sun:auto-snapshot" = "false";
         };
         home = {
           type = "zfs_fs";
-          mountpoint = "legacy"; # Legacy mountpoint
-          canMount = true;
           options."com.sun:auto-snapshot" = "true";
         };
       };
