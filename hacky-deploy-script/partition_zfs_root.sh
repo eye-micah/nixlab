@@ -45,6 +45,7 @@ ZFS_PART="${DEVICE}-part2"
 zpool create -f \
     -O compression=zstd \
     -O com.sun:auto-snapshot=false \
+    -O mountpoint=legacy \
     -o cachefile=none \
     zroot "$ZFS_PART"
 
@@ -62,4 +63,5 @@ mount -t zfs zroot/lab /mnt/lab
 mount "$ESP_PART" /mnt/boot -o umask=0077
 
 echo "Disk and ZFS setup complete!"
-zpool export zroot || true
+#umount -R /mnt || true
+#zpool export zroot || true
