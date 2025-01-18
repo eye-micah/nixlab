@@ -8,7 +8,7 @@
     ./services
   ];
 
-  services.openssh.permitRootLogin = true;
+  services.openssh.permitRootLogin = "yes";
 
   networking.hostName = "nanba";
   networking.hostId = "41b9e6d2";
