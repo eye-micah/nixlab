@@ -36,7 +36,7 @@
               home-manager,
               agenix,
               disko,
-              nixvim,
+              t nixvim,
               ... } @inputs: let
     modules = import ./modules/default.nix { inherit (nixpkgs) lib; };
 
@@ -105,6 +105,7 @@
         ];
       };
 
+     
       oracleArm = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [ ./configuration.nix ./hosts/oracleArm ];
@@ -115,6 +116,7 @@
       #  modules = impermanentModules ++ hostConfigs;
       #};
     };
+
 
     homeConfigurations = {
       micah = home-manager.lib.homeManagerConfiguration {
