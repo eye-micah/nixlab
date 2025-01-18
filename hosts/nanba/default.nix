@@ -2,6 +2,8 @@
 
 {
 
+  age.secrets.tailscaleNanba.file = ../../secrets/tailscaleNanba.age;
+
   imports = [
     ./services
   ];
