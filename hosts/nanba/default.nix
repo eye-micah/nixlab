@@ -11,6 +11,8 @@
 
   networking.useDHCP = true;
 
+  environment.systemPackages = with pkgs; [ tailscale adguardhome ];
+
   # tailscale
   services.tailscale = {
     # Should already be enabled.
