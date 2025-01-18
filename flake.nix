@@ -136,6 +136,7 @@
       micah = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs { system = "x86_64-linux"; };
         modules = [
+
           ./home-manager/clients/linux.nix
           ./home-manager/clients/home.nix
         ];
