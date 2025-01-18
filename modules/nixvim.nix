@@ -8,6 +8,7 @@
       luaLoader.enable = true;
       plugins = {
         nix.enable = true;
+        presence-nvim.enable = true;
       };
   };
 }
