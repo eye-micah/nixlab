@@ -36,6 +36,7 @@
               home-manager,
               agenix,
               disko,
+              impermanence,
               nixvim,
               ... } @inputs: let
     modules = import ./modules/default.nix { inherit (nixpkgs) lib; };
@@ -62,8 +63,14 @@
 
     # Define impermanentModules
     impermanentModules = [
+      ./modules/zfs.nix
+      ./modules/zfs-fs-config.nix
+      ./modules/qemu.nix
+      agenix.nixosModules.default
+      disko.nixosModules.default
       inputs.impermanence.nixosModules.impermanence
       ./configuration.nix
+      ./disko/imperm-root
     ];
 
   in {
@@ -100,7 +107,7 @@
 
       nanba = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        modules = persistentModules ++ [
+        modules = impermanentModules ++ [
             ./hosts/nanba
         ];
       };

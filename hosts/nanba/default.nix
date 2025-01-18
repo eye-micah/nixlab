@@ -17,6 +17,26 @@
 
   environment.systemPackages = with pkgs; [ tailscale adguardhome ];
 
+  enviornment.persistence."/nix/persist" = {
+    enable = true;
+    hideMounts = false;
+    directories = [
+      "/var/log"
+      "/var/lib/nixos"
+      "/var/lib/systemd/coredump"
+      "/var/lib/tailscale"
+      "/var/lib/adguardhome"
+      "/etc/ssh"
+    ];
+    files = [ "/etc/machine-id" ];
+
+
+  fileSystems."/" = {
+    device = "none";
+    fsType = "tmpfs";
+    options = [ "defaults" "size=2G" "mode=755" ];
+  };
+
   # tailscale
   services.tailscale = {
     # Should already be enabled.

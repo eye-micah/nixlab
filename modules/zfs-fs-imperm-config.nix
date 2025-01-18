@@ -2,8 +2,8 @@
 
 {
     fileSystems."/" = {
-        device = lib.mkDefault "zroot/root";
-        fsType = lib.mkDefault "zfs";
+        device = "zroot/root";
+        fsType = "zfs";
         neededForBoot = true;
     };
 
