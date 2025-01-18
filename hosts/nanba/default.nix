@@ -19,8 +19,8 @@
   services.tailscale = {
     # Should already be enabled.
     enable = true;
-    extraUpFlags = [ "--ssh" "--advertise-exit-node" "--accept-dns=true" "--advertise-routes=192.168.0.0/24,192.168.1.0/24" "--auth-key=tskey-auth-k5LiWZXvMG11CNTRL-pXRjeANVE8DyQiSuzjsi7DAqwYf6GSjE" ];
-    #authKeyFile = "${config.age.secrets.tailscaleNanba.path}";
+    extraUpFlags = [ "--ssh" "--advertise-exit-node" "--accept-dns=true" "--advertise-routes=192.168.0.0/24,192.168.1.0/24" ];
+    authKeyFile = "tskey-auth-k5LiWZXvMG11CNTRL-pXRjeANVE8DyQiSuzjsi7DAqwYf6GSjE";
     authKeyParameters.preauthorized = true;
   };
 
