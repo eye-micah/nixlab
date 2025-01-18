@@ -36,7 +36,7 @@
               home-manager,
               agenix,
               disko,
-              t nixvim,
+              nixvim,
               ... } @inputs: let
     modules = import ./modules/default.nix { inherit (nixpkgs) lib; };
 
