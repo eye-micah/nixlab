@@ -31,7 +31,7 @@
     enable = true;
     settings = {
         http = {
-          address = "localhost:3003";
+          address = "localhost:3000";
         };
         dns = {
           upstream_dns = [
@@ -50,6 +50,6 @@
       };
     };
 
-    networking.firewall.allowedTCPPorts = [ 3003 53 80 443 ];
+    networking.firewall.allowedTCPPorts = [ 3000 53 80 443 ];
 
 }
