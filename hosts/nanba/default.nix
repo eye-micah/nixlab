@@ -76,6 +76,7 @@
         filters = map(url: { enabled = true; url = url; }) [
           "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt"  # The Big List of Hacked Malware Web Sites
           "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt"  # malicious url blocklist
+          "https://raw.githubusercontent.com/JackCuthbert/pihole-twitter/main/pihole-twitter.txt" # shitter
         ];
       };
     };
