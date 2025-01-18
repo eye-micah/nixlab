@@ -8,14 +8,14 @@
     };
 
     fileSystems."/nix" = {
-        device = "zroot/nix";
-        fsType = "zfs";
+        device = lib.mkForce "zroot/nix";
+        fsType = lib.mkForce "zfs";
         neededForBoot = true;
     };
 
     fileSystems."/home" = {
-        device = "zroot/home";
-        fsType = "zfs";
+        device = lib.mkForce "zroot/home";
+        fsType = lib.mkForce "zfs";
         neededForBoot = true;
     };
 

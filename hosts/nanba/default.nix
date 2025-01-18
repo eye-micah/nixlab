@@ -17,7 +17,7 @@
 
   environment.systemPackages = with pkgs; [ tailscale adguardhome ];
 
-  enviornment.persistence."/nix/persist" = {
+  environment.persistence."/nix/persist" = {
     enable = true;
     hideMounts = false;
     directories = [
@@ -26,10 +26,15 @@
       "/var/lib/systemd/coredump"
       "/var/lib/tailscale"
       "/var/lib/adguardhome"
-      "/etc/ssh"
     ];
-    files = [ "/etc/machine-id" ];
-
+    files = [ 
+      "/etc/machine-id" 
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+      "/etc/ssh/ssh_host_rsa_key"
+      "/etc/ssh/ssh_host_rsa_key.pub"
+    ];
+  };
 
   fileSystems."/" = {
     device = "none";
