@@ -71,6 +71,7 @@
       inputs.impermanence.nixosModules.impermanence
       ./configuration.nix
       ./disko/imperm-root
+      ./modules/imperm-age.nix
     ];
 
   in {
@@ -105,10 +106,17 @@
         ];
       };
 
-      nanba = nixpkgs.lib.nixosSystem {
+      nanba = nixpkgs.lib.nixosSystem { # HP T620 thin client -- AdGuard Home, Tailscale, Cloudflare Tunnel
         system = "x86_64-linux";
         modules = impermanentModules ++ [
             ./hosts/nanba
+        ];
+      };
+
+      kaito = nixpkgs.lib.nixosSystem { # 
+        system = "x86_64-linux";
+        modules = impermanentModules ++ [
+          ./hosts/kaito
         ];
       };
 

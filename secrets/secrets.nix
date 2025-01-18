@@ -5,4 +5,9 @@ in
 {
   "tailscaleNanba.age".publicKeys = [ haruka nanba ];
   "tailscaleSaeko.age".publicKeys = [ haruka ];
+  "rsyncKaitoKeyId.age".publicKeys = [ haruka ];
+  "rsyncKaitoAppKey.age".publicKeys = [ haruka ];
+  "resticEnv.age".publicKeys = [ haruka ];
+  "resticRepo.age".publicKeys = [ haruka ];
+  "resticPassword.age".publicKeys = [ haruka ];
 }
