@@ -1,11 +1,13 @@
-{ ... }: {
+{ config, ... }: {
 
     age.secrets = {
-        "resticEnv".file = ../secrets/resticEnv.age;
-        "resticRepo".file = ../secrets/resticRepo.age;
-        "resticPassword".file = ../secrets/resticPassword.age;
+        "resticEnv".file = ../../secrets/resticEnv.age;
+        "resticRepo".file = ../../secrets/resticRepo.age;
+        "resticPassword".file = ../../secrets/resticPassword.age;
     };
     
+    networking.hostId = "judgm3nt";
+
     services.restic.backups = {
         weekly = {
             initialize = true;

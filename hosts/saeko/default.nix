@@ -28,9 +28,9 @@
     };
 
     age.secrets = {
-        "resticEnv".file = ../secrets/resticEnv.age;
-        "resticRepo".file = ../secrets/resticRepo.age;
-        "resticPassword".file = ../secrets/resticPassword.age;
+        "resticEnv".file = ../../secrets/resticEnv.age;
+        "resticRepo".file = ../../secrets/resticRepo.age;
+        "resticPassword".file = ../../secrets/resticPassword.age;
     };
     
     services.restic.backups = {
@@ -50,16 +50,16 @@
                 RandomizedDelaySec = "5h";
             };
         };
-        kaito = {
-            initialize = true;
+#        kaito = {
+#            initialize = true;
 
-            paths = [
-                "/cvol"
-                "/mnt/storage-ssd/editing-finished"
-                "/mnt/storage-ssd/docs"
-            ];
-            repository = "ssh:backup@kaito:/mnt/mirror";
-        };
+#            paths = [
+#                "/cvol"
+#                "/mnt/storage-ssd/editing-finished"
+#                "/mnt/storage-ssd/docs"
+#            ];
+#            repository = "ssh:backup@kaito:/mnt/mirror";
+#        };
     };
 
 }

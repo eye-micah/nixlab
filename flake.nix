@@ -71,7 +71,6 @@
       inputs.impermanence.nixosModules.impermanence
       ./configuration.nix
       ./disko/imperm-root
-      ./modules/imperm-age.nix
     ];
 
   in {
