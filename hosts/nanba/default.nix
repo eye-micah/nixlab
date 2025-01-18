@@ -16,6 +16,7 @@
   # tailscale
   services.tailscale = {
     # Should already be enabled.
+    enable = true;
     extraUpFlags = [ "--ssh" "--advertise-exit-node" "--accept-dns=true" "--advertise-routes=192.168.0.0/24,192.168.1.0/24" ];
     authKeyFile = "${config.age.secrets.tailscaleNanba.path}";
     authKeyParameters.preauthorized = true;
