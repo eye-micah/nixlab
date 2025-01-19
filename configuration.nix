@@ -11,7 +11,7 @@
     nixpkgs.config.allowUnfree = true;
     nixpkgs.config.allowUnsupportedSystem = true;
 
-    system.stateVersion = lib.mkDefault "25.05";
+    system.stateVersion = lib.mkDefault "24.11";
 
     boot.initrd.systemd.enable = false;
 
