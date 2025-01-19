@@ -66,7 +66,6 @@
     # Set the desired options and configurations
     shellAliases = {
       rm = "rm -i";
-      switch = "darwin-rebuild switch --flake '#haruka'";
     };
 
     # Additional environment variables
@@ -96,7 +95,7 @@
 
         elif [[ -d /etc/nixos ]]; then
           # More robust detection for NixOS (checks for /etc/nixos directory)
-          nixos-rebuild switch --flake "$flake_dir"
+          sudo nixos-rebuild switch --flake "$flake_dir"
 
         else
           # For non-NixOS Linux (using home-manager)
