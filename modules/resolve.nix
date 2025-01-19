@@ -1,3 +1,3 @@
 { pkgs, ... }: {
-  environment.systemPackages = with pkgs; [ davinci-resolve shutter-encoder ];
+  environment.systemPackages = with pkgs; [ davinci-resolve ];
 }
