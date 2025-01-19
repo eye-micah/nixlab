@@ -1,6 +1,9 @@
 {
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable = {
+      url = "github:nixos/nixpkgs/nixos-unstable";
+    };
     deploy-rs.url = "github:serokell/deploy-rs";
     deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
     auto-aspm = {
@@ -8,11 +11,11 @@
       flake = false;
     };
     nix-darwin = {
-      url = "github:LnL7/nix-darwin/master";
+      url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     impermanence = {
@@ -23,12 +26,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
-      url = "github:nix-community/nixvim";
+      url = "github:nix-community/nixvim/nixos-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nix-darwin, home-manager, agenix, nixvim, ... } @inputs: let
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, agenix, nixvim, ... } @inputs: let
     modules = import ./modules/default.nix { inherit (nixpkgs) lib; };
 
     # Define persistentModules
@@ -43,10 +46,10 @@
     desktopModules = [
       ./modules/pipewire.nix
       ./modules/firefox.nix
-      ./modules/cinnamon.nix
+      #./modules/cinnamon.nix
       ./modules/printing.nix
       ./modules/plymouth.nix
-      #./modules/gnome.nix
+      ./modules/gnome.nix
       ./modules/flatpak.nix
       nixvim.nixosModules.nixvim
       ./modules/nixvim.nix

@@ -24,10 +24,14 @@
 	pkgs.brgenml1cupswrapper  # — Generic drivers for more Brother printers [1]
 	pkgs.cnijfilter2 # — Drivers for some Canon Pixma devices (Proprietary driver)
 
+
+        pkgs.cups
+        pkgs.cups-printers
   ];
 
   
-  systemd.services.cups-browsed.enable = true;
+  services.system-config-printer.enable = true;
+  programs.system-config-printer.enable = true;
 
   services.printing = {
     listenAddresses = [ "*:631" ];

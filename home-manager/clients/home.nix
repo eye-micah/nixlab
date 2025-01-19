@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, ... }:
+{ inputs, config, pkgs, pkgsUnstable, ... }:
 
 {
 
@@ -12,8 +12,7 @@
     # pkgs.vim
     pkgs.btop
     pkgs.zsh
-    pkgs.nerd-fonts.meslo-lg
-    pkgs.nerd-fonts.fira-code
+    pkgs.fira-code-nerdfont
     pkgs.nixd
   ];
 
