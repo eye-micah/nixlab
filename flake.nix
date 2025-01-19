@@ -101,7 +101,9 @@
           ./modules/gaming.nix
           ./modules/nvidia.nix
           ./modules/resolve.nix
+          ./modules/saekoMounts.nix
           ./hosts/saejima
+          ./modules/nixvim.nix 
         ] ++ [
           home-manager.nixosModules.home-manager
           {

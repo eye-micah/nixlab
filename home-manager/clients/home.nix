@@ -55,6 +55,10 @@
   home.file.".vimrc".source = ./dotfiles/vimrc;
   home.file.".p10k.zsh".source = ./dotfiles/p10k.zsh;
 
+
+  home.file.".local/share/fonts/avenir.ttf".source = ./dotfiles/fonts/avenir;
+  home.file.".local/share/fonts/didot.ttf".source = ./dotfiles/fonts/didot;
+
   # Enable Zsh shell for the user
   programs.zsh = {
     enable = true;
@@ -80,6 +84,26 @@
 
       # Extended glob setting
       setopt extended_glob
+
+      switch() {
+        # Autodetect the directory where the flake is stored (assuming it's the current directory)
+        local flake_dir="$HOME/git/nixlab"
+
+        # Check if we're on macOS, NixOS, or a non-NixOS Linux system
+        if [[ "$(uname)" == "Darwin" ]]; then
+          # For macOS (Darwin)
+          darwin-rebuild switch --flake "$flake_dir"
+
+        elif [[ -d /etc/nixos ]]; then
+          # More robust detection for NixOS (checks for /etc/nixos directory)
+          nixos-rebuild switch --flake "$flake_dir"
+
+        else
+          # For non-NixOS Linux (using home-manager)
+          home-manager switch --flake "$flake_dir"
+        fi
+      }
+      
     '';
 
     antidote = {

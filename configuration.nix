@@ -8,6 +8,8 @@
         #./services
     ];
 
+    time.timeZone = "America/New_York";
+
     nixpkgs.config.allowUnfree = true;
     nixpkgs.config.allowUnsupportedSystem = true;
 
