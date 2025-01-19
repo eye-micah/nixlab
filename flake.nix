@@ -124,17 +124,12 @@
           ./hosts/kaito
         ];
       };
-
      
       oracleArm = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [ ./configuration.nix ./hosts/oracleArm ];
       };
 
-      #kaito = nixpkgs.lib.nixosSystem {
-      #  system = "x86_64-linux";
-      #  modules = impermanentModules ++ hostConfigs;
-      #};
     };
 
 

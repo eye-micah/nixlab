@@ -16,8 +16,8 @@
   };
 
   fileSystems."/" = {
-      device = "zroot";
-      fsType = "zfs";
+      device = lib.mkForce "zroot";
+      fsType = lib.mkForce "zfs";
       neededForBoot = true;
   };
 
