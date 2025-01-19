@@ -15,6 +15,30 @@
     ];
   };
 
+  fileSystems."/" = {
+      device = lib.mkDefault "zroot";
+      fsType = lib.mkDefault "zfs";
+      neededForBoot = true;
+  };
+
+  fileSystems."/nix" = {
+      device = lib.mkForce "zroot/nix";
+      fsType = lib.mkForce "zfs";
+      neededForBoot = true;
+  };
+
+  fileSystems."/home" = {
+      device = lib.mkForce "zroot/home";
+      fsType = lib.mkForce "zfs";
+      neededForBoot = true;
+  };
+
+  fileSystems."/boot" = {
+      device = lib.mkForce "/dev/disk/by-label/NIXESP";
+      fsType = "vfat";
+  };
+
+
 
   networking.firewall.enable = false;
  
