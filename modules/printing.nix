@@ -10,14 +10,8 @@
     };
   };
 
-  services.printing = {
-    listenAddresses = [ "*:631" ];
-    allowFrom = [ "all" ];
-    browsing = true;
-    defaultShared = true;
-    openFirewall = true;
-    
-    drivers = [
+  environment.systemPackages = [
+
 
 	pkgs.gutenprint # — Drivers for many different printers from many different vendors.
 	pkgs.gutenprintBin # — Additional, binary-only drivers for some printers.
@@ -31,9 +25,15 @@
 	pkgs.brgenml1cupswrapper  # — Generic drivers for more Brother printers [1]
 	pkgs.cnijfilter2 # — Drivers for some Canon Pixma devices (Proprietary driver)
 
+  ];
 
-    ];
-
+  services.printing = {
+    listenAddresses = [ "*:631" ];
+    allowFrom = [ "all" ];
+    browsing = true;
+    defaultShared = true;
+    openFirewall = true;
+    
     browsedConf = ''
       BrowseDNSSDSubTypes _cups,_print
       BrowseLocalProtocols all

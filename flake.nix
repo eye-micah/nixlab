@@ -44,6 +44,8 @@
       ./modules/pipewire.nix
       ./modules/firefox.nix
       ./modules/cinnamon.nix
+      ./modules/printing.nix
+      ./modules/plymouth.nix
       #./modules/gnome.nix
       ./modules/flatpak.nix
       nixvim.nixosModules.nixvim
