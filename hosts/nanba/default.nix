@@ -20,6 +20,10 @@
 
   networking.useDHCP = true;
 
+  networking.firewall.enable = false;
+
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+
   environment.systemPackages = with pkgs; [ tailscale adguardhome ];
 
   environment.persistence."/nix/persist" = {
