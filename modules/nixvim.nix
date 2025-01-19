@@ -7,7 +7,7 @@
       vimAlias = true;
       plugins = {
         nix.enable = true;
-        presence-nvim.enable = true;
+        presence.nvim.enable = true;
       };
   };
 }
