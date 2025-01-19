@@ -106,20 +106,15 @@
 
         # Check if we're on macOS, NixOS, or a non-NixOS Linux system
         if [[ "$(uname)" == "Darwin" ]]; then
-          # For macOS (Darwin)
-          if command -v darwin-rebuild &>/dev/null; then
-            darwin-rebuild switch --flake "$flake_dir" $build_host_option --target-host "$target_host"
-          else
-            echo "darwin-rebuild command not found. Are you sure you're on macOS?"
-          fi
+            darwin-rebuild switch --flake "$flake_dir"/.#${ cat /etc/hostname } $build_host_option --target-host "$target_host"
 
         elif [[ -d /etc/nixos ]]; then
           # For NixOS (checks for /etc/nixos directory)
-          nixos-rebuild switch --flake "$flake_dir" $build_host_option --target-host "$target_host"
+          nixos-rebuild switch --flake "$flake_dir"/.#${ cat /etc/hostname } $build_host_option --target-host "$target_host"
 
         else
           # For non-NixOS Linux (using home-manager)
-          home-manager switch --flake "$flake_dir"
+          home-manager switch --flake "$flake_dir"/.#${ cat /etc/hostname }
         fi
       }      
     '';
