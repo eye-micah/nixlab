@@ -43,7 +43,8 @@
     desktopModules = [
       ./modules/pipewire.nix
       ./modules/firefox.nix
-      ./modules/gnome.nix
+      ./modules/cinnamon.nix
+      #./modules/gnome.nix
       ./modules/flatpak.nix
       nixvim.nixosModules.nixvim
       ./modules/nixvim.nix
