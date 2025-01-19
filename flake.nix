@@ -100,6 +100,7 @@
         modules = persistentModules ++ desktopModules ++ [
           ./modules/gaming.nix
           ./modules/nvidia.nix
+          ./modules/resolve.nix
           ./hosts/saejima
         ] ++ [
           home-manager.nixosModules.home-manager
