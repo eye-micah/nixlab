@@ -86,23 +86,42 @@
 
       switch() {
         # Autodetect the directory where the flake is stored (assuming it's the current directory)
-        local flake_dir="$HOME/git/nixlab"
+        local flake_dir="$(pwd)"
+        
+        # IP of the saejima build node
+        local build_host="192.168.1.235"
+        local target_host="localhost"  # Default target host (local machine)
+
+        # Check if the build node is reachable (ping the build host)
+        if ping -c 1 "$build_host" &>/dev/null; then
+          echo "Build host $build_host is up. Using it as a build host."
+          local build_host_option="--build-host micah@$build_host"
+        else
+          echo "Build host $build_host is not reachable. Proceeding with the local build."
+          local build_host_option=""
+        fi
+
+        # Detect the target host (if needed, you can modify this to dynamically select a remote target host)
+        # In this case, it's defaulting to local unless otherwise specified
 
         # Check if we're on macOS, NixOS, or a non-NixOS Linux system
         if [[ "$(uname)" == "Darwin" ]]; then
           # For macOS (Darwin)
-          darwin-rebuild switch --flake "$flake_dir"
+          if command -v darwin-rebuild &>/dev/null; then
+            darwin-rebuild switch --flake "$flake_dir" $build_host_option --target-host "$target_host"
+          else
+            echo "darwin-rebuild command not found. Are you sure you're on macOS?"
+          fi
 
         elif [[ -d /etc/nixos ]]; then
-          # More robust detection for NixOS (checks for /etc/nixos directory)
-          sudo nixos-rebuild switch --flake "$flake_dir"
+          # For NixOS (checks for /etc/nixos directory)
+          nixos-rebuild switch --flake "$flake_dir" $build_host_option --target-host "$target_host"
 
         else
           # For non-NixOS Linux (using home-manager)
           home-manager switch --flake "$flake_dir"
         fi
-      }
-      
+      }      
     '';
 
     antidote = {
