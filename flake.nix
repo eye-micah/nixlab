@@ -11,9 +11,8 @@
       flake = false;
     };
     nix-darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+      url = "github:LnL7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs"; };
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -23,24 +22,37 @@
     };
     agenix = {
       url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-24.11";
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    disko = {
+      url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, agenix, nixvim, ... } @inputs: let
+  outputs = { self,
+              nixpkgs, nixpkgs-unstable,
+              nix-darwin,
+              home-manager,
+              agenix,
+              disko,
+              impermanence,
+              nixvim,
+              ... } @inputs: let
     modules = import ./modules/default.nix { inherit (nixpkgs) lib; };
 
     # Define persistentModules
     persistentModules = [
       ./modules/zfs.nix
       ./modules/zfs-fs-config.nix
-      ./configuration.nix  # Shared configuration for all hosts
+      ./modules/qemu.nix
       agenix.nixosModules.default
-
+      ./configuration.nix  # Shared configuration for all hosts
+      disko.nixosModules.default
+      ./disko/root
     ];
 
     desktopModules = [
@@ -57,8 +69,14 @@
 
     # Define impermanentModules
     impermanentModules = [
+      ./modules/zfs.nix
+      ./modules/zfs-fs-config.nix
+      ./modules/qemu.nix
+      agenix.nixosModules.default
+      disko.nixosModules.default
       inputs.impermanence.nixosModules.impermanence
       ./configuration.nix
+      ./disko/imperm-root
     ];
 
   in {
@@ -93,13 +111,21 @@
         ];
       };
 
-      nanba = nixpkgs.lib.nixosSystem {
+      nanba = nixpkgs.lib.nixosSystem { # HP T620 thin client -- AdGuard Home, Tailscale, Cloudflare Tunnel
         system = "x86_64-linux";
-        modules = persistentModules ++ [
+        modules = impermanentModules ++ [
             ./hosts/nanba
         ];
       };
 
+      kaito = nixpkgs.lib.nixosSystem { # 
+        system = "x86_64-linux";
+        modules = impermanentModules ++ [
+          ./hosts/kaito
+        ];
+      };
+
+     
       oracleArm = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [ ./configuration.nix ./hosts/oracleArm ];
@@ -111,10 +137,12 @@
       #};
     };
 
+
     homeConfigurations = {
       micah = home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs { system = "x86_64-linux"; };
         modules = [
+
           ./home-manager/clients/linux.nix
           ./home-manager/clients/home.nix
         ];

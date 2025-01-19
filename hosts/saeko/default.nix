@@ -1,9 +1,14 @@
-{ pkgs, inputs, lib, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
     environment.systemPackages = with pkgs; [
         pkgs.zfs
     ];
+
+    fileSystems."/cvol" = {
+        device = "zroot/cvol";
+        fsType = "zfs";
+    };
 
     imports = [
         ./services
@@ -20,6 +25,41 @@
             dockerCompat = true;
             defaultNetwork.settings.dns_enabled = true;
         };
+    };
+
+    age.secrets = {
+        "resticEnv".file = ../../secrets/resticEnv.age;
+        "resticRepo".file = ../../secrets/resticRepo.age;
+        "resticPassword".file = ../../secrets/resticPassword.age;
+    };
+    
+    services.restic.backups = {
+        backblaze = {
+            initialize = true;
+            environmentFile = config.age.secrets."resticEnv".path;
+            repositoryFile = config.age.secrets."resticRepo".path;
+            passwordFile = config.age.secrets."resticPassword".path;
+
+            paths = [
+                "/cvol"
+                "/mnt/storage-ssd/editing-finished" ## Uses way too much disk space! Can't afford that!
+                "/mnt/storage-ssd/docs"
+            ];
+            timerConfig = {
+                OnCalendar = "05:00";
+                RandomizedDelaySec = "5h";
+            };
+        };
+#        kaito = {
+#            initialize = true;
+
+#            paths = [
+#                "/cvol"
+#                "/mnt/storage-ssd/editing-finished"
+#                "/mnt/storage-ssd/docs"
+#            ];
+#            repository = "ssh:backup@kaito:/mnt/mirror";
+#        };
     };
 
 }

@@ -1,24 +1,12 @@
-{ pkgs, inputs, lib, ... }:
+{ pkgs, inputs, config, lib, ... }:
 
 {
-
-    #boot.zfs.devNodes = "/dev/disk/by-id";
-
-    #boot.zfs.forceImportRoot = true;
 
     imports = [
         #./hardware-configuration.nix
 #        ./default.nix # Separating parts of configuration that are unique to this system.
         #./services
     ];
-
-    
-
-    nix.settings = {
-      substituters = ["https://hyprland.cachix.org"];
-      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
-    };
-
 
     nixpkgs.config.allowUnfree = true;
     nixpkgs.config.allowUnsupportedSystem = true;
@@ -27,20 +15,23 @@
 
     boot.initrd.systemd.enable = false;
 
-    boot.supportedFilesystems = [ "zfs" "vfat" ];
+    #boot.supportedFilesystems = [ "zfs" "vfat" ];
+    #boot.initrd.supportedFilesystems = [ "zfs" "vfat" ];
+    #boot.zfs.extraPools = [ "zroot" ];
 
     services.zfs.trim.enable = true;
     services.zfs.autoScrub.enable = true;
 
     boot.loader = {
         grub = {
-            efiSupport = true;
-            zfsSupport = true;
+            efiSupport = lib.mkDefault true;
+            zfsSupport = lib.mkDefault false;
             device = "nodev";
+            efiInstallAsRemovable = lib.mkDefault false;
         };
         efi = {
             canTouchEfiVariables = lib.mkDefault true;
-            efiSysMountPoint = "/boot";
+            efiSysMountPoint = lib.mkDefault "/boot";
         };
     };
 
@@ -49,6 +40,7 @@
     };
 
     services.openssh.enable = true;
+    networking.firewall.allowedTCPPorts = [ 22 ];
 
     nix = {
         gc = {
