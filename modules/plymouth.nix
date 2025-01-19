@@ -1,14 +1,9 @@
-{ ... }: {
+{ pkgs, ... }: {
 
   boot = {
     plymouth = {
       enable = true;
-      theme = "rings";
-      themePackages = with pkgs; [
-        (adi1090x-plymouth-themes.override {
-          selected_themes = [ "abstract_ring_alt" ];
-        })
-      ];
+      theme = "bgrt";
     };
 
     consoleLogLevel = 0;
@@ -23,4 +18,5 @@
       "udev.log_priority=3"
     ];
 
+  };
 }
