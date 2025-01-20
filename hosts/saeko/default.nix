@@ -5,10 +5,8 @@
         pkgs.zfs
     ];
 
-    fileSystems."/cvol" = {
-        device = "zroot/cvol";
-        fsType = "zfs";
-    };
+    hardware.opengl.enable = true;
+    hardware.opengl.driSupport = true;
 
     imports = [
         ./services
@@ -16,16 +14,6 @@
 
     networking.hostName = "saeko";
     networking.hostId = "41b9e6d1";
-
-    # Containerization and VMs enablement
-    virtualisation = {
-        containers.enable = true;
-        podman = {
-            enable = true;
-            dockerCompat = true;
-            defaultNetwork.settings.dns_enabled = true;
-        };
-    };
 
     age.secrets = {
         "resticEnv".file = ../../secrets/resticEnv.age;
@@ -41,7 +29,6 @@
             passwordFile = config.age.secrets."resticPassword".path;
 
             paths = [
-                "/cvol"
                 "/mnt/storage-ssd/editing-finished" ## Uses way too much disk space! Can't afford that!
                 "/mnt/storage-ssd/docs"
             ];
