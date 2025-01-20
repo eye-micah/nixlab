@@ -8,6 +8,11 @@
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
 
+    jovian-nixos = {
+      url = "github:Jovian-Experiments/Jovian-NixOS/development";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     deploy-rs = {
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,123 +46,45 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, agenix, disko, impermanence, nixvim, ... } @inputs:
-    let
-      baseModules = [
-        ./modules/zfs.nix
-        ./modules/zfs-fs-config.nix
-        ./modules/qemu.nix
-        agenix.nixosModules.default
-        disko.nixosModules.default
-        ./configuration.nix
-      ];
+  outputs = { ... }@inputs:
+      let
+          helpers = import ./flakeHelpers.nix inputs;
+          inherit (helpers) mkMerge mkNixos mkDarwin;
+      in
+      mkMerge [
 
-      persistentModules = baseModules ++ [
-        ./disko/root
-      ];
+          # Steam Deck
+          (mkNixos "shinada" inputs.nixpkgs-unstable [
+            ./hosts/shinada
+            inputs.jovian-nixos.nixosModules.default
+          ])
 
-      impermanentModules = baseModules ++ [
-        inputs.impermanence.nixosModules.impermanence
-        ./disko/imperm-root
-      ];
-
-      desktopModules = [
-        ./modules/pipewire.nix
-        ./modules/firefox.nix
-        ./modules/printing.nix
-        ./modules/plymouth.nix
-        ./modules/gnome.nix
-        ./modules/flatpak.nix
-        nixvim.nixosModules.nixvim
-        ./modules/nixvim.nix
-      ];
-
-    in {
-      nixosConfigurations = {
-        generic = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = persistentModules ++ [
-            ./hosts/generic
-          ];
-        };
-
-        saeko = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = persistentModules ++ [
-            ./hosts/saeko
-          ];
-        };
-
-        saejima = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = persistentModules ++ desktopModules ++ [
+          # Gaming PC
+          (mkNixos "saejima" inputs.nixpkgs [
+            ./hosts/saejima
             ./modules/gaming.nix
             ./modules/nvidia.nix
             ./modules/resolve.nix
             ./modules/saekoMounts.nix
-            ./hosts/saejima
-          ] ++ [
-            home-manager.nixosModules.home-manager {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.micah = import ./home-manager/clients/home.nix;
-            }
-          ];
-        };
+          ])
 
-        nanba = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = impermanentModules ++ [
+          # T620 Thin Client
+          (mkNixos "nanba" inputs.nixpkgs [
             ./hosts/nanba
-          ];
-        };
+            inputs.impermanence.nixosModules.impermanence
+          ])
 
-        kaito = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = impermanentModules ++ [
+          # Home server
+          (mkNixos "saeko" inputs.nixpkgs [
+            ./hosts/saeko
+          ])
+
+          # Backup NAS
+          (mkNixos "kaito" inputs.nixpkgs [
             ./hosts/kaito
-          ];
-        };
-
-        oracleArm = nixpkgs.lib.nixosSystem {
-          system = "aarch64-linux";
-          modules = [ ./configuration.nix ./hosts/oracleArm ];
-        };
-      };
-
-      homeConfigurations = {
-        micah = home-manager.lib.homeManagerConfiguration {
-          pkgs = import nixpkgs { system = "x86_64-linux"; };
-          modules = [
-            nixvim.homeManagerModules.nixvim
-            ./modules/nixvim.nix
-            ./home-manager/clients/linux.nix
-            ./home-manager/clients/home.nix
-          ];
-        };
-      };
-
-      darwinConfigurations = {
-        haruka = nix-darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          modules = [
-            ./modules/darwin.nix
-            ./modules/nixvim.nix
-            nixvim.nixDarwinModules.nixvim
-            home-manager.darwinModules.home-manager {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.micah = import ./home-manager/clients/home.nix;
-            }
-          ];
-        };
-      };
-    };
+            inputs.impermanence.nixosModules.impermanence
+          ])
+      ];
 }
-

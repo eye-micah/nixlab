@@ -1,12 +1,8 @@
 { config, pkgs, inputs, lib, ... }:
 
 {
-    environment.systemPackages = with pkgs; [
-        pkgs.zfs
-    ];
 
     hardware.opengl.enable = true;
-    hardware.opengl.driSupport = true;
 
     imports = [
         ./services

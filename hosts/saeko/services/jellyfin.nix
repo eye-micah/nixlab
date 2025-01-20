@@ -33,7 +33,7 @@ in {
         TZ = "Etc/UTC";
       };
       autoStart = true;
-      extraOptions = [ --device="/dev/dri:/dev/dri" ];
+      extraOptions = [ "--device=/dev/dri:/dev/dri" ];
     };  
   };
 }  
