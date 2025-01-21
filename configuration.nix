@@ -8,6 +8,11 @@
         #./services
     ];
 
+    security.sudo.extraConfig = ''
+      Defaults pwfeedback
+      Defaults lecture = never
+    '';
+    
     time.timeZone = "America/New_York";
 
     nixpkgs.config.allowUnfree = true;
