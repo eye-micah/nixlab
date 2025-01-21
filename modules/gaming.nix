@@ -35,7 +35,7 @@
     gamemode
 
     # emulation
-    pcsx2-bin
+    pcsx2
     rpcs3
     dolphin-emu
     duckstation

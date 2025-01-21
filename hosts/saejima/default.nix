@@ -11,6 +11,7 @@
     hostId = "41b9e6d4";
     hostName = "saejima";
     nameservers = [
+      "192.168.1.244"
       "192.168.1.206"
     ];
   };
@@ -38,6 +39,16 @@
       fsType = "vfat";
   };
 
+  boot.kernelModules = [ "xpad" ];
+
+  systemd.services = {
+    "xpad-modprobe" = {
+      after = [ "graphical.target" ];
+      serviceConfig = {
+        ExecStart = "${config.system.sbin.modprobe}/sbin/modprobe xpad"
+      };
+    };
+  };
 
 
   networking.firewall.enable = false;
