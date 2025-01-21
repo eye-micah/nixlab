@@ -14,8 +14,8 @@
     };
 
     fileSystems."/home" = {
-        device = lib.mkForce "zroot/home";
-        fsType = lib.mkForce "zfs";
+        device = lib.mkDefault "zroot/home";
+        fsType = lib.mkDefault "zfs";
         neededForBoot = true;
     };
 
