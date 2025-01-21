@@ -28,8 +28,8 @@ in
                 })
 
             ]
-        }
-    }
+        };
+    };
     mkNixos = machineHostname: nixpkgsVersion: extraModules: rec {
         nixosConfigurations.${machineHostname} = nixpkgsVersion.lib.nixosSystem {
             system = "x86_64-linux";

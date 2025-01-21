@@ -11,6 +11,13 @@
     networking.hostName = "saeko";
     networking.hostId = "41b9e6d1";
 
+    networking.nat = {
+      enable = true;
+      internalInterfaces = ["ve-+"];
+      externalInterface = "ens3"; # change
+      enableIPv6 = true;
+    };
+
     age.secrets = {
         "resticEnv".file = ../../secrets/resticEnv.age;
         "resticRepo".file = ../../secrets/resticRepo.age;
