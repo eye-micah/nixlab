@@ -6,7 +6,6 @@
     ];
 
     hardware.opengl.enable = true;
-    hardware.opengl.driSupport = true;
 
     imports = [
         ./services
