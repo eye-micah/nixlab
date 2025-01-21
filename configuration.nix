@@ -73,7 +73,7 @@
         #zfs
     ];
 
-
+      programs.zsh.enable = true;
 
       users.users.micah = {
         isSystemUser = true;
