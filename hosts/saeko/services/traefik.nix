@@ -43,7 +43,20 @@ in {
         --security-opt=no-new-privileges=true 
       ];
       labels = [
-        "traefik.http.routers.traefik.rule" = "Host( `traefik-dashboard.lan.zandyne.xyz` )"
+        "traefik.enable" = "true"
+        "traefik.http.routers.traefik.rule" = "Host( `traefik-dashboard.${localDomain}` )"
+        "traefik.http.routers.traefik.entrypoints" = "http"
+        "traefik.http.middlewares.traefik-https-redirect.redirectscehem.scheme" = "https"
+        "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto" = "https"
+        "traefik.http.routers.traefik.middlewares" = "traefik-https-redirect"
+        "traefik.http.routers.traefik-secure.entrypoints" = "https"
+        "traefik.http.routers.traefik-secure.rule" = "Host(`traefik-dashboard.${localDomain}` )"
+        "traefik.http.routers.traefik-secure.middlewares" = "traefik.auth"
+        "traefik.http.routers.traefik-secure.tls" = "true"
+        "traefik.http.routers.traefik-secure.tls.certresolver" = "cloudflare"
+        "traefik.http.routers.traefik-secure.tls.domains[0].main" = "${localDomain}"
+        "traefik.http.routers.traefik-secure.tls.domains[0].sans" = "*.${localDomain}"
+        "traefik.http.routers.traefik-secure.service" = "api@internal"
       ];
     };  
   };
