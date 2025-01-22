@@ -19,10 +19,5 @@
 
   services.caddy = {
     enable = true;
-    extraConfig = ''
-      tls { 
-        resolvers 1.1.1.1
-      }
-    '';
   };
 }
