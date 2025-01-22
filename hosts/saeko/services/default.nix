@@ -1,5 +1,6 @@
 {
   imports = [
-    ./jellyfin.nix
+    ./jellyfin-1.nix
+    ./caddy.nix
   ];
 }

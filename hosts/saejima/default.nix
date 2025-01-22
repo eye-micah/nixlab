@@ -1,4 +1,4 @@
-{ pkgs, inputs, lib, ... }:
+{ pkgs, config, inputs, lib, ... }:
 
 {
 
@@ -45,13 +45,12 @@
     "xpad-modprobe" = {
       after = [ "graphical.target" ];
       serviceConfig = {
-        ExecStart = "${config.system.sbin.modprobe}/sbin/modprobe xpad"
+        ExecStart = "modprobe xpad";
       };
     };
   };
 
-
   networking.firewall.enable = false;
  
-  environment.systemPackages = with pkgs; [ zed-editor ];
+  environment.systemPackages = with pkgs; [ # put shit here ];
 }

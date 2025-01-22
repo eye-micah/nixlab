@@ -5,6 +5,11 @@
         pkgs.zfs
     ];
 
+    age.identityPaths = [
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_rsa_key"
+    ];
+
     hardware.opengl.enable = true;
 
     imports = [
@@ -15,6 +20,7 @@
     networking.hostId = "41b9e6d1";
 
     age.secrets = {
+        "cloudflareToken".file = ../../secrets/cloudflareToken.age;
         "resticEnv".file = ../../secrets/resticEnv.age;
         "resticRepo".file = ../../secrets/resticRepo.age;
         "resticPassword".file = ../../secrets/resticPassword.age;

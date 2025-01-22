@@ -87,7 +87,7 @@
           ];
         };
 
-        saeko = nixpkgs.lib.nixosSystem {
+        saeko = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = persistentModules ++ [
             ./hosts/saeko
