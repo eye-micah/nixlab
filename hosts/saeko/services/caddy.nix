@@ -10,6 +10,9 @@
     };
   };
 
+  networking.firewall.enable = true;
+  networking.allowedTCPPorts = [ 80 443 ];
+
   #services.caddy.virtualHosts."test.lan.zandyne.xyz" = {
   #  extraConfig = ''
   #    reverse_proxy 127.0.0.1:8080
