@@ -5,11 +5,11 @@ let
 in
 {
   "tailscaleNanba.age".publicKeys = [ haruka nanba ];
-  "tailscaleSaeko.age".publicKeys = [ haruka ];
+  "tailscaleSaeko.age".publicKeys = [ haruka saeko ];
   "rsyncKaitoKeyId.age".publicKeys = [ haruka ];
   "rsyncKaitoAppKey.age".publicKeys = [ haruka ];
-  "resticEnv.age".publicKeys = [ haruka ];
-  "resticRepo.age".publicKeys = [ haruka ];
-  "resticPassword.age".publicKeys = [ haruka ];
-  "cloudflareToken.age".publicKeys = [ haruka ];
+  "resticEnv.age".publicKeys = [ haruka saeko ];
+  "resticRepo.age".publicKeys = [ haruka saeko ];
+  "resticPassword.age".publicKeys = [ haruka saeko ];
+  "cloudflareToken.age".publicKeys = [ haruka saeko ];
 }
