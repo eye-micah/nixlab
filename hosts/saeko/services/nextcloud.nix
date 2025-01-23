@@ -2,10 +2,10 @@
   services.nextcloud = {
     enable = true;
     configureRedis = true;
-    package = pkgs.nextcloud30; # why
+    package = pkgs.nextcloud28; # why
     hostName = "nextcloud.${envVars.localDomain}";
     config.adminpassFile = "${config.age.secrets.nextcloudPass.path}";
-    config.dbtype = "pgsql";
+    config.dbtype = "sqlite";
     extraApps = {
       inherit (config.services.nextcloud.package.packages.apps) onlyoffice polls notes calendar tasks;
     };
