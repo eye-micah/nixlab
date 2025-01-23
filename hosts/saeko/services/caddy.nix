@@ -33,4 +33,9 @@
       }
     '';
   };
+
+  services.caddy.virtualHosts."git.lan.zandyne.xyz".extraConfig = ''
+    reverse_proxy http://192.168.1.173:3000/gitea/nixlab.git
+  '';
+  
 }
