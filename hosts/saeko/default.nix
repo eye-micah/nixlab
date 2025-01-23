@@ -6,6 +6,13 @@
         tailscale
     ];
 
+    networking.nat = {
+        enable = true;
+        internalInterfaces = [ "ve-+" ];
+        externalInterface = "enp1s0";
+        enableIPv6 = false;
+    };
+
     boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
     services.tailscale = {
