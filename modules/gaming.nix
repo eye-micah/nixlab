@@ -45,6 +45,7 @@
 
     # streaming/social crap
     vesktop
+    discord
     obs-studio
   ];
 

@@ -1,4 +1,4 @@
-{ pkgs, inputs, lib, ... }:
+{ pkgs, config, inputs, lib, ... }:
 
 {
 
@@ -45,7 +45,7 @@
     "xpad-modprobe" = {
       after = [ "graphical.target" ];
       serviceConfig = {
-        ExecStart = "${config.system.sbin.modprobe}/sbin/modprobe xpad"
+        ExecStart = "modprobe xpad";
       };
     };
   };
