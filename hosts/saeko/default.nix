@@ -9,9 +9,9 @@
 
     services.nfs.server.enable = true;
     services.nfs.server.exports = ''
-      /mnt/storage-ssd/editing-workspace	192.168.1.191,haruka.local,haruka,192.168.1.235,saejima.local,saejima(rw,async,insecure,no_root_squash,no_subtree_check)
-      /mnt/storage-ssd/editing-finished	        192.168.1.191,haruka.local,haruka,192.168.1.235,saejima.local,saejima(rw,async,insecure,no_root_squash,no_subtree_check)
-      /mnt/storage-ssd/games	                192.168.1.191,haruka.local,haruka,192.168.1.235,saejima.local,saejima(rw,async,insecure,no_root_squash,no_subtree_check)
+      /mnt/storage-ssd/editing-workspace	*(rw,async,insecure,no_root_squash,no_subtree_check)
+      /mnt/storage-ssd/editing-finished	        *(rw,async,insecure,no_root_squash,no_subtree_check)
+      /mnt/storage-ssd/games	                *(rw,async,insecure,no_root_squash,no_subtree_check)
     '';
 
     services.avahi = {
