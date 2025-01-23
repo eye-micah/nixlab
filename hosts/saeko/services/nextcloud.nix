@@ -21,7 +21,7 @@
     config = { config, pkgs, lib, ... }: {
 
       systemd.tmpfiles.rules = [
-        "f /var/lib/nextcloud/config/CAN_INSTALL - nextcloud nextcloud --"
+        "f /var/lib/nextcloud/CAN_INSTALL - nextcloud nextcloud --"
       ];
 
       system.stateVersion = "24.11";
