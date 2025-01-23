@@ -22,6 +22,6 @@
 
   services.caddy = {
     enable = true;
-    listenAddresses = [ "127.0.0.1" "::1" ];
+    settings.listenAddresses = [ "127.0.0.1" "::1" ];
   };
 }
