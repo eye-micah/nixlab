@@ -13,15 +13,15 @@
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.11";
 
-    bindMounts = {
-      "/data" = { hostPath = "/mnt/storage-ssd/nextcloud/data"; isReadOnly = false; };
-      "/db" = { hostPath = "/mnt/storage-ssd/nextcloud/db"; isReadOnly = false; };
-    };
+    #bindMounts = {
+    #  "/data" = { hostPath = "/mnt/storage-ssd/nextcloud/data"; isReadOnly = false; };
+    #  "/db" = { hostPath = "/mnt/storage-ssd/nextcloud/db"; isReadOnly = false; };
+    #};
 
     config = { config, pkgs, lib, ... }: {
 
       systemd.tmpfiles.rules = [
-        "f /data/CAN_INSTALL - nextcloud nextcloud --"
+        "f /var/lib/nextcloud/config/CAN_INSTALL - nextcloud nextcloud --"
       ];
 
       system.stateVersion = "24.11";
@@ -43,7 +43,6 @@
         config.adminpassFile = "${pkgs.writeText "adminpass" "test123"}";
         #config.adminpassFile = "${config.age.secrets.nextcloudPass.path}";
         config.dbtype = "sqlite";
-        config.home = "/data";
         extraApps = {
           inherit (config.services.nextcloud.package.packages.apps) onlyoffice polls notes calendar tasks;
         };
