@@ -42,7 +42,6 @@
         configureRedis = true;
         package = pkgs.nextcloud30;
         hostName = "nextcloud.${envVars.localDomain}";
-        config.dbtype = "sqlite";
         config = {
           dbtype = "pgsql";
           dbuser = "nextcloud";
