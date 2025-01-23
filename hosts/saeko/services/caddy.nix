@@ -22,5 +22,8 @@
 
   services.caddy = {
     enable = true;
+    virtualHosts."example.lan.zandyne.xyz".extraConfig = ''
+      respond "Hello, world!"
+    '';
   };
 }
