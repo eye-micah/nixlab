@@ -1,8 +1,9 @@
 {
   imports = [
-    ./jellyfin-1.nix
+    ./jellyfin.nix
     ./nextcloud.nix
     ./navidrome.nix
+    ./minecraft.nix
     ./caddy.nix
   ];
 }
