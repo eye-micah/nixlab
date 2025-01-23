@@ -23,6 +23,7 @@
   networking.firewall.enable = false;
 
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+  boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = 1;
 
   environment.systemPackages = with pkgs; [ tailscale adguardhome ];
 
@@ -105,8 +106,8 @@
         };
         dns = {
           upstream_dns = [
-            "9.9.9.9#dns.quad9.net"
-            "149.112.112.112#dns.quad9.net"
+            "1.1.1.1#cloudflare-dns.net"
+            "1.0.0.1#cloudflare-dns.net"
           ];
         };
         filtering = {

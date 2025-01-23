@@ -1,4 +1,9 @@
 {
+  nixConfig = {
+      extra-substituters = [ "https://microvm.cachix.org" ];
+      extra-trusted-public-keys = [ "microvm.cachix.org-1:oXnBc6hRE3eX5rSYdRyMYXnfzcCxC7yKPTbZXALsqys=" ];
+  };
+
   inputs = {
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-24.11";
@@ -41,13 +46,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    disko = {
-      url = "github:nix-community/disko";
+    microvm = {
+      url = "github:astro/microvm.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-minecraft = {
+      url = "github:Infinidoge/nix-minecraft";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, agenix, disko, impermanence, nixvim, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, agenix, disko, impermanence, nixvim, microvm, nix-minecraft, ... } @inputs:
     let
       baseModules = [
         ./modules/zfs.nix
@@ -87,7 +97,7 @@
           ];
         };
 
-        saeko = nixpkgs.lib.nixosSystem {
+        saeko = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = persistentModules ++ [
             ./hosts/saeko

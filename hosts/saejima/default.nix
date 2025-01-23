@@ -50,8 +50,7 @@
     };
   };
 
-
   networking.firewall.enable = false;
  
-  environment.systemPackages = with pkgs; [ zed-editor ];
+  environment.systemPackages = with pkgs; [ ];
 }
