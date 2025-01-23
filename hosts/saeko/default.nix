@@ -22,6 +22,7 @@
 
     age.secrets = {
         "cloudflareToken".file = ../../secrets/cloudflareToken.age;
+        "nextcloudPass".file = ../../secrets/nextcloudPass.age;
         "resticEnv".file = ../../secrets/resticEnv.age;
         "resticRepo".file = ../../secrets/resticRepo.age;
         "resticPassword".file = ../../secrets/resticPassword.age;
