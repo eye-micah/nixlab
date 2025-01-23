@@ -19,7 +19,7 @@
   services.caddy.virtualHosts."nextcloud.${envVars.localDomain}" = {
     useACMEHost = "${envVars.localDomain}";
     extraConfig = ''
-      reverseProxy http://127.0.0.1:8080
+      reverse_proxy http://127.0.0.1:8080
     ''
     ;
   };
