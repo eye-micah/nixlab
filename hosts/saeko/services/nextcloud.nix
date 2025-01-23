@@ -59,11 +59,10 @@
       services.postgresql = {
         enable = true;
         ensureDatabases = [ "nextcloud" ];
-        ensureUsers = [
-          { name = "nextcloud";
-            ensurePermissions."DATABASE nextcloud" = "ALL PRIVILEGES";
-          }
-        ];
+        ensureUsers = [{ 
+          name = "nextcloud";
+          ensureDBOwnership = true;
+        }];
       };
 
       systemd.services."nextcloud-setup" = {
