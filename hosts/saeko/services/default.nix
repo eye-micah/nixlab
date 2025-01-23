@@ -3,7 +3,7 @@
     ./jellyfin.nix
     ./nextcloud.nix
     ./navidrome.nix
-    ./minecraft.nix
+    #./minecraft.nix
     ./caddy.nix
   ];
 }
