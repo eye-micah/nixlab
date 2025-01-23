@@ -44,7 +44,7 @@
 
                 jvmOpts = "-Xms4096M -Xmx4096M -XX:+UseG1GC";
             };
-        }
-    }    
+        };
+    };    
 
 }
