@@ -40,7 +40,7 @@
       services.nextcloud = {
         enable = true;
         configureRedis = true;
-        package = pkgs.nextcloud30;
+        package = pkgs.nextcloud28;
         hostName = "nextcloud.${envVars.localDomain}";
         config = {
           dbtype = "pgsql";
