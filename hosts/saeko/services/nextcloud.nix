@@ -13,10 +13,10 @@
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.11";
 
-    #bindMounts = {
-    #  "/data" = { hostPath = "/mnt/storage-ssd/nextcloud/data"; isReadOnly = false; };
-    #  "/db" = { hostPath = "/mnt/storage-ssd/nextcloud/db"; isReadOnly = false; };
-    #};
+    bindMounts = {
+      "/var/lib/nextcloud" = { hostPath = "/cvol/nextcloud"; isReadOnly = false; };
+      #"/db" = { hostPath = "/mnt/storage-ssd/nextcloud/db"; isReadOnly = false; };
+    };
 
     config = { config, pkgs, lib, ... }: {
 
