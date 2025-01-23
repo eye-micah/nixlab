@@ -18,6 +18,7 @@
 
     networking.hostName = "saeko";
     networking.hostId = "41b9e6d1";
+    networking.nameservers = [ "1.1.1.1" ];
 
     age.secrets = {
         "cloudflareToken".file = ../../secrets/cloudflareToken.age;
