@@ -22,7 +22,7 @@
 
   services.caddy = {
     enable = true;
-    extraConfig = ''
+    globalConfig = ''
       tls internal {
         resolvers 1.1.1.1
       }
