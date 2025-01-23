@@ -6,6 +6,10 @@
     hostName = "nextcloud.${envVars.localDomain}";
     config.adminpassFile = "${config.age.secrets.nextcloudPass.path}";
     config.dbtype = "pgsql";
+    extraApps = {
+      inherit (config.services.nextcloud.package.packages.apps) onlyoffice polls notes calendar tasks;
+    };
+    extraAppsEnable = true;
   };
 
   # WHY IS THERE A HARD DEPENDENCY ON NGINX???
