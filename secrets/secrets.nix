@@ -12,4 +12,5 @@ in
   "resticRepo.age".publicKeys = [ haruka saeko ];
   "resticPassword.age".publicKeys = [ haruka saeko ];
   "cloudflareToken.age".publicKeys = [ haruka saeko ];
+  "nextcloudPass.age".publicKeys = [ haruka saeko ];
 }
