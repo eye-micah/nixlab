@@ -15,6 +15,8 @@
 
     bindMounts = {
       "/var/lib/nextcloud" = { hostPath = "/cvol/nextcloud"; isReadOnly = false; };
+      "/var/lib/nextcloud/data" = { hostPath = "/mnt/storage-ssd/nextcloud"; isReadOnly = false; };
+      "/var/lib/postgresql" = { hostPath = "/cvol/nextcloud-db"; isReadOnly = false; };
       #"/db" = { hostPath = "/mnt/storage-ssd/nextcloud/db"; isReadOnly = false; };
     };
 
@@ -38,15 +40,36 @@
       services.nextcloud = {
         enable = true;
         configureRedis = true;
-        package = pkgs.nextcloud28;
+        package = pkgs.nextcloud30;
         hostName = "nextcloud.${envVars.localDomain}";
-        config.adminpassFile = "${pkgs.writeText "adminpass" "test123"}";
-        #config.adminpassFile = "${config.age.secrets.nextcloudPass.path}";
         config.dbtype = "sqlite";
+        config = {
+          dbtype = "pgsql";
+          dbuser = "nextcloud";
+          dbhost = "/run/postgresql";
+          dbname = "nextcloud";
+          adminpassFile = "${pkgs.writeText "adminpass" "whitewomen"}";
+          adminuser = "root";
+        };
         extraApps = {
           inherit (config.services.nextcloud.package.packages.apps) onlyoffice polls notes calendar tasks;
         };
         extraAppsEnable = true;
+      };
+
+      services.postgresql = {
+        enable = true;
+        ensureDatabases = [ "nextcloud" ];
+        ensureUsers = [
+          { name = "nextcloud";
+            ensurePermissions."DATABASE nextcloud" = "ALL PRIVILEGES";
+          }
+        ];
+      };
+
+      systemd.services."nextcloud-setup" = {
+        requires = [ "postgresql.service" ];
+        after = [ "postgresql.service" ];
       };
     };
 
