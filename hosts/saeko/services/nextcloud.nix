@@ -4,7 +4,7 @@
     configureRedis = true;
     package = pkgs.nextcloud28;
     hostname = "nextcloud.${envVars.localDomain}";
-    config.adminPassfile = "${config.age.secrets.nextcloudPass.path}";
+    config.adminpassFile = "${config.age.secrets.nextcloudPass.path}";
     config.dbtype = "pgsql";
   };
 
