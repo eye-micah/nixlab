@@ -1,4 +1,4 @@
-{ ... }: {
+{ lib, nix-minecraft, ... }: {
 
     systemd.tmpfiles.rules = [
         "f /cvol/minecraft/quade - minecraft minecraft --"
@@ -14,7 +14,10 @@
             "/var/lib/minecraft" = { hostPath = "/cvol/minecraft/quade"; isReadOnly = false;};
         };
 
-        config = { ... }: {
+        config = { config, pkgs, lib, ... }: {
+            imports = [ nix-minecraft.nixosModules.minecraft-servers ];
+            nixpkgs.overlays = [ nix-minecraft.overlay ];
+            
             system.stateVersion = "24.11";
             networking = {
                 firewall = {
@@ -26,23 +29,21 @@
 
             services.resolved.enable = true;
 
-            services.minecraft = {
-                enable = true;
-                eula = true;
-                declarative = true;
-
-                serverProperties = {
-                    gamemode = "survival";
-                    difficulty = "hard";
-                    simulation-distance = 10;
-                    level-seed = "4";
+            services.minecraft-servers = {
+                servers = {
+                    quade = {
+                        enable = true;
+                        eula = true;
+                        serverProperties = {
+                            gamemode = "survival";
+                            difficulty = "hard";
+                            simulation-distance = 10;
+                            level-seed = "4";
+                        };
+                        whitelist = { /* */ };
+                        jvmOpts = "-Xms4096M -Xmx4096M -XX:+UseG1GC";
+                    };
                 };
-
-                whitelist = {
-                    # username = id;
-                };
-
-                jvmOpts = "-Xms4096M -Xmx4096M -XX:+UseG1GC";
             };
         };
     };    

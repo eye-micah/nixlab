@@ -57,7 +57,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, agenix, disko, impermanence, nixvim, microvm, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, agenix, disko, impermanence, nixvim, microvm, nix-minecraft, ... } @inputs:
     let
       baseModules = [
         ./modules/zfs.nix

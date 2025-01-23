@@ -1,10 +1,5 @@
 { config, pkgs, lib, ... }: let envVars = import ../env-vars.nix; in {
-  networking.nat = {
-    enable = true;
-    internalInterfaces = [ "ve-+" ];
-    externalInterface = "enp1s0";
-    enableIPv6 = false;
-  };
+
 
   # Nextcloud is so fucking fat and greedy I have to slam it inside a container so it doesn't listen on 86 ports I'm already using.
   containers.nextcloud = {
