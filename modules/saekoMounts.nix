@@ -2,7 +2,7 @@
 
   # Mount points for NFS shares
   fileSystems."/mnt/workspace" = {
-    device = "saeko:/mnt/storage-ssd/editing-workspace";
+    device = "saeko.local:/mnt/storage-ssd/editing-workspace";
     fsType = "nfs";
     options = [
       "rw"  # Read-Write mount
@@ -17,7 +17,7 @@
   };
 
   fileSystems."/mnt/finished" = {
-    device = "saeko:/mnt/storage-ssd/editing-finished";
+    device = "saeko.local:/mnt/storage-ssd/editing-finished";
     fsType = "nfs";
     options = [
       "rw"  # Read-Write mount
@@ -32,7 +32,7 @@
   };
   
   fileSystems."/mnt/games" = {
-    device = "saeko:/mnt/storage-ssd/games";
+    device = "saeko.local:/mnt/storage-ssd/games";
     fsType = "nfs";
     options = [
       "rw"  # Read-Write mount
