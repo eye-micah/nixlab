@@ -1,4 +1,4 @@
-{ ... }: {
+{ ... }: let envVars = import ../env-vars.nix; in {
     services.navidrome = {
         enable = true;
         openFirewall = true;
