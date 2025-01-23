@@ -9,7 +9,7 @@
         device = "zroot/cvol";
         fsType = "zfs";
         neededForBoot = true;
-    }
+    };
 
     boot.zfs.extraPools = [ "storage-ssd" ];
 
