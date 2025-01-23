@@ -24,6 +24,9 @@
     enable = true;
     virtualHosts."example.lan.zandyne.xyz".extraConfig = ''
       respond "Hello, world!"
+      tls {
+        resolvers 1.1.1.1
+      }
     '';
   };
 }
