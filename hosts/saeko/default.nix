@@ -6,6 +6,23 @@
         tailscale
     ];
 
+
+    services.nfs.server.enable = true;
+    services.nfs.server.exports = ''
+      /mnt/storage-ssd/editing-workspace	haruka,saejima(rw,async,insecure,no_root_squash,no_subtree_check)
+      /mnt/storage-ssd/editing-finished	        haruka,saejima(rw,async,insecure,no_root_squash,no_subtree_check)
+      /mnt/storage-ssd/games	                haruka,saejima(rw,async,insecure,no_root_squash,no_subtree_check)
+    '';
+
+    services.avahi = {
+      enable = true;
+      nssmdns = true;
+      publish = {
+        enable = true;
+        addresses = true;
+      };
+    };
+
     networking.nat = {
         enable = true;
         internalInterfaces = [ "ve-+" ];
