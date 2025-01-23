@@ -5,7 +5,7 @@
         pkgs.zfs
     ];
 
-    fileSystem."/cvol" = {
+    fileSystems."/cvol" = {
         device = "zroot/cvol";
         fsType = "zfs";
         neededForBoot = true;
