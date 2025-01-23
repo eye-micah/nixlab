@@ -22,11 +22,6 @@
 
   services.caddy = {
     enable = true;
-    globalConfig = ''
-      tls internal {
-        resolvers 1.1.1.1
-      }
-    ''
-    ;
+    listenAddresses = [ "127.0.0.1" "::1" ];
   };
 }
