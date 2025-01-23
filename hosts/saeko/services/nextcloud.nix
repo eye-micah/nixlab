@@ -16,9 +16,14 @@
     bindMounts = {
       "/data" = { hostPath = "/mnt/storage-ssd/nextcloud/data"; isReadOnly = false; };
       "/db" = { hostPath = "/mnt/storage-ssd/nextcloud/db"; isReadOnly = false; };
-    }
+    };
 
     config = { config, pkgs, lib, ... }: {
+
+      systemd.tmpfiles.rules = [
+        "f /data/CAN_INSTALL - nextcloud nextcloud --"
+      ];
+
       system.stateVersion = "24.11";
       networking = {
         firewall = {
@@ -37,7 +42,8 @@
         hostName = "nextcloud.${envVars.localDomain}";
         config.adminpassFile = "${pkgs.writeText "adminpass" "test123"}";
         #config.adminpassFile = "${config.age.secrets.nextcloudPass.path}";
-        config.dbtype = "pgsql";
+        config.dbtype = "sqlite";
+        config.home = "/data";
         extraApps = {
           inherit (config.services.nextcloud.package.packages.apps) onlyoffice polls notes calendar tasks;
         };
