@@ -25,7 +25,7 @@
         "nextcloudPass".file = ../../secrets/nextcloudPass.age;
         "nextcloudPass".owner = "nextcloud";
         "nextcloudPass".group = "nextcloud";
-        "nextcloudPass".mode = 660;
+        "nextcloudPass".mode = "660";
         "resticEnv".file = ../../secrets/resticEnv.age;
         "resticRepo".file = ../../secrets/resticRepo.age;
         "resticPassword".file = ../../secrets/resticPassword.age;
