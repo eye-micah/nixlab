@@ -4,8 +4,12 @@
     acceptTerms = true;
     defaults.email = "micahdc@mailbox.org";
     certs."lan.zandyne.xyz" = {
-      domain = "*.lan.zandyne.xyz";
+      group = config.services.caddy.group;
+      domain = "lan.zandyne.xyz";
+      extraDomainNames = [ "*.lan.zandyne.xyz" ];
       dnsProvider = "cloudflare";
+      dnsResolver = "1.1.1.1:53";
+      dnsPropagationCheck = true;
       environmentFile = "${config.age.secrets.cloudflareToken.path}";
     };
   };
