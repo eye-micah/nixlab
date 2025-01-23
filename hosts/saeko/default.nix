@@ -69,6 +69,7 @@
         #"nextcloudPass".owner = "nextcloud";
         #"nextcloudPass".group = "nextcloud";
         #"nextcloudPass".mode = "660";
+        "tailscaleSaeko".file = ../../secrets/tailscaleSaeko.age;
         "resticEnv".file = ../../secrets/resticEnv.age;
         "resticRepo".file = ../../secrets/resticRepo.age;
         "resticPassword".file = ../../secrets/resticPassword.age;
