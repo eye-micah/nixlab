@@ -52,5 +52,5 @@
 
   networking.firewall.enable = false;
  
-  environment.systemPackages = with pkgs; [ # put shit here ];
+  environment.systemPackages = with pkgs; [ ];
 }

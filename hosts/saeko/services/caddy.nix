@@ -10,7 +10,7 @@
     };
   };
 
-  networking.firewall.enable = true;
+  networking.firewall.enable = false;
   networking.firewall.allowedTCPPorts = [ 80 443 ];
 
   #services.caddy.virtualHosts."test.lan.zandyne.xyz" = {
@@ -22,5 +22,11 @@
 
   services.caddy = {
     enable = true;
+    extraConfig = ''
+      tls {
+        resolvers 1.1.1.1
+      }
+    ''
+    ;
   };
 }
