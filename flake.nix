@@ -57,24 +57,21 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, agenix, disko, impermanence, nixvim, microvm, nix-minecraft, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, agenix, impermanence, nixvim, microvm, nix-minecraft, auto-aspm, ... } @inputs:
     let
       baseModules = [
         ./modules/zfs.nix
         ./modules/zfs-fs-config.nix
         ./modules/qemu.nix
         agenix.nixosModules.default
-        disko.nixosModules.default
         ./configuration.nix
       ];
 
       persistentModules = baseModules ++ [
-        ./disko/root
       ];
 
       impermanentModules = baseModules ++ [
         inputs.impermanence.nixosModules.impermanence
-        ./disko/imperm-root
       ];
 
       desktopModules = [
@@ -100,6 +97,7 @@
 
         saeko = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
           modules = persistentModules ++ [
             ./modules/auto-aspm.nix
             ./hosts/saeko

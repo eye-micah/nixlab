@@ -1,6 +1,7 @@
-{ inputs, pkgs, lib, ... }:
+{ inputs, config, pkgs, lib, ... }:
 let
   auto-aspm = pkgs.writeScriptBin "auto-aspm" (builtins.readFile "${inputs.auto-aspm}/autoaspm.py");
+in
 {
   environment.systemPackages = [
     auto-aspm
