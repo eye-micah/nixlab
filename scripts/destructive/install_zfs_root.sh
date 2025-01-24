@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 set -euo pipefail
 
 if [[ $# -ne 3 ]]; then
@@ -27,10 +28,11 @@ fi
 
 # Copy the partitioning script and run it on the target
 echo "Sending partitioning script to $HOST..."
-scp partition_zfs_root.sh "$HOST:/tmp/partition_zfs_root.sh"
+scp ../flake.nix "$HOST:/tmp/partition/flake.nix"
+scp ./partition_zfs_root.py "$HOST:/tmp/partition/partition_zfs_root.py"
 
 echo "Running partitioning script on $HOST..."
-ssh "$HOST" "sudo bash /tmp/partition_zfs_root.sh $DEVICE"
+ssh "$HOST" "cd /tmp/partition && nix run . -- $DEVICE --force"
 
 # Copy the NixOS configuration to the target
 echo "Copying NixOS configuration to $HOST..."
