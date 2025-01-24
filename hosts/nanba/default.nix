@@ -13,14 +13,14 @@
     ./services
   ];
 
-  services.openssh.permitRootLogin = "yes";
+  services.openssh.settings.permitRootLogin = "yes";
 
   networking.hostName = "nanba";
   networking.hostId = "41b9e6d2";
 
   networking.useDHCP = true;
 
-  networking.firewall.enable = false;
+  networking.firewall.enable = true;
 
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
   boot.kernel.sysctl."net.ipv6.conf.all.forwarding" = 1;

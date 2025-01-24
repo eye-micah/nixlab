@@ -23,7 +23,7 @@
     gnome-weather
     gnome-connections
     gnome-software
-    gnome-videos
+    totem
     gnome-contacts
   ];
 
@@ -31,6 +31,7 @@
     gnomeExtensions.dash-to-panel
     gnomeExtensions.appindicator
     gnome-terminal
+    celluloid
   ];
 
   services.udev.packages = [ pkgs.gnome-settings-daemon ]; # Needed for appindicator icons

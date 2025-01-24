@@ -83,6 +83,7 @@
         ./modules/printing.nix
         ./modules/plymouth.nix
         ./modules/gnome.nix
+        ./modules/fonts.nix
         ./modules/flatpak.nix
         nixvim.nixosModules.nixvim
         ./modules/nixvim.nix

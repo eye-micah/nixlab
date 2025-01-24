@@ -16,7 +16,7 @@
 
     services.avahi = {
       enable = true;
-      nssmdns = true;
+      nssmdns4 = true;
       publish = {
         enable = true;
         addresses = true;
@@ -77,7 +77,7 @@
       "/etc/ssh/ssh_host_rsa_key"
     ];
 
-    hardware.opengl.enable = true;
+    hardware.graphics.enable = true;
 
     imports = [
         ./services
@@ -109,9 +109,10 @@
             paths = [
                 "/mnt/storage-ssd/editing-finished" ## Uses way too much disk space! Can't afford that!
                 "/mnt/storage-ssd/docs"
+                "/cvol"
             ];
             timerConfig = {
-                OnCalendar = "05:00";
+                OnCalendar = "weekly";
                 RandomizedDelaySec = "5h";
             };
         };

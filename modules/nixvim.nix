@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 {
   programs.nixvim = {
       enable = true;
@@ -14,14 +14,16 @@
         cmp-fuzzy-path.enable = true;
         nvim-tree.enable = true;
         auto-save.enable = true;
-        presence.nvim.enable = true;
+        presence-nvim.enable = true;
         cmp = {
+          enable = true;
           autoEnableSources = true;
           settings.sources = [
             { name = "nvim_lsp"; }
             { name = "path"; }
             { name = "buffer"; }
-          };
+          ];
+        };
         treesitter = {
           enable = true;
           grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
@@ -39,5 +41,6 @@
             yaml
           ];
       };
+    };
   };
 }
