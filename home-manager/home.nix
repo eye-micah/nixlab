@@ -52,7 +52,7 @@
   home.file.".zshenv".source = ../dotfiles/zshenv;
   #home.file.".zshrc".source = ./dotfiles/zshrc;
   #home.file.".zsh_plugins.txt".source = ./dotfiles/zsh_plugins.txt;
-  home.file.".vimrc".source = ../dotfiles/vimrc;
+  #home.file.".vimrc".source = ../dotfiles/vimrc;
   home.file.".p10k.zsh".source = ../dotfiles/p10k.zsh;
 
 
