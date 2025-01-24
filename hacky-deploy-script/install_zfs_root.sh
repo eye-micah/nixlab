@@ -34,11 +34,11 @@ ssh "$HOST" "sudo bash /tmp/partition_zfs_root.sh $DEVICE"
 
 # Copy the NixOS configuration to the target
 echo "Copying NixOS configuration to $HOST..."
-nix run nixpkgs#rsync -- -avz --delete "$(dirname "$0")/.." "$HOST:/mnt/lab"
+nix run nixpkgs#rsync -- -avz --delete "$(dirname "$0")/.." "$HOST:/tmp/lab"
 
 # Deploy NixOS configuration
 echo "Deploying NixOS configuration..."
-ssh "$HOST" "cd /mnt/lab && chown -R root:root /mnt/lab && sudo nixos-install --flake .#$FLAKE"
+ssh "$HOST" "cd /tmp/lab && chown -R root:root /tmp/lab && sudo nixos-install --flake .#$FLAKE"
 
 
 echo "Disk partitioning and NixOS installation complete!"

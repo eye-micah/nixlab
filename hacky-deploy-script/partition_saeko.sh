@@ -49,7 +49,6 @@ echo "Creating ZFS datasets..."
 zfs create -o com.sun:auto-snapshot=false -o mountpoint=legacy zroot/root
 zfs create -o com.sun:auto-snapshot=false -o mountpoint=legacy zroot/nix
 zfs create -o com.sun:auto-snapshot=true  -o mountpoint=legacy zroot/home
-zfs create -o com.sun:auto-snapshot=false -o mountpoint=legacy zroot/lab
 zfs create -o com.sun:auto-snapshot=true  -o mountpoint=legacy zroot/cvol
 
 echo "Mounting filesystems..."
@@ -58,7 +57,6 @@ mkdir -p /mnt/{boot,nix,home,lab}
 mount -t zfs zroot/nix /mnt/nix
 mount -t zfs zroot/home /mnt/home
 mount -t zfs zroot/cvol /mnt/cvol
-mount -t zfs zroot/lab /mnt/lab
 mount "$ESP_PART" /mnt/boot -o umask=0077
 
 echo "Disk and ZFS setup complete!"
