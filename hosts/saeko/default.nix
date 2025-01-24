@@ -1,6 +1,16 @@
 { config, pkgs, inputs, lib, ... }:
 
 {
+
+    # My custom modules
+    lab = {
+      amdgpu.enable = true;
+      jellyfin = {
+        enable = true;
+        enableCaddy = true;
+      };
+    };
+
     environment.systemPackages = with pkgs; [
         zfs
         tailscale
@@ -12,7 +22,8 @@
       /mnt/storage-ssd/editing-workspace	*(rw,async,insecure,no_root_squash,no_subtree_check)
       /mnt/storage-ssd/editing-finished	        *(rw,async,insecure,no_root_squash,no_subtree_check)
       /mnt/storage-ssd/games	                *(rw,async,insecure,no_root_squash,no_subtree_check)
-    '';
+    ''
+    ;
 
     services.avahi = {
       enable = true;
@@ -80,7 +91,8 @@
     hardware.graphics.enable = true;
 
     imports = [
-        ./services
+        #./services
+        ../../modules/homelab/jellyfin.nix
     ];
 
     networking.hostName = "saeko";
