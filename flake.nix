@@ -163,7 +163,7 @@
             home-manager.darwinModules.home-manager {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.micah = import ./home-manager/clients/home.nix;
+              home-manager.users.micah = import ./home-manager/home.nix;
             }
           ];
         };
