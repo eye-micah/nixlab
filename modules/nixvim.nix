@@ -15,6 +15,15 @@
         nvim-tree.enable = true;
         auto-save.enable = true;
         presence-nvim.enable = true;
+        rainbow-delimiters.enable = true;
+        rainbow-delimiters.highlight = [
+          "RainbowDelimiterBlue"
+          "RainbowDelimiterGreen"
+          "RainbowDelimiterViolet"
+          "RainbowDelimiterCyan"
+        ];
+        fugitive.enable = true;
+        fzf-lua.enable = true;
         cmp = {
           enable = true;
           autoEnableSources = true;
