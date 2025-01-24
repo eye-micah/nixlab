@@ -1,6 +1,6 @@
 # nixlab
 
-Nix Homelab config, sandbox to play around while I get ready to push to GitHub
+Nix Homelab config, sandbox to play around with. Very WIP and will change a lot.
 
 # THE PLAN
 
