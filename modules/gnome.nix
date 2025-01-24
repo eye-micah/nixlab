@@ -23,6 +23,8 @@
     gnome-weather
     gnome-connections
     gnome-software
+    gnome-videos
+    gnome-contacts
   ];
 
   environment.systemPackages = with pkgs; [
