@@ -28,11 +28,10 @@ fi
 
 # Copy the partitioning script and run it on the target
 echo "Sending partitioning script to $HOST..."
-scp ../flake.nix "$HOST:/tmp/partition/flake.nix"
 scp ./partition_zfs_root.py "$HOST:/tmp/partition/partition_zfs_root.py"
 
 echo "Running partitioning script on $HOST..."
-ssh "$HOST" "cd /tmp/partition && nix run . -- $DEVICE --force"
+ssh "$HOST" "cd /tmp/partition && nix run --experimental-features 'nix-command flakes' 'nixpkgs#python3' -- /tmp/partition/partition_zfs_root.py"
 
 # Copy the NixOS configuration to the target
 echo "Copying NixOS configuration to $HOST..."
