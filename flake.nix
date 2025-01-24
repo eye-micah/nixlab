@@ -101,6 +101,7 @@
         saeko = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
           modules = persistentModules ++ [
+            ./modules/auto-aspm.nix
             ./hosts/saeko
           ];
         };
