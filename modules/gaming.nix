@@ -66,7 +66,7 @@
     autoLogin.user = "micah";
   };
 
-  services.xserver.displayManager.defaultSession = "gamescopeSession";
+  services.xserver.displayManager.defaultSession = "steam";
 
   hardware.xone.enable = true;
 
