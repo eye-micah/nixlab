@@ -51,6 +51,10 @@
   programs.gamescope = {
     enable = true;
     capSysNice = false;
+    args = [
+      "--adaptive-sync"
+      "-r 165"
+    ];
   };
 
   programs.steam = {
