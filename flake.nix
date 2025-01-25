@@ -78,7 +78,7 @@
         ./modules/pipewire.nix
         ./modules/firefox.nix
         ./modules/printing.nix
-        ./modules/plymouth.nix
+        #./modules/plymouth.nix
         ./modules/gnome.nix
         ./modules/fonts.nix
         ./modules/flatpak.nix
