@@ -76,25 +76,23 @@
 
   #services.xserver.displayManager.defaultSession = "steam";
 
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "tuigreet --time --remember --cmd gamescope -r 165 --adaptive-sync -e -- steam -tenfoot"
-        user = "micah";
-      };
-    };
-  };
+  # Define the systemd service
+  systemd.services.gamescopeSteam = {
+    description = "Run Gamescope with Steam in tenfoot mode";
+    wantedBy = [ "multi-user.target" ]; # Auto-start on boot
 
-  systemd.services.greetd.serviceConfig = {
-    Type = "idle";
-    StandardInput = "tty";
-    StandardOutput = "tty";
-    StandardError = "journal"; # Without this errors will spam on screen
-    # Without these bootlogs will spam on screen
-    TTYReset = true;
-    TTYVHangup = true;
-    TTYVTDisallocate = true;
+    # Specify that the service runs as the user "micah"
+    serviceConfig = {
+      ExecStart = "${pkgs.gamescope}/bin/gamescope -r 165 --adaptive-sync -e -- ${pkgs.steam}/bin/steam -tenfoot";
+      Restart = "always";
+      RestartSec = "5s";
+      Environment = "DISPLAY=:0";
+      StandardOutput = "journal";
+      StandardError = "journal";
+    };
+
+    # Run the service as the "micah" user
+    user = "micah";
   };
 
 
