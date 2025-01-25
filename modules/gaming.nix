@@ -76,11 +76,6 @@
 
   services.xserver.displayManager.defaultSession = "steam";
 
-  # Define the systemd service
-  systemd.services.gamescopeSteam = {
-    description = "Run Gamescope with Steam in tenfoot mode";
-    wantedBy = [ "multi-user.target" ]; # Auto-start on boot
-
   systemd.services."getty@tty1".enable = false;
   systemd.services."autovt@tty1".enable = false;
 
