@@ -127,6 +127,7 @@
         zsh-users/zsh-history-substring-search
         zsh-users/zsh-syntax-highlighting
         rupa/z
+        jeffreytse/zsh-vi-mode
       ''];
     };
     enableCompletion = false;

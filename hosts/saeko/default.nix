@@ -2,14 +2,14 @@
 
 {
 
-    # My custom modules
-    lab = {
-      amdgpu.enable = true;
-      jellyfin = {
-        enable = true;
-        enableCaddy = true;
-      };
-    };
+    ## My custom modules
+    # lab = {
+    #  amdgpu.enable = true;
+    #  jellyfin = {
+    #    enable = true;
+    #    enableCaddy = true;
+    #  };
+    #};
 
     environment.systemPackages = with pkgs; [
         zfs
@@ -91,8 +91,8 @@
     hardware.graphics.enable = true;
 
     imports = [
-        #./services
-        ../../modules/homelab/jellyfin.nix
+        ./services
+        #../../modules/homelab/jellyfin.nix
     ];
 
     networking.hostName = "saeko";

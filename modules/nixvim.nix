@@ -5,6 +5,18 @@
       #defaultEditor = true;
       viAlias = true;
       vimAlias = true;
+      keymaps = [
+        {
+          mode = "n";
+          action = "<cmd>CHADopen<cr>";
+          key = "<leader>v";
+        }
+        { 
+          mode = "n";
+          action = "<cmd>FloatermToggle<cr>";
+          key = "<C-t>";
+        }
+      ];
       opts = {
         number = true;
       };
@@ -12,8 +24,11 @@
       plugins = {
         nix.enable = true;
         cmp-fuzzy-path.enable = true;
-        nvim-tree.enable = true;
+        floaterm.enable = true;
+        chadtree.enable = true;
+        coq-nvim.enable = true;
         auto-save.enable = true;
+        auto-session.enable = true;
         presence-nvim.enable = true;
         rainbow-delimiters.enable = true;
         rainbow-delimiters.highlight = [

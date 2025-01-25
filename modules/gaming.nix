@@ -11,7 +11,6 @@
   };
 
   boot.kernelModules = [ "xpad" ]; # Needed for my 8BitDo controller.
-
   systemd.services.load-xpad = {
     description = "Load xpad module on boot and after waking from suspend";
 
@@ -59,7 +58,15 @@
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
+    gamescopeSession.enable = true;
   };
+
+  services.displayManager = {
+    autoLogin.enable = true;
+    autoLogin.user = "micah";
+  };
+
+  services.xserver.displayManager.defaultSession = "gamescopeSession";
 
   hardware.xone.enable = true;
 
