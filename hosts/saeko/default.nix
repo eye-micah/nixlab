@@ -16,6 +16,10 @@
         tailscale
     ];
 
+    hardware.graphics.enable = true;
+    #hardware.opengl.driSupport = true;
+    hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
+    services.xserver.videoDrivers = [ "amdgpu" ];
 
     services.nfs.server.enable = true;
     services.nfs.server.exports = ''
