@@ -89,10 +89,9 @@
       Environment = "DISPLAY=:0";
       StandardOutput = "journal";
       StandardError = "journal";
+      User = "micah";
     };
 
-    # Run the service as the "micah" user
-    user = "micah";
   };
 
 
