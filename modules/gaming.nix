@@ -69,15 +69,37 @@
     ];
   };
 
-  services.displayManager = {
-    autoLogin.enable = true;
-    autoLogin.user = "micah";
+  #services.displayManager = {
+  #  autoLogin.enable = true;
+  #  autoLogin.user = "micah";
+  #};
+
+  #services.xserver.displayManager.defaultSession = "steam";
+
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "tuigreet --time --remember --cmd gamescope -r 165 --adaptive-sync -e -- steam -tenfoot"
+        user = "micah";
+      };
+    };
   };
 
-  services.xserver.displayManager.defaultSession = "steam";
+  systemd.services.greetd.serviceConfig = {
+    Type = "idle";
+    StandardInput = "tty";
+    StandardOutput = "tty";
+    StandardError = "journal"; # Without this errors will spam on screen
+    # Without these bootlogs will spam on screen
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
+  };
 
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
+
+  #systemd.services."getty@tty1".enable = false;
+  #systemd.services."autovt@tty1".enable = false;
 
   hardware.xone.enable = true;
 
