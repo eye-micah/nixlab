@@ -70,14 +70,14 @@
   };
 
   services.displayManager = {
-    autoLogin.enable = true;
+    autoLogin.enable = false;
     autoLogin.user = "micah";
   };
 
-  services.xserver.displayManager.defaultSession = "steam";
+  services.xserver.displayManager.defaultSession = "gnome";
 
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
+  #systemd.services."getty@tty1".enable = false;
+  #systemd.services."autovt@tty1".enable = false;
 
   hardware.xone.enable = true;
 
