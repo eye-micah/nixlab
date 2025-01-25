@@ -69,34 +69,20 @@
     ];
   };
 
-  #services.displayManager = {
-  #  autoLogin.enable = true;
-  #  autoLogin.user = "micah";
-  #};
+  services.displayManager = {
+    autoLogin.enable = true;
+    autoLogin.user = "micah";
+  };
 
-  #services.xserver.displayManager.defaultSession = "steam";
+  services.xserver.displayManager.defaultSession = "steam";
 
   # Define the systemd service
   systemd.services.gamescopeSteam = {
     description = "Run Gamescope with Steam in tenfoot mode";
     wantedBy = [ "multi-user.target" ]; # Auto-start on boot
 
-    # Specify that the service runs as the user "micah"
-    serviceConfig = {
-      ExecStart = "${pkgs.gamescope}/bin/gamescope -r 165 --adaptive-sync -e -- ${pkgs.steam}/bin/steam -tenfoot";
-      Restart = "always";
-      RestartSec = "5s";
-      Environment = "DISPLAY=:0";
-      StandardOutput = "journal";
-      StandardError = "journal";
-      User = "micah";
-    };
-
-  };
-
-
-  #systemd.services."getty@tty1".enable = false;
-  #systemd.services."autovt@tty1".enable = false;
+  systemd.services."getty@tty1".enable = false;
+  systemd.services."autovt@tty1".enable = false;
 
   hardware.xone.enable = true;
 
