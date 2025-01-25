@@ -63,6 +63,10 @@
     dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
     gamescopeSession.enable = true;
+    gamescopeSession.args = [
+      "--adaptive-sync"
+      "-r 165"
+    ];
   };
 
   services.displayManager = {
