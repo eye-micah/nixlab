@@ -70,6 +70,7 @@
   };
 
   services.displayManager = {
+    lightdm.enable = true;
     autoLogin.enable = true;
     autoLogin.user = "micah";
   };
