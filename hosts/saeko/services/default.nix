@@ -5,5 +5,6 @@
     ./navidrome.nix
     #./minecraft.nix
     ./caddy.nix
+    ./conversion.nix
   ];
 }

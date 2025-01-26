@@ -20,6 +20,8 @@
       Defaults lecture = never
     '';
 
+    networking.enableIPv6 = true;
+
     hardware.enableAllFirmware = true;
     
     time.timeZone = "America/New_York";
