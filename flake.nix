@@ -1,9 +1,4 @@
 {
-  nixConfig = {
-      extra-substituters = [ "https://microvm.cachix.org" ];
-      extra-trusted-public-keys = [ "microvm.cachix.org-1:oXnBc6hRE3eX5rSYdRyMYXnfzcCxC7yKPTbZXALsqys=" ];
-  };
-
   inputs = {
     nixpkgs = {
       url = "github:nixos/nixpkgs/nixos-24.11";
@@ -101,6 +96,12 @@
           modules = persistentModules ++ [
             ./modules/auto-aspm.nix
             ./hosts/saeko
+          ] ++ [
+            home-manager.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.micah = import ./home-manager/home.nix;
+            }
           ];
         };
 
