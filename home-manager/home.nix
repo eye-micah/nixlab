@@ -6,15 +6,21 @@
     #inputs.nixvim.homeManagerModules.nixvim
     # ];
 
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    GIT_EDITOR = "nvim";
+    VISUAL = "nvim";
+  };
+
   home.stateVersion = "24.11";
-  home.packages = with pkgs; [
-    tmux
+  home.packages = [
+    pkgs.tmux
     # pkgs.vim
-    btop
-    zsh
-    fira-code-nerdfont
-    nixd
-    lf
+    pkgs.btop
+    pkgs.zsh
+    pkgs.fira-code-nerdfont
+    pkgs.nixd
   ];
 
   # Platform-specific adjustments
@@ -24,7 +30,6 @@
 #    [ pkgs.git ];   # Example of a Linux-only package
 
   home.username = "micah";
-  home.sessionVariables.EDITOR = "nvim";
 
 #  home.homeDirectory = if system == "darwin" then
 #    "/Users/micah"
@@ -32,6 +37,21 @@
 #    "/home/micah";
 
   programs.home-manager.enable = true;
+
+  programs.git = {
+    enable = true;
+    userName = "Micah Daniel";
+    userEmail = "micah@micah.com";
+    extraConfig = {
+      core.editor = "nvim";   
+      color.ui = "auto";
+      diff = {
+        tool = "nvim -d";
+        mnemonicprefix = true;
+      };
+    };
+  };
+
 
   home.file.".ssh/config".text = ''
     Host *
@@ -53,7 +73,7 @@
 
   home.file.".zshenv".source = ../dotfiles/zshenv;
   #home.file.".zshrc".source = ./dotfiles/zshrc;
-  #home.file.".zsh_plugins.txt".source = ./dotfiles/zsh_plugins.txt;
+  #home.file.".zsh_plugins.txt".source = ../dotfiles/zsh_plugins.txt;
   #home.file.".vimrc".source = ../dotfiles/vimrc;
   home.file.".p10k.zsh".source = ../dotfiles/p10k.zsh;
 
@@ -79,6 +99,9 @@
       export WINEESYNC=1
       export HOMEBREW_NO_ANALYTICS=1
       export SOPS_AGE_KEY_FILE=~/.config/sops/age/keys.txt
+      export EDITOR=nvim
+      export GIT_EDITOR=nvim
+      export VISUAL=nvim
 
       # Custom PATH setup (adjust as needed)
       export PATH=/opt/homebrew/bin/:$HOME/.local/bin:/opt/local/bin:$HOME/Library/Python/3.9/bin:/usr/sbin:/sbin:$PATH
@@ -129,7 +152,6 @@
         zsh-users/zsh-history-substring-search
         zsh-users/zsh-syntax-highlighting
         rupa/z
-        jeffreytse/zsh-vi-mode
       ''];
     };
     enableCompletion = false;
