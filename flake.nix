@@ -116,7 +116,7 @@
             home-manager.nixosModules.home-manager {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.micah = import ./home-manager/clients/home.nix;
+              home-manager.users.micah = import ./home-manager/home.nix;
             }
           ];
         };
@@ -147,8 +147,7 @@
           modules = [
             nixvim.homeManagerModules.nixvim
             ./modules/nixvim.nix
-            ./home-manager/clients/linux.nix
-            ./home-manager/clients/home.nix
+            ./home-manager/home.nix
           ];
         };
       };
