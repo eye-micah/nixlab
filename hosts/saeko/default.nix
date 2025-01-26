@@ -29,6 +29,12 @@
     ''
     ;
 
+    services.ollama = {
+      enable = true;
+      acceleration = "rocm";
+    };
+
+
     services.avahi = {
       enable = true;
       nssmdns4 = true;

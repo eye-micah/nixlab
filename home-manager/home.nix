@@ -7,13 +7,14 @@
     # ];
 
   home.stateVersion = "24.11";
-  home.packages = [
-    pkgs.tmux
+  home.packages = with pkgs; [
+    tmux
     # pkgs.vim
-    pkgs.btop
-    pkgs.zsh
-    pkgs.fira-code-nerdfont
-    pkgs.nixd
+    btop
+    zsh
+    fira-code-nerdfont
+    nixd
+    lf
   ];
 
   # Platform-specific adjustments
@@ -23,6 +24,7 @@
 #    [ pkgs.git ];   # Example of a Linux-only package
 
   home.username = "micah";
+  home.sessionVariables.EDITOR = "nvim";
 
 #  home.homeDirectory = if system == "darwin" then
 #    "/Users/micah"
