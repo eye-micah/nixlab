@@ -14,12 +14,16 @@
     environment.systemPackages = with pkgs; [
         zfs
         tailscale
+        ocl-icd
+        clinfo
     ];
 
     hardware.graphics.enable = true;
     #hardware.opengl.driSupport = true;
     hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
     services.xserver.videoDrivers = [ "amdgpu" ];
+
+    hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd ];
 
     boot.kernelModules = [ "amdgpu" ];
 
@@ -35,7 +39,6 @@
       enable = true;
       acceleration = "rocm";
     };
-
 
     services.avahi = {
       enable = true;

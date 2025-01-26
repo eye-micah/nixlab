@@ -8,6 +8,13 @@
         #./services
     ];
 
+    # Removing default packages that I don't need.
+    ## Most of these I'm realizing are fairly useful and use small amounts of disk space anyway.
+    #environment.defaultPackages = lib.mkForce with pkgs; [
+    #  mkpasswd
+    #  util-linux
+    #];
+
     security.sudo.extraConfig = ''
       Defaults pwfeedback
       Defaults lecture = never
@@ -75,19 +82,21 @@
         #zfs
     ];
 
-      users.users.micah = {
-        isSystemUser = true;
-        home = "/home/micah";
-        createHome = true;
-        hashedPassword = "$6$RnJeIDSyPLqDOHGu$u/oHbJyOeBu0uss9DY2VBYLD7BZmCNoc7456iP4LBEy8a5tjlu5GzDEX1FKte/7rFxolXXNkZS5UacQdz5Row0";  # This will use a hashed password in the system
-        shell = pkgs.bash;    # Set the shell to Zsh or another shell of your choice
-        group = "micah";
-        extraGroups = [ "wheel" "podman" "video" "input" ];
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFQy6Jw3QC3ADSbNdRZZSTZMOwB7o/+SQatG4Er2gtC micah@haruka.tail8d76a.ts.net"
-        ];
-      };
+    programs.zsh.enable = true;
 
-      users.groups.micah = {};
+    users.users.micah = {
+      isSystemUser = true;
+      home = "/home/micah";
+      createHome = true;
+      hashedPassword = "$6$RnJeIDSyPLqDOHGu$u/oHbJyOeBu0uss9DY2VBYLD7BZmCNoc7456iP4LBEy8a5tjlu5GzDEX1FKte/7rFxolXXNkZS5UacQdz5Row0";  # This will use a hashed password in the system
+      shell = pkgs.zsh;    # Set the shell to Zsh or another shell of your choice
+      group = "micah";
+      extraGroups = [ "wheel" "podman" "video" "input" ];
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHFQy6Jw3QC3ADSbNdRZZSTZMOwB7o/+SQatG4Er2gtC micah@haruka.tail8d76a.ts.net"
+      ];
+    };
+
+    users.groups.micah = {};
 
 }
