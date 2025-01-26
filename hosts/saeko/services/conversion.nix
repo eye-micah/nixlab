@@ -5,7 +5,7 @@
     serviceConfig = {
       Type = "oneshot";
       ExecStart = "${pkgs.writeShellScriptBin "convert-to-prores" ''
-        #!/usr/bin/env bash
+      #!/usr/bin/env bash
         set -e
 
         # Directories
@@ -16,7 +16,7 @@
         mkdir -p "$DEST_DIR"
 
         # Find and process H.264 and H.265 files
-        find "$SOURCE_DIR" -type f \\( -iname "*.MOV" -o -iname "*.mov" \\) | while read -r file; do
+        find "$SOURCE_DIR" -type f \\( -iname \"*.mp4\" -o -iname \"*.mkv\" \\) | while read -r file; do
             # Extract file name without extension
             base_name=$(basename "$file" | sed 's/\\.[^.]*$//')
 
@@ -40,7 +40,7 @@
                 echo "Conversion failed for: $file"
             fi
         done
-        ''}";
+      ''}";
       };
     };
 
