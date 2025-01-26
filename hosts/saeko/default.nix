@@ -21,6 +21,8 @@
     hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
     services.xserver.videoDrivers = [ "amdgpu" ];
 
+    boot.kernelModules = [ "amdgpu" ];
+
     services.nfs.server.enable = true;
     services.nfs.server.exports = ''
       /mnt/storage-ssd/editing-workspace	*(rw,async,insecure,no_root_squash,no_subtree_check)
