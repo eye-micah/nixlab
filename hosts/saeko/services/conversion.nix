@@ -3,53 +3,57 @@
   systemd.services.church-prores-conversion = {
     description = "Convert iPad footage to ProRes proxy for Resolve";
     serviceConfig = {
+      StandardOutput = "/var/log/prores.log";
+      StandardError = "/var/log/prores-error.log";
       Type = "oneshot";
-      ExecStart = "${pkgs.writeShellScriptBin "convert-to-prores" ''
-      #!/usr/bin/env bash
-        set -e
+      ExecStart = "${pkgs.writeShellScript "prores.sh" ''
 
-        # Directories
-        SOURCE_DIR="/mnt/storage-ssd/editing-workspace/GCC/h265"
-        DEST_DIR="/mnt/storage-ssd/editing-workspace/GCC/prores"
+            #!/bin/bash
 
-        # Ensure the destination directory exists
-        mkdir -p "$DEST_DIR"
+            # Directories
+            SOURCE_DIR="/mnt/storage-ssd/editing-workspace/GCC/h265"
+            DEST_DIR="/mnt/storage-ssd/editing-workspace/GCC/prores"
 
-        # Find and process H.264 and H.265 files
-        find "$SOURCE_DIR" -type f \\( -iname \"*.mp4\" -o -iname \"*.mkv\" \\) | while read -r file; do
-            # Extract file name without extension
-            base_name=$(basename "$file" | sed 's/\\.[^.]*$//')
+            # Ensure the destination directory exists
+            mkdir -p "$DEST_DIR"
 
-            # Destination file path
-            dest_file="$DEST_DIR/$base_name.mov"
+            # Find and process H.264 and H.265 files
+            find "$SOURCE_DIR" -type f \( -iname "*.mp4" -o -iname "*.mkv" \) | while read -r file; do
+                # Extract file name without extension
+                base_name=$(basename "$file" | sed 's/\.[^.]*$//')
 
-            # Skip conversion if the ProRes file already exists
-            if [[ -f "$dest_file" ]]; then
-                echo "ProRes file already exists for: $file"
-                continue
-            fi
+                # Destination file path
+                dest_file="$DEST_DIR/$base_name.mov"
 
-            # Convert to ProRes Proxy quality
-            echo "Converting $file to ProRes Proxy..."
-            ${pkgs.ffmpeg}/bin/ffmpeg -i "$file" -c:v prores -profile:v 0 -c:a copy "$dest_file"
+                # Skip conversion if the ProRes file already exists
+                if [[ -f "$dest_file" ]]; then
+                    echo "ProRes file already exists for: $file"
+                    continue
+                fi
 
-            # Check for success
-            if [[ $? -eq 0 ]]; then
-                echo "Conversion completed: $dest_file"
-            else
-                echo "Conversion failed for: $file"
-            fi
-        done
+                # Convert to ProRes Proxy quality
+                echo "Converting $file to ProRes Proxy..."
+                ffmpeg -i "$file" -c:v prores -profile:v 0 -c:a copy "$dest_file"
+
+                # Check for success
+                if [[ $? -eq 0 ]]; then
+                    echo "Conversion completed: $dest_file"
+                else
+                    echo "Conversion failed for: $file"
+                fi
+            done
+
       ''}";
-      };
     };
+  };
 
-    systemd.timers.church-prores-conversion = {
-      description = "Run conversion script hourly";
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "hourly";
-        Persistent = true;
-      };
+  systemd.timers.church-prores-conversion = {
+    description = "Run conversion script hourly";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "hourly";
+      Persistent = true;
     };
+  };
 }
+

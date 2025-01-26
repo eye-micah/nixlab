@@ -10,7 +10,7 @@
   ];
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = true; # nixos says these two settings are experimental -- we'll see?
+    powerManagement.enable = false; # nixos says these two settings are experimental -- we'll see?
     powerManagement.finegrained = false;
     open = false; 
     nvidiaSettings = true;
