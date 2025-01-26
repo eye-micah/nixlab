@@ -98,8 +98,6 @@
       "/etc/ssh/ssh_host_rsa_key"
     ];
 
-    hardware.graphics.enable = true;
-
     imports = [
         ./services
         #../../modules/homelab/jellyfin.nix
