@@ -12,6 +12,8 @@
       Defaults pwfeedback
       Defaults lecture = never
     '';
+
+    hardware.enableAllFirmware = true;
     
     time.timeZone = "America/New_York";
 
