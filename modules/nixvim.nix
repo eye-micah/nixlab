@@ -27,8 +27,6 @@
         floaterm.enable = true;
         chadtree.enable = true;
         coq-nvim.enable = true;
-        auto-save.enable = true;
-        auto-session.enable = true;
         presence-nvim.enable = true;
         rainbow-delimiters.enable = true;
         rainbow-delimiters.highlight = [

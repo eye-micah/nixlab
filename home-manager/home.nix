@@ -88,6 +88,7 @@
     # Set the desired options and configurations
     shellAliases = {
       rm = "rm -i";
+      nix-shell="nix-shell --run $SHELL";
     };
 
     # Additional environment variables

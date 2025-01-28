@@ -26,20 +26,22 @@ if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
     exit 1
 fi
 
-# Copy the partitioning script and run it on the target
+# Cosh the partitioning script and run it on the target
 echo "Sending partitioning script to $HOST..."
-scp ./partition_zfs_root.py "$HOST:/tmp/partition/partition_zfs_root.py"
+ssh "$HOST" "mkdir -p /tmp/partition"
+
+scp ./partition_zfs_root.sh "$HOST:/tmp/partition/partition_zfs_root.sh"
 
 echo "Running partitioning script on $HOST..."
-ssh "$HOST" "cd /tmp/partition && nix run --experimental-features 'nix-command flakes' 'nixpkgs#python3' -- /tmp/partition/partition_zfs_root.py"
+ssh "$HOST" "cd /tmp/partition && bash /tmp/partition/partition_zfs_root.sh $DEVICE"
 
-# Copy the NixOS configuration to the target
-echo "Copying NixOS configuration to $HOST..."
-nix run nixpkgs#rsync -- -avz --delete "$(dirname "$0")/.." "$HOST:/tmp/lab"
+# Cosh the NixOS configuration to the target
+echo "Coshing NixOS configuration to $HOST..."
+nix run nixpkgs#rsync -- -avz --delete "$(dirname "$0")/../.." "$HOST:/mnt/lab"
 
 # Deploy NixOS configuration
 echo "Deploying NixOS configuration..."
-ssh "$HOST" "cd /tmp/lab && chown -R root:root /tmp/lab && sudo nixos-install --flake .#$FLAKE"
+ssh "$HOST" "cd /mnt/lab && chown -R root:root /mnt/lab && sudo nixos-install --flake .#$FLAKE"
 
 
 echo "Disk partitioning and NixOS installation complete!"

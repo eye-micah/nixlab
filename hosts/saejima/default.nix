@@ -39,6 +39,11 @@
       fsType = "vfat";
   };
 
+  fileSystems."/mnt/steam-games" = {
+      device = "zroot/games";
+      fsType = "zfs";
+  };
+
   boot.kernelModules = [ "xpad" ];
 
   systemd.services = {
