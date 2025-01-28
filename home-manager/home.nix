@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, pkgsUnstable, ... }:
+{ lib, inputs, config, pkgs, pkgsUnstable, ... }:
 
 {
 
@@ -7,13 +7,23 @@
     # ];
 
 
+  dconf.settings = {
+    "org/gnome/desktop/interface".color-scheme = "prefer-dark";
+    "org/gnome/shell" = {
+      enabled-extensions = with pkgs.gnomeExtensions; [
+        appindicator.extensionUuid
+      ];
+    };
+  };
+
+
   home.sessionVariables = {
     EDITOR = "nvim";
     GIT_EDITOR = "nvim";
     VISUAL = "nvim";
   };
 
-  home.stateVersion = "24.11";
+  home.stateVersion = lib.mkDefault "24.11";
   home.packages = [
     pkgs.tmux
     # pkgs.vim

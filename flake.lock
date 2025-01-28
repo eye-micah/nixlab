@@ -292,6 +292,27 @@
         "type": "github"
       }
     },
+    "home-manager-unstable": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1737968762,
+        "narHash": "sha256-xiPARGKwocaMtv+U/rgi+h2g56CZZEmrcl7ldRaslq8=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "e1ae908bcc30af792b0bb0a52e53b03d2577255e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "master",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "home-manager_2": {
       "inputs": {
         "nixpkgs": [
@@ -613,6 +634,7 @@
         "auto-aspm": "auto-aspm",
         "deploy-rs": "deploy-rs",
         "home-manager": "home-manager_2",
+        "home-manager-unstable": "home-manager-unstable",
         "impermanence": "impermanence",
         "jovian-nixos": "jovian-nixos",
         "microvm": "microvm",

@@ -33,6 +33,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     impermanence = {
       url = "github:nix-community/impermanence";
     };
@@ -56,7 +61,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, jovian-nixos, nix-darwin, home-manager, agenix, impermanence, nixvim, microvm, nix-minecraft, auto-aspm, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, jovian-nixos, nix-darwin, home-manager, home-manager-unstable, agenix, impermanence, nixvim, microvm, nix-minecraft, auto-aspm, ... } @inputs:
     let
       baseModules = [
         ./modules/zfs.nix
@@ -152,6 +157,11 @@
           system = "x86_64-linux";
           modules = deckModules ++ [
             ./hosts/shinada
+            home-manager-unstable.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.micah = import ./home-manager/home.nix;
+            }
             jovian-nixos.nixosModules.default {
               jovian = {
                 decky-loader.enable = true;

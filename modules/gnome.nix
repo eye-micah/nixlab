@@ -22,7 +22,6 @@
     gnome-music
     gnome-weather
     gnome-connections
-    gnome-software
     totem
     gnome-contacts
   ];

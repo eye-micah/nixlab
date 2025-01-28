@@ -1,13 +1,27 @@
 { config, pkgs, lib, ... }:
 
 {
+
+
   
   networking.hostName = "shinada";
   networking.hostId = "deadb33f";
   networking.useDHCP = lib.mkDefault true;
   services.xserver.displayManager.gdm.enable = lib.mkForce false; # Needed for Jovian-NixOS to work correctly
 
-  environment.systemPackages = with pkgs; [ trayscale ];
+  environment.systemPackages = with pkgs; [ trayscale gnome-software ];
+
+  boot.kernelModules = [ "xpad" ]; # Needed for my 8BitDo controller.
+  systemd.services.load-xpad = {
+    description = "Load xpad module on boot and after waking from suspend";
+
+    # Enable the service on boot and hook it into suspend/resume
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.kmod}/bin/modprobe xpad";
+    };
+  };
 
   age.identityPaths = [
     "/etc/ssh/ssh_host_ed25519_key"
