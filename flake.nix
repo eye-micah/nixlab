@@ -85,6 +85,13 @@
         ./modules/nixvim.nix
       ];
 
+      deckModules = [
+        ./configuration.nix
+        ./modules/ext4-config.nix
+        ./modules/gnome.nix
+        ./modules/flatpak.nix
+      ];
+
     in {
       nixosConfigurations = {
         generic = nixpkgs.lib.nixosSystem {
@@ -142,10 +149,8 @@
 
         shinada = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = persistentModules ++ [
+          modules = deckModules ++ [
             ./hosts/shinada
-            ./modules/gnome.nix
-            ./modules/flatpak.nix
             jovian-nixos.nixosModules.default {
               jovian = {
                 decky-loader.enable = true;
