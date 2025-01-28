@@ -21,7 +21,7 @@
       enable = true;
   };
 
-  networking.firewall.allowedUDPPorts = [ ${services.tailscale.port} ];
+  #networking.firewall.allowedUDPPorts = [ ${services.tailscale.port} ];
 
   # create a oneshot job to authenticate to Tailscale
   systemd.services.tailscale-autoconnect = {
