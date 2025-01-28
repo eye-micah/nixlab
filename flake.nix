@@ -161,6 +161,7 @@
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
               home-manager.users.micah = import ./home-manager/home.nix;
+              home-manager.backupFileExtension = "hm.bak";
             }
             jovian-nixos.nixosModules.default {
               jovian = {
