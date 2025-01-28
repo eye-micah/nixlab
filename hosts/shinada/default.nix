@@ -10,7 +10,8 @@
   environment.systemPackages = with pkgs; [ trayscale ];
 
   age.identityPaths = [
-    "/etc/ssh/ssh_host_ed25519.key"
+    "/etc/ssh/ssh_host_ed25519_key"
+    "/etc/ssh/ssh_host_rsa_key"
   ];
 
   age.secrets = {
