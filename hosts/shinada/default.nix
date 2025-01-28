@@ -48,8 +48,7 @@
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale set --operator=micah
-      ${tailscale}/bin/tailscale up -authkey $( cat ${config.age.secrets.tailscaleShinada.path} ) --ssh 
+      ${tailscale}/bin/tailscale up -authkey $( cat ${config.age.secrets.tailscaleShinada.path} ) --ssh --operator=micah 
       '';
   };
 
