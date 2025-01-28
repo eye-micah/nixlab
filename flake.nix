@@ -86,6 +86,7 @@
       ];
 
       deckModules = [
+        agenix.nixosModules.default
         ./configuration.nix
         ./modules/ext4-config.nix
         ./modules/gnome.nix
