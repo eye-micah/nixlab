@@ -142,8 +142,10 @@
 
         shinada = nixpkgs-unstable.lib.nixosSystem {
           system = "x86_64-linux";
-          modules = persistentModules ++ desktopModules ++ [
+          modules = persistentModules ++ [
             ./hosts/shinada
+            ./modules/gnome.nix
+            ./modules/flatpak.nix
             jovian-nixos.nixosModules.default {
               jovian = {
                 decky-loader.enable = true;
