@@ -103,7 +103,7 @@ def ensure_zfs_datasets():
     datasets = {
         "zroot/root": ["-o", "com.sun:auto-snapshot=false", "-o", "mountpoint=legacy"],
         "zroot/nix": ["-o", "com.sun:auto-snapshot=false", "-o", "mountpoint=legacy"],
-        "zroot/home": ["-o", "com.sun:auto-snapshot=true", "-o", "mountpoint=legacy"],
+        "zroot/home": ["-o", "com.sun:auto-snapshot=true", "-o", "mountpoint=legacy", "-o", "casesensitivity=insensitive", "-o", "ashift=12", "-o", "sync=disabled"],
         "zroot/lab": ["-o", "com.sun:auto-snapshot=false", "-o", "mountpoint=legacy"]
     }
     for name, properties in datasets.items():
@@ -116,7 +116,7 @@ def ensure_zfs_datasets():
 
 def main(device):
     # Unmount filesystems if necessary
-    mount_points = ["/mnt", "/mnt/nix", "/mnt/boot", "/mnt/home"]
+    mount_points = ["/mnt", "/mnt/nix", "/mnt/boot", "/mnt/home", "/mnt/lab"]
     for mount_point in mount_points:
         ensure_unmounted(mount_point)
 

@@ -1,11 +1,16 @@
 {
-  inputs = {
-    nixpkgs = {
-      url = "github:nixos/nixpkgs/nixos-24.11";
-    };
+  inputs = { 
+    nixpkgs = { 
+      url = "github:nixos/nixpkgs/nixos-24.11"; 
+    }; 
 
     nixpkgs-unstable = {
       url = "github:nixos/nixpkgs/nixos-unstable";
+    };
+
+    jovian-nixos = {
+      url = "github:Jovian-Experiments/Jovian-NixOS";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     deploy-rs = {
@@ -28,10 +33,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     impermanence = {
       url = "github:nix-community/impermanence";
     };
-
     agenix = {
       url = "github:ryantm/agenix";
     };
@@ -52,7 +61,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nix-darwin, home-manager, agenix, impermanence, nixvim, microvm, nix-minecraft, auto-aspm, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, jovian-nixos, nix-darwin, home-manager, home-manager-unstable, agenix, impermanence, nixvim, microvm, nix-minecraft, auto-aspm, ... } @inputs:
     let
       baseModules = [
         ./modules/zfs.nix
@@ -80,6 +89,14 @@
         ./modules/flatpak.nix
         nixvim.nixosModules.nixvim
         ./modules/nixvim.nix
+      ];
+
+      deckModules = [
+        agenix.nixosModules.default
+        ./configuration.nix
+        ./modules/ext4-config.nix
+        ./modules/gnome.nix
+        ./modules/flatpak.nix
       ];
 
     in {
@@ -135,6 +152,34 @@
           system = "x86_64-linux";
           modules = impermanentModules ++ [
             ./hosts/kaito
+          ];
+        };
+
+        shinada = nixpkgs-unstable.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = deckModules ++ [
+            ./hosts/shinada
+            home-manager-unstable.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.micah = import ./home-manager/home.nix;
+              home-manager.backupFileExtension = "hm.bak";
+            }
+            jovian-nixos.nixosModules.default {
+              jovian = {
+                decky-loader.enable = true;
+                devices.steamdeck = {
+                  enable = true;
+                  autoUpdate = true;
+                };
+                steam = {
+                  enable = true;
+                  autoStart = true;
+                  desktopSession = "gnome";
+                  user = "micah";
+                };
+              };
+            }
           ];
         };
 

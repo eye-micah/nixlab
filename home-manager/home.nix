@@ -1,10 +1,41 @@
-{ inputs, config, pkgs, pkgsUnstable, ... }:
+{ lib, inputs, config, pkgs, ... }:
+let
+
+  allAutostart = [
+    {
+      pname = "vesktop";
+      package = pkgs.vesktop;
+    }
+    {
+      pname = "trayscale";
+      package = pkgs.trayscale;
+    }
+  ];
+
+  autostartPrograms = lib.filter (program: program.package != null) allAutostart;
+
+  autostartFiles = builtins.listToAttrs (map (pkg: {
+    name = ".config/autostart/${pkg.pname}.desktop";
+    value = ''
+      [Desktop Entry]
+      Type=Application
+      Name=${pkg.pname}
+      Exec=${pkg.package}/bin/${pkg.pname}
+    '';
+  }) autostartPrograms);
+
+in
 
 {
 
-  #imports = [
-    #inputs.nixvim.homeManagerModules.nixvim
-    # ];
+  dconf.settings = {
+    "org/gnome/desktop/interface".color-scheme = "prefer-dark";
+    "org/gnome/shell" = {
+      enabled-extensions = with pkgs.gnomeExtensions; [
+        appindicator.extensionUuid
+      ];
+    };
+  };
 
 
   home.sessionVariables = {
@@ -13,7 +44,8 @@
     VISUAL = "nvim";
   };
 
-  home.stateVersion = "24.11";
+  home.stateVersion = lib.mkDefault "24.11";
+
   home.packages = [
     pkgs.tmux
     # pkgs.vim
@@ -23,30 +55,6 @@
     pkgs.nixd
   ];
 
-
-  gtk = {
-    enable = true;
-    theme = {
-      package = pkgs.mint-themes;
-      name = "Mint-Y";
-    };
-
-    #cursorTheme = {
-    #  package = pkgs.
-    #};
-
-    iconTheme = {
-      package = pkgs.mint-y-icons;
-      name = "Mint-Y";
-    };
-  };
-
-  qt = {
-   enable = true;
-   platformTheme = "gtk";
-  };
-
-
   # Platform-specific adjustments
 #  platformSpecificPackages = if system == "darwin" then
 #    [ pkgs.zenity ] # Example of a macOS-only package
@@ -54,11 +62,6 @@
 #    [ pkgs.git ];   # Example of a Linux-only package
 
   home.username = "micah";
-
-#  home.homeDirectory = if system == "darwin" then
-#    "/Users/micah"
-#  else
-#    "/home/micah";
 
   programs.home-manager.enable = true;
 
@@ -77,33 +80,39 @@
   };
 
 
-  home.file.".ssh/config".text = ''
-    Host *
-      ForwardAgent no
-      AddKeysToAgent no
-      Compression no
-      ServerAliveInterval 0
-      ServerAliveCountMax 3
-      HashKnownHosts no
-      UserKnownHostsFile /dev/null
-      StrictHostKeyChecking no
-      ControlMaster no
-      ControlPath ~/.ssh/master-%r@%n:%p
-      ControlPersist no
-  '';
+  home.file = lib.mkMerge [
 
-  # Zsh
-  ## Link the actual zshrc from the Nix folder
+    # Merge autostart files only on Linux
+    (lib.optionalAttrs (pkgs.stdenv.isLinux) [
+      autostartFiles
+    ])
 
-  home.file.".zshenv".source = ../dotfiles/zshenv;
-  #home.file.".zshrc".source = ./dotfiles/zshrc;
-  #home.file.".zsh_plugins.txt".source = ../dotfiles/zsh_plugins.txt;
-  #home.file.".vimrc".source = ../dotfiles/vimrc;
-  home.file.".p10k.zsh".source = ../dotfiles/p10k.zsh;
+    # SSH Configuration
+    {
+      ".ssh/config".text = ''
+        Host *
+          ForwardAgent no
+          AddKeysToAgent no
+          Compression no
+          ServerAliveInterval 0
+          ServerAliveCountMax 3
+          HashKnownHosts no
+          UserKnownHostsFile /dev/null
+          StrictHostKeyChecking no
+          ControlMaster no
+          ControlPath ~/.ssh/master-%r@%n:%p
+          ControlPersist no
+      '';
+    }
 
-
-  home.file.".local/share/fonts/avenir.ttf".source = ../dotfiles/fonts/avenir;
-  home.file.".local/share/fonts/didot.ttf".source = ../dotfiles/fonts/didot;
+    # Zsh and Fonts Configurations
+    {
+      ".zshenv".source = ../dotfiles/zshenv;  # Correctly reference external files with 'source'
+      ".p10k.zsh".source = ../dotfiles/p10k.zsh;
+      ".local/share/fonts/avenir.ttf".source = ../dotfiles/fonts/avenir;
+      ".local/share/fonts/didot.ttf".source = ../dotfiles/fonts/didot;
+    }
+  ];
 
   # Enable Zsh shell for the user
   programs.zsh = {
@@ -112,6 +121,7 @@
     # Set the desired options and configurations
     shellAliases = {
       rm = "rm -i";
+      nix-shell="nix-shell --run $SHELL";
     };
 
     # Additional environment variables
