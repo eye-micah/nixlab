@@ -2,6 +2,7 @@
 {
   environment.sessionVariables = {
     XDG_CURRENT_DESKTOP = "gnome";
+    EDITOR = "nvim";
   };
 
   environment.systemPackages = with pkgs; [ gettext cinnamon-common mint-y-icons mint-themes ];

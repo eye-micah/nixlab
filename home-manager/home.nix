@@ -23,6 +23,30 @@
     pkgs.nixd
   ];
 
+
+  gtk = {
+    enable = true;
+    theme = {
+      package = pkgs.mint-themes;
+      name = "Mint-Y";
+    };
+
+    #cursorTheme = {
+    #  package = pkgs.
+    #};
+
+    iconTheme = {
+      package = pkgs.mint-y-icons;
+      name = "Mint-Y";
+    };
+  };
+
+  qt = {
+   enable = true;
+   platformTheme = "gtk";
+  };
+
+
   # Platform-specific adjustments
 #  platformSpecificPackages = if system == "darwin" then
 #    [ pkgs.zenity ] # Example of a macOS-only package

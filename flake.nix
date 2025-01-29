@@ -74,7 +74,8 @@
         ./modules/firefox.nix
         ./modules/printing.nix
         #./modules/plymouth.nix
-        ./modules/gnome.nix
+        #./modules/gnome.nix
+        ./modules/cinnamon.nix
         ./modules/fonts.nix
         ./modules/flatpak.nix
         nixvim.nixosModules.nixvim
@@ -117,6 +118,7 @@
             home-manager.nixosModules.home-manager {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "hm-bak";
               home-manager.users.micah = import ./home-manager/home.nix;
             }
           ];
