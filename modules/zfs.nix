@@ -1,19 +1,25 @@
-{ config, pkgs, lib, ... }:
-
 {
-#  services.zfs.zed.settings = {
-#    ZED_DEBUG_LOG = "/tmp/zed.debug.log";
-#    ZED_EMAIL_ADDR = [ config.age.secrets."gmailAddress".path ];
-#    ZED_EMAIL_PROG = "${pkgs.msmtp}/bin/msmtp";
-#    ZED_EMAIL_OPTS = "@ADDRESS@";
-#
-#    ZED_NOTIFY_INTERVAL_SECS = 3600;
-#    ZED_NOTIFY_VERBOSE = true;
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-#    ZED_USE_ENCLOSURE_LEDS = true;
-#    ZED_SCRUB_AFTER_RESILVER = true;
-
-#  };
-  # this option does not work; will return error
-#  services.zfs.zed.enableMail = false;
+let
+  zfsCompatibleKernelPackages = lib.filterAttrs (
+    name: kernelPackages:
+    (builtins.match "linux_[0-9]+_[0-9]+" name) != null
+    && (builtins.tryEval kernelPackages).success
+    && (!kernelPackages.${config.boot.zfs.package.kernelModuleAttribute}.meta.broken)
+  ) pkgs.linuxKernel.packages;
+  latestKernelPackage = lib.last (
+    lib.sort (a: b: (lib.versionOlder a.kernel.version b.kernel.version)) (
+      builtins.attrValues zfsCompatibleKernelPackages
+    )
+  );
+in
+{
+  # Note this might jump back and forth as kernels are added or removed.
+  boot.kernelPackages = latestKernelPackage;
 }
+
