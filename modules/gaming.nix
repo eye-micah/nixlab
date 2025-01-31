@@ -11,20 +11,6 @@
   };
 
   boot.kernelModules = [ "xpad" ]; # Needed for my 8BitDo controller.
-  systemd.services.load-xpad = {
-    description = "Load xpad module on boot and after waking from suspend";
-
-    # Enable the service on boot and hook it into suspend/resume
-    wantedBy = [ "multi-user.target" "sleep.target" ];
-    before = [ "suspend.target" "hibernate.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.kmod}/bin/modprobe xpad";
-    };
-  };
-
-
-
 
   hardware.uinput.enable = true;
 

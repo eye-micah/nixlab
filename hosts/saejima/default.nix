@@ -2,11 +2,16 @@
 
 {
 
+
+  imports = [
+    #./gpu-passthru.nix
+  ];
+
   networking = {
     useDHCP = false; # NM handles this for us.
     networkmanager = {
       enable = true;
-      dns = "none"; # NixOS handles this.
+      dns = "systemd-resolved"; # NixOS handles this.
     };
     hostId = "41b9e6d4";
     hostName = "saejima";
@@ -14,6 +19,15 @@
       "192.168.1.244"
       "192.168.1.206"
     ];
+  };
+
+  services.resolved = {
+    enable = true;
+  };
+
+  services.mullvad-vpn = {
+    enable = true;
+    package = pkgs.mullvad-vpn;
   };
 
   fileSystems."/" = {
@@ -46,14 +60,14 @@
 
   boot.kernelModules = [ "xpad" ];
 
-  systemd.services = {
-    "xpad-modprobe" = {
-      after = [ "graphical.target" ];
-      serviceConfig = {
-        ExecStart = "modprobe xpad";
-      };
-    };
-  };
+  #systemd.services = {
+  #  "xpad-modprobe" = {
+  #    after = [ "graphical.target" ];
+  #    serviceConfig = {
+  #      ExecStart = "modprobe xpad";
+  #    };
+  #  };
+  #};
 
   networking.firewall.enable = false;
  
