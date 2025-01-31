@@ -10,6 +10,8 @@
 
   home.stateVersion = lib.mkDefault "24.11";
 
+  home.homeDirectory = lib.mkDefault "/home/micah";
+
   home.packages = [
     pkgs.tmux
     # pkgs.vim
