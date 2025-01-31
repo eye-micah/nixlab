@@ -2,8 +2,6 @@
 {
 
 
-
-
   home.sessionVariables = {
     EDITOR = "nvim";
     GIT_EDITOR = "nvim";
@@ -72,6 +70,14 @@
       ".p10k.zsh".source = ../dotfiles/p10k.zsh;
       ".local/share/fonts/avenir.ttf".source = ../dotfiles/fonts/avenir;
       ".local/share/fonts/didot.ttf".source = ../dotfiles/fonts/didot;
+
+      # Sway/Waybar/Kitty
+      ".config/sway/config".source = ../dotfiles/swayConfig;
+      ".config/sway/nixos.png".source = ../dotfiles/swayBg;
+      ".config/waybar/config".source = ../dotfiles/waybarConfig;
+      ".config/waybar/style.css".source = ../dotfiles/waybarCss;
+      ".config/kitty/kitty.conf".source = ../dotfiles/kittyConfig;
+      ".config/kitty/current-theme.conf".source = ../dotfiles/kittyTheme;
     }
   ];
 
