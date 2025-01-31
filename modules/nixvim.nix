@@ -5,6 +5,12 @@
       #defaultEditor = true;
       viAlias = true;
       vimAlias = true;
+
+      colorschemes.base16 = {
+        enable = true;
+        colorscheme = "dracula";
+      };
+
       keymaps = [
         {
           mode = "n";
@@ -63,6 +69,8 @@
             yaml
           ];
       };
+
+
     };
   };
 }

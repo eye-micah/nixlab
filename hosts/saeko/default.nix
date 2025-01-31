@@ -2,13 +2,16 @@
 
 {
 
-    ## My custom modules
-    # lab = {
-    #  amdgpu.enable = true;
+    # My custom modules
+#    homelab = {
+
+#      amdgpu.enable = true;
+
     #  jellyfin = {
     #    enable = true;
     #    enableCaddy = true;
     #  };
+
     #};
 
     environment.systemPackages = with pkgs; [
@@ -21,11 +24,8 @@
     hardware.graphics.enable = true;
     #hardware.opengl.driSupport = true;
     hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
-    services.xserver.videoDrivers = [ "amdgpu" ];
 
     hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd ];
-
-    boot.kernelModules = [ "amdgpu" ];
 
     services.nfs.server.enable = true;
     services.nfs.server.exports = ''
@@ -56,7 +56,7 @@
         enableIPv6 = false;
     };
 
-    boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+    boot.kernel.sysctl."net.ipv4.ip_forward" = lib.mkDefault 1;
 
     services.tailscale = {
         enable = true;
@@ -105,6 +105,7 @@
 
     imports = [
         ./services
+        #../../modules/homelab
         #../../modules/homelab/jellyfin.nix
     ];
 
@@ -122,6 +123,7 @@
         "resticEnv".file = ../../secrets/resticEnv.age;
         "resticRepo".file = ../../secrets/resticRepo.age;
         "resticPassword".file = ../../secrets/resticPassword.age;
+        "wgConf".file = ../../secrets/wgConf.age;
     };
     
     services.restic.backups = {

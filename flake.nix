@@ -13,6 +13,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    nixarr = {
+      url = "github:rasmus-kirk/nixarr";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     deploy-rs = {
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -61,7 +66,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, jovian-nixos, nix-darwin, home-manager, home-manager-unstable, agenix, impermanence, nixvim, microvm, nix-minecraft, auto-aspm, ... } @inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, nixarr, deploy-rs, jovian-nixos, nix-darwin, home-manager, home-manager-unstable, agenix, impermanence, nixvim, microvm, nix-minecraft, auto-aspm, ... } @inputs:
     let
       baseModules = [
         ./modules/zfs.nix
@@ -84,7 +89,7 @@
         ./modules/printing.nix
         #./modules/plymouth.nix
         #./modules/gnome.nix
-        ./modules/cinnamon.nix
+        ./modules/sway.nix
         ./modules/fonts.nix
         ./modules/flatpak.nix
         nixvim.nixosModules.nixvim
@@ -114,6 +119,7 @@
           modules = persistentModules ++ [
             ./modules/auto-aspm.nix
             ./hosts/saeko
+            nixarr.nixosModules.default
           ] ++ [
             home-manager.nixosModules.home-manager {
               home-manager.useGlobalPkgs = true;
@@ -215,6 +221,36 @@
           ];
         };
       };
+
+      deploy = {
+        nodes = {
+          saeko = {
+            fastConnection = true;
+            interactiveSudo = true;
+            remoteBuild = true;
+            hostname = "saeko";
+            profiles.system = {
+              sshUser = "micah";
+              user = "root";
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.saeko;
+            };
+          };
+          saejima = {
+            fastConnection = true;
+            interactiveSudo = true;
+            remoteBuild = true;
+            hostname = "saejima.local";
+            profiles.system = {
+              sshUser = "micah";
+              user = "root";
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.saejima;
+            };
+          };
+        };
+      };
+
+      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+
     };
 }
 

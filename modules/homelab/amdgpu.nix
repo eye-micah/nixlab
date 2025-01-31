@@ -1,32 +1,11 @@
-{ lib, ... }: {
+{ lib, config, ... }: 
+let cfg = config.homelab.amdgpu; in {
 
-with lib;
-
-let
-  configOptions = {
-    lab.amdgpu = mkOption {
-      type = types.attrsOf (types.submodule {
-        options = {
-          enable = mkOption {
-            type = types.bool;
-            default = false;
-            description = ''
-              Enable amdgpu config
-            '';
-          };
-        };
-      });
-      default = { enable = false; };
-      description = ''
-        Option to enable basic amdgpu config.
-      '';
+    options = {
+      homelab.amdgpu.enable = lib.mkEnableOption "Enable amdgpu config";
     };
-in
 
-{
-    options = configOptions;
-
-    config = mkIf config.lab.amdgpu.enable {
+    config = lib.mkIf cfg.enable {
       boot.initrd.kernelModules = [ "amdgpu" ];
       hardware.graphics.enable = true;
     };
