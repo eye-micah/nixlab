@@ -1,31 +1,4 @@
 { lib, inputs, config, pkgs, ... }:
-let
-
-  allAutostart = [
-    {
-      pname = "vesktop";
-      package = pkgs.vesktop;
-    }
-    {
-      pname = "trayscale";
-      package = pkgs.trayscale;
-    }
-  ];
-
-  autostartPrograms = lib.filter (program: program.package != null) allAutostart;
-
-  autostartFiles = builtins.listToAttrs (map (pkg: {
-    name = ".config/autostart/${pkg.pname}.desktop";
-    value = ''
-      [Desktop Entry]
-      Type=Application
-      Name=${pkg.pname}
-      Exec=${pkg.package}/bin/${pkg.pname}
-    '';
-  }) autostartPrograms);
-
-in
-
 {
 
   dconf.settings = {
@@ -81,11 +54,6 @@ in
 
 
   home.file = lib.mkMerge [
-
-    # Merge autostart files only on Linux
-    (lib.optionalAttrs (pkgs.stdenv.isLinux) [
-      autostartFiles
-    ])
 
     # SSH Configuration
     {

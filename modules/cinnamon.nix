@@ -17,4 +17,6 @@
     displayManager.defaultSession = "cinnamon";
   };
 
+  qt.enable = false;
+
 }
