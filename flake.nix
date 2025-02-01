@@ -182,7 +182,7 @@
                 steam = {
                   enable = true;
                   autoStart = true;
-                  desktopSession = "gnome";
+                  desktopSession = "gnome"; # Way more touch-friendly.
                   user = "micah";
                 };
               };
