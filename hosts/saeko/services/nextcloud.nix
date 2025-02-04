@@ -3,6 +3,9 @@
 
   # Nextcloud is so fucking fat and greedy I have to slam it inside a container so it doesn't listen on 86 ports I'm already using.
   containers.nextcloud = {
+
+
+
     autoStart = true;
     privateNetwork = true;
     hostAddress = "192.168.100.10";
@@ -16,6 +19,11 @@
     };
 
     config = { config, pkgs, lib, ... }: {
+
+      # I have no idea what'll break if I upgrade the package. 
+      nixpkgs.config.permittedInsecurePackages = [
+        "nextcloud-28.0.14"
+      ];
 
       systemd.tmpfiles.rules = [
         "f /var/lib/nextcloud/CAN_INSTALL - nextcloud nextcloud --"

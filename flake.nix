@@ -213,6 +213,21 @@
           modules = [
             ./modules/darwin.nix
             ./modules/nixvim.nix
+            ./hosts/haruka
+            nixvim.nixDarwinModules.nixvim
+            home-manager.darwinModules.home-manager {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.micah = import ./home-manager/home.nix;
+            }
+          ];
+        };
+        saki = nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            ./modules/darwin.nix
+            ./modules/nixvim.nix
+            ./hosts/saki
             nixvim.nixDarwinModules.nixvim
             home-manager.darwinModules.home-manager {
               home-manager.useGlobalPkgs = true;
@@ -234,6 +249,17 @@
               sshUser = "micah";
               user = "root";
               path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.saeko;
+            };
+          };
+          nanba = {
+            fastConnection = true;
+            interactiveSudo = true;
+            remoteBuild = false;
+            hostname = "nanba";
+            profiles.system = {
+              sshUser = "micah";
+              user = "root";
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.nanba;
             };
           };
           saejima = {

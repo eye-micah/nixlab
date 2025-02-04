@@ -14,9 +14,10 @@
     modesetting.enable = true;
     powerManagement.enable = true; # nixos says these two settings are experimental -- we'll see?
     powerManagement.finegrained = false;
-    open = false; 
+    open = true; 
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.production;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    #package = config.boot.kernelPackages.nvidiaPackages.legacy_470; # Maybe this will fix suspend?
   };
 
   boot.initrd.kernelModules = [
