@@ -21,6 +21,11 @@
     ];
   };
 
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "micah" ];
+  virtualisation.virtualbox.host.enableExtensionPack = true;
+
+
   services.resolved = {
     enable = true;
   };

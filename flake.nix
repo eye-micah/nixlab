@@ -86,7 +86,7 @@
       desktopModules = [
         ./modules/pipewire.nix
         ./modules/firefox.nix
-        ./modules/printing.nix
+        #./modules/printing.nix
         #./modules/plymouth.nix
         #./modules/gnome.nix
         ./modules/sway.nix

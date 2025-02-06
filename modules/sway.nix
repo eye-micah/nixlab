@@ -3,6 +3,7 @@
 
   environment.sessionVariables = {
     XDG_CURRENT_DESKTOP = "sway";
+    XDG_SESSION_TYPE = "wayland";
   };
 
   environment.systemPackages = with pkgs; [
@@ -16,12 +17,24 @@
     font-awesome
     powerline-fonts
     powerline-symbols
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-wlr
   ];
+
+  xdg.portal.enable = true;
+  xdg.portal.wlr.enable = true;
+  xdg.portal.wlr.settings.screencast = {
+    output_name = "DP-1";
+    chooser_type = "simple";
+    chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+  };
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-wlr pkgs.xdg-desktop-portal-gtk ];
 
   services.gnome.gnome-keyring.enable = true;
 
   programs.sway = {
     enable = true;
+    package = pkgs.swayfx;
     wrapperFeatures.gtk = true;
   };
 

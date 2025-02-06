@@ -91,6 +91,7 @@
     shellAliases = {
       rm = "rm -i";
       nix-shell="nix-shell --run $SHELL";
+      hms = "nix run 'nixpkgs#home-manager' -- switch --flake '/home/micah/git/nixlab#micah'";
     };
 
     # Additional environment variables
