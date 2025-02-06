@@ -2,27 +2,11 @@
 
 {
 
-  # Saeko from Yakuza: Like a Dragon! I think.
-  # Ryzen 4650G + 64GB RAM + ZFS SSD pool for bulk storage and editing + 10GbE.
-  # Power savings optimized
-
-    # My custom modules
-#    homelab = {
-
-#      amdgpu.enable = true;
-
-    #  jellyfin = {
-    #    enable = true;
-    #    enableCaddy = true;
-    #  };
-
-    #};
-
     environment.systemPackages = with pkgs; [
-        zfs
         tailscale
         ocl-icd
         clinfo
+        msmtp
     ];
 
     hardware = {
@@ -130,8 +114,10 @@
         "resticRepo".file = ../../secrets/resticRepo.age;
         "resticPassword".file = ../../secrets/resticPassword.age;
         "wgConf".file = ../../secrets/wgConf.age;
+        "gmailPassword".file = ../../secrets/gmailPassword.age;
+        "gmailAddress".file = ../../secrets/gmailAddress.age;
     };
-    
+
     services.restic.backups = {
         backblaze = {
             initialize = true;

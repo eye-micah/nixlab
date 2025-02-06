@@ -63,4 +63,19 @@
   networking.firewall.enable = false; # This is a desktop that sits at home behind my router's firewall. It's not necessary and hurts printer discovery
  
   environment.systemPackages = with pkgs; [ ];
+
+  
+  services.logind = {
+    extraConfig = ''
+      IdleAction=poweroff
+      IdleActionSec=1200  # Change to preferred timeout in seconds (e.g., 10 minutes)
+    '';
+  };
+
+  # Mask suspend-related targets
+  systemd.targets.sleep.enable = false;
+  systemd.targets.suspend.enable = false;
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybridSleep.enable = false;
+
 }

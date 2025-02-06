@@ -15,6 +15,12 @@
     #  util-linux
     #];
 
+    system.autoUpgrade = {
+      enable = true;
+      flake = "github:eye-micah/nixlab";
+      dates = "daily";
+      allowReboot = true;
+    };
 
     security.sudo.extraConfig = ''
       Defaults pwfeedback

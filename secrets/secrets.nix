@@ -8,6 +8,8 @@ in
   "tailscaleNanba.age".publicKeys = [ haruka nanba ];
   "tailscaleSaeko.age".publicKeys = [ haruka saeko ];
   "tailscaleShinada.age".publicKeys = [ haruka shinada ];
+  "gmailPassword.age".publicKeys = [ haruka saeko nanba ];
+  "gmailAddress.age".publicKeys = [ haruka saeko nanba ];
   "rsyncKaitoKeyId.age".publicKeys = [ haruka ];
   "rsyncKaitoAppKey.age".publicKeys = [ haruka ];
   "resticEnv.age".publicKeys = [ haruka saeko ];

@@ -67,7 +67,25 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, nixarr, deploy-rs, jovian-nixos, nix-darwin, home-manager, home-manager-unstable, agenix, impermanence, nixvim, microvm, nix-minecraft, auto-aspm, ... } @inputs:
+  outputs = { 
+    self,
+    nixpkgs, 
+    nixpkgs-unstable, 
+    agenix,
+    deploy-rs,
+    nixarr, 
+    jovian-nixos, 
+    nix-darwin, 
+    home-manager, 
+    home-manager-unstable, 
+    impermanence, 
+    nixvim, 
+    microvm, 
+    nix-minecraft, 
+    auto-aspm, 
+    ... 
+  } @inputs:
+
     let
       baseModules = [
         ./modules/zfs.nix
@@ -119,6 +137,7 @@
           specialArgs = { inherit inputs; };
           modules = persistentModules ++ [
             ./modules/auto-aspm.nix
+            ./modules/zed.nix
             ./hosts/saeko
             nixarr.nixosModules.default
           ] ++ [
