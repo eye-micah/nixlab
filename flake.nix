@@ -46,6 +46,7 @@
     impermanence = {
       url = "github:nix-community/impermanence";
     };
+
     agenix = {
       url = "github:ryantm/agenix";
     };

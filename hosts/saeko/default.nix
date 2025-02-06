@@ -2,6 +2,10 @@
 
 {
 
+  # Saeko from Yakuza: Like a Dragon! I think.
+  # Ryzen 4650G + 64GB RAM + ZFS SSD pool for bulk storage and editing + 10GbE.
+  # Power savings optimized
+
     # My custom modules
 #    homelab = {
 
@@ -21,25 +25,26 @@
         clinfo
     ];
 
-    hardware.graphics.enable = true;
-    #hardware.opengl.driSupport = true;
-    hardware.opengl.extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl ];
+    hardware = {
+      graphics = {
+        enable = true;
+        extraPackages = with pkgs; [ vaapiVdpau libvdpau-va-gl rocmPackages.clr.icd ]; # Jellyfin hwaccel packages
+      };
+    };
 
-    hardware.graphics.extraPackages = with pkgs; [ rocmPackages.clr.icd ];
 
     services.nfs.server.enable = true;
+
+    # NFS shares are insecure like this but I just wasn't able to get it working otherwise adding IPs or hostnames. May move to Samba but I do not have any Windows hosts.
     services.nfs.server.exports = ''
       /mnt/storage-ssd/editing-workspace	*(rw,async,insecure,no_root_squash,no_subtree_check)
       /mnt/storage-ssd/editing-finished	        *(rw,async,insecure,no_root_squash,no_subtree_check)
       /mnt/storage-ssd/games	                *(rw,async,insecure,no_root_squash,no_subtree_check)
+      /mnt/storage-ssd/movies                   *(rw,async,insecure,no_root_squash,no_subtree_check)
     ''
     ;
 
-    services.ollama = {
-      enable = true;
-      acceleration = "rocm";
-    };
-
+    # Needed for hostname discovery. Look into hardening.
     services.avahi = {
       enable = true;
       nssmdns4 = true;
@@ -49,6 +54,7 @@
       };
     };
 
+    # Needed for systemd-nspawn containers.
     networking.nat = {
         enable = true;
         internalInterfaces = [ "ve-+" ];
@@ -90,7 +96,7 @@
         '';
     };
 
-    fileSystems."/cvol" = {
+    fileSystems."/cvol" = { # Container persistent volume dataset for systemd-nspawn/Docker/Podman/K8s
         device = "zroot/cvol";
         fsType = "zfs";
         neededForBoot = true;
@@ -111,7 +117,7 @@
 
     networking.hostName = "saeko";
     networking.hostId = "41b9e6d1";
-    networking.nameservers = [ "1.1.1.1" ];
+    networking.nameservers = [ "1.1.1.1" ]; # CF DNS makes it easier to resolve with reverse proxy.
 
     age.secrets = {
         "cloudflareToken".file = ../../secrets/cloudflareToken.age;
